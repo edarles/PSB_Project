@@ -101,7 +101,7 @@ extern "C"
     // compute grid and thread block size for a given number of elements
     void computeGridSize(uint n, uint &numBlocks, uint &numThreads)
     {
-	uint blockSize = 32;
+	uint blockSize = 256;
         numThreads = min(blockSize, n);
         numBlocks = iDivUp(n, numThreads);
     }
