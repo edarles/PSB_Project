@@ -1,0 +1,26 @@
+#include <GaussianHeightFieldCollision.cuh>
+#include <GaussianHeightFieldCollision_Kernel.cuh>
+#include <common.cuh>
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+extern "C"
+{
+void collisionSystem_Gaussian_HeightFieldCollision_CUDA(double* oldPos, 
+			double* newPos, double* oldVel, double* newVel, double radiusParticle, float dt, uint nbBodiesP, 
+			double A, double x0, double z0, double p1, double p2,
+			Vector3 Min, Vector3 Max, float elast)
+{
+	int numThreadsX, numBlocksX;
+        computeGridSize(nbBodiesP, 256, numBlocksX, numThreadsX);
+  
+	float3 min_ = make_float3(Min.x(),Min.y(),Min.z());
+	float3 max_ = make_float3(Max.x(),Max.y(),Max.z());
+	
+	collisionSystem_Gaussian_HeightFieldCollision_Kernel<<< numBlocksX,numThreadsX >>>
+			((double3*)newPos, (double3*)newVel,radiusParticle,dt,nbBodiesP,A,x0,z0,p1,p2,min_,max_,elast);
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/

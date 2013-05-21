@@ -1,0 +1,125 @@
+#include <Cylinder.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <stdio.h>
+
+/**********************************************************************/
+/**********************************************************************/
+namespace Utils
+{
+/**********************************************************************/
+/**********************************************************************/
+Cylinder::Cylinder():ObjectGeo()
+{
+	center = Vector3(0,0,0);
+	baseRadius = 1.0;
+	length = 1.0;
+	direction = Vector3(0,0,1);
+}
+/**********************************************************************/
+Cylinder::Cylinder(Vector3 center, float baseRadius,  
+		   float length, Vector3 direction):ObjectGeo()
+{
+	this->center = center;
+	this->baseRadius = baseRadius;
+	this->length = length;
+	this->direction	= direction;
+}
+/**********************************************************************/
+Cylinder::Cylinder(const Cylinder& C):ObjectGeo(C)
+{
+	this->center = C.center;
+	this->baseRadius = C.baseRadius;
+	this->length = C.length;
+	this->direction = C.direction;
+}
+/**********************************************************************/
+Cylinder::~Cylinder()
+{
+}
+/**********************************************************************/
+/**********************************************************************/
+Vector3 Cylinder::getCenter()
+{
+	return center;
+}
+/**********************************************************************/
+float	Cylinder::getBaseRadius()
+{
+	return baseRadius;
+}
+/**********************************************************************/
+float	Cylinder::getLength()
+{
+	return length;
+}
+/**********************************************************************/
+Vector3	Cylinder::getDirection()
+{
+	return direction;
+}
+/**********************************************************************/
+/**********************************************************************/
+void	Cylinder::setCenter(Vector3 c)
+{
+	center = c;
+}
+/**********************************************************************/
+void	Cylinder::setBaseRadius(float r)
+{
+	baseRadius = r;
+}
+/**********************************************************************/
+void	Cylinder::setLength(float l)
+{
+	length = l;
+}
+/**********************************************************************/
+void	Cylinder::setDirection(Vector3 d)
+{
+	direction = d;
+}
+/**********************************************************************/
+/**********************************************************************/
+void	Cylinder::display(Vector3 color)
+{
+	glColor3f(color.x(),color.y(),color.z());
+
+	Vector3 V = Vector3(-direction.x()*length,-direction.y()*length,-direction.z()*length);	
+	if(V.z() == 0) V.setZ(0.0001);
+	float v = V.length();
+	float ax = 57.2957795*acos( V.z()/v );
+	if ( V.z() < 0.0 )
+    		ax = -ax;
+	float rx = -V.y()*V.z();
+	float ry = V.x()*V.z();
+
+	glPushMatrix();
+	GLUquadric *quadric = gluNewQuadric();
+	//draw the cylinder body
+	glTranslatef(center.x()+direction.x()*(length/2),center.y()+direction.y()*(length/2),center.z()+direction.z()*(length/2));
+	glRotatef(ax, rx, ry, 0.0);
+	gluQuadricOrientation(quadric,GLU_OUTSIDE);
+	gluCylinder(quadric, baseRadius, baseRadius, v, 20, 1);
+	//draw the first cap
+	gluQuadricOrientation(quadric,GLU_INSIDE);
+	gluDisk( quadric, 0.0, baseRadius, 20, 1);
+	glTranslatef( 0,0,v );
+	//draw the second cap
+	gluQuadricOrientation(quadric,GLU_OUTSIDE);
+	gluDisk( quadric, 0.0, baseRadius, 20, 1);
+	gluDeleteQuadric(quadric);
+	glPopMatrix();	
+
+	glColor3f(1,1,1);
+}
+/**********************************************************************/
+void 	Cylinder::displayNormale(Vector3 color)
+{
+	glColor3f(color.x(),color.y(),color.z());
+}
+/**********************************************************************/
+/**********************************************************************/
+}
+/**********************************************************************/
+/**********************************************************************/

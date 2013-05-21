@@ -1,0 +1,27 @@
+#include <CombinedHeightFieldCollision.cuh>
+#include <CombinedHeightFieldCollision_Kernel.cuh>
+#include <common.cuh>
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+extern "C"
+{
+void collisionSystem_Combined_HeightFieldCollision_CUDA(double* oldPos, 
+			double* newPos, double* oldVel, double* newVel, double radiusParticle, float dt, uint nbBodiesP, 
+			double* height, double* normX0, double* normX1, double* normZ0, double* normZ1,
+			Vector3 Min, Vector3 Max, float elast)
+{
+	int numThreadsX, numBlocksX;
+        computeGridSize(nbBodiesP,numBlocksX, numThreadsX);
+	
+	float3 min_ = make_float3(Min.x(),Min.y(),Min.z());
+	float3 max_ = make_float3(Max.x(),Max.y(),Max.z());
+
+	collisionSystem_Combined_HeightFieldCollision_Kernel<<< numBlocksX,numThreadsX >>>
+			((double3*)newPos, (double3*)newVel,radiusParticle,dt,nbBodiesP,
+			(double3*) height, (double3*) normX0, (double3*) normX1, (double3*) normZ0, (double3*) normZ1, min_,max_,elast);
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/

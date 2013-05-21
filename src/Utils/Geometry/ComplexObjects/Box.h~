@@ -1,0 +1,56 @@
+#ifndef _BOX_
+#define _BOX_
+
+#include <Vector3.h>
+#include <vector>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <Quadrilateral.h>
+
+#include <ObjectGeo.h>
+using namespace std;
+
+namespace Utils {
+
+class Box : public ObjectGeo
+{
+	public:
+		
+		Box();
+		Box(vector<Quadrilateral> faces);
+		Box(const Box&);
+		~Box();
+
+		vector<Quadrilateral>   getFaces();
+		Quadrilateral           getFace(unsigned int);
+		Vector3			getCenter();
+		float			getSizeX();
+		float			getSizeY();
+		float			getSizeZ();
+		Vector3			getMin();
+		Vector3			getMax();
+
+		void 			setFaces(vector<Quadrilateral>);
+		void			setFace(unsigned int, Quadrilateral Q);
+		void			setCenter(Vector3);
+		void			setSizeX(float);
+		void			setSizeY(float);
+		void			setSizeZ(float);
+		
+		void 			display(Vector3 color);
+		void 			displayNormale(Vector3 color);
+
+		void			create(Vector3 center, float sizeX, float sizeY, float sizeZ);
+
+		void			calculateMinMax();
+
+	protected:
+
+		vector<Quadrilateral>   faces;
+		Vector3 center;
+		float sizeX, sizeY, sizeZ;
+		Vector3 max, min;
+};
+
+}
+#endif

@@ -1,0 +1,46 @@
+#ifndef WINDOW_CONFIGURATION_CUDA_SYSTEM_H
+#define WINDOW_CONFIGURATION_CUDA_SYSTEM_H
+
+#include <QWidget>
+#include <QtGui>
+#include <QMainWindow>
+#include <QtCore/QDir>
+#include <glWidget.h>
+#include <ForceExt_Gravity.h>
+//************************************************************************/
+//************************************************************************/
+class WindowConfiguration_CudaSystem : public QWidget
+{
+    Q_OBJECT
+
+//************************************************************************/
+public:
+
+    WindowConfiguration_CudaSystem(GLWidget *glWidget);
+    ~WindowConfiguration_CudaSystem();
+
+    QSize sizeHint() const;
+
+public slots:
+
+    void accept();
+    void cancel();
+    void createDataSystem(double);
+
+private:
+	
+    SimulationData_CudaSystem *data;
+    GLWidget *glWidget;
+    
+    QPushButton *buttonOK;
+    QPushButton *buttonCancel;
+
+    QDoubleSpinBox *gravity, *particleRadius, *particleMass, *deltaTime;
+    QDoubleSpinBox *interactionRadius, *spring, *damping, *shear, *attraction;
+
+    QLabel *gravityLabel, *particleRadiusLabel, *particleMassLabel, *deltaTimeLabel;
+    QLabel *interactionRadiusLabel, *springLabel, *dampingLabel, *shearLabel, *attractionLabel; 
+    
+};
+
+#endif

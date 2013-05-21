@@ -1,0 +1,51 @@
+#include <MarchingCube.cuh>
+#include <MarchingCube_Kernel.cuh>
+#include <common.cuh>
+#include <stdio.h>
+#include <GL/gl.h>
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+extern "C"
+{
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+void createGrid_MarchingCube_CUDA(Vector3 C, double l, double w, double d, float sizeCell, uint nbPosX, uint nbPosY, uint nbPosZ,
+				  double* grid, int* m_nbIndex)
+{
+	double3 center = make_double3(C.x(),C.y(),C.z());
+
+	printf("nbPosX:%d nbPosY:%d nbPosZ:%d\n",nbPosX,nbPosY,nbPosZ);
+	int numThreadsX, numBlocksX, numThreadsY, numBlocksY, numThreadsZ, numBlocksZ;
+        computeGridSize(nbPosX, numBlocksX, numThreadsX);
+	computeGridSize(nbPosY, numBlocksY, numThreadsY);
+	computeGridSize(nbPosZ, numBlocksZ, numThreadsZ);
+
+	dim3 dimBlock(numBlocksX,numBlocksY,numBlocksZ);
+    	dim3 dimGrid(numThreadsX,numThreadsY,numThreadsZ);
+
+	createGrid_MarchingCube_Kernel<<<dimGrid, dimBlock>>>((double4*) grid, center, l, w, d,
+					               	      sizeCell, nbPosX, nbPosY, nbPosZ, m_nbIndex);
+	cudaDeviceSynchronize();
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+void polygonize_MarchingCube_CUDA(double* grid, uint nbPosX, uint nbPosY, uint nbPosZ, double isoLevel, 
+				  int* m_nbIndex, double* m_vertex, double* m_normales, int* m_index)
+{
+	int numThreadsX, numBlocksX, numThreadsY, numBlocksY, numThreadsZ, numBlocksZ;
+        computeGridSize(nbPosX, numBlocksX, numThreadsX);
+	computeGridSize(nbPosY, numBlocksY, numThreadsY);
+	computeGridSize(nbPosZ, numBlocksZ, numThreadsZ);
+
+	dim3 dimBlock(numBlocksX,numBlocksY,numBlocksZ);
+    	dim3 dimGrid(numThreadsX,numThreadsY,numThreadsZ);
+	
+	polygonize_MarchingCube_Kernel<<< dimGrid, dimBlock >>>((double4*) grid, nbPosX, nbPosY, nbPosZ,
+					       			isoLevel, m_nbIndex, (double3*) m_vertex, (double3*) m_normales, m_index);
+	cudaDeviceSynchronize();
+}	
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+}
+/*******************************************************************************************************/
+/*******************************************************************************************************/

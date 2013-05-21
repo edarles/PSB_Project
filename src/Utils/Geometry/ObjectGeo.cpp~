@@ -1,0 +1,12 @@
+namespace Utils 
+{
+ObjectGeo::ObjectGeo()
+{
+}
+ObjectGeo::ObjectGeo(const ObjectGeo& O)
+{
+}
+ObjectGeo::~ObjectGeo()
+{
+}
+}

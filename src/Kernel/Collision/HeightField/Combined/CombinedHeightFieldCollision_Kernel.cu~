@@ -1,0 +1,57 @@
+#include <CombinedHeightFieldCollision_Kernel.cuh>
+#include <double3.h>
+/******************************************************************************************/
+/******************************************************************************************/
+extern "C"
+{
+/******************************************************************************************/
+/******************************************************************************************/
+__host__ __device__ double3 approximateNormale_Combined(double3 V1, double3 V2, double3 V3, double3 V4)
+{
+	double d=0.01;
+	double dpx = (V1.y-V2.y)/(2*d);
+	double dpy = 1.0;
+	double dpz = (V3.y-V4.y)/(2*d);
+	double norme = sqrt(dpx*dpx + dpy*dpy + dpz*dpz);
+	double3 N;
+	N.x =-dpx/norme;
+	N.y = dpy/norme;
+	N.z =-dpz/norme;
+	return N;
+}
+/******************************************************************************************/
+/******************************************************************************************/
+__global__ void collisionSystem_Combined_HeightFieldCollision_Kernel
+	   (double3* newPos, double3 *newVel, double radiusParticle, float dt, uint nbBodiesP, 
+	    double3* height, double3* normX0, double3* normX1, double3* normZ0, double3* normZ1,
+	    float3 min_, float3 max_, float elast)
+{
+	
+	int indexP = blockIdx.x * blockDim.x + threadIdx.x;
+    	if(indexP < nbBodiesP){
+		double3 pos = newPos[indexP];
+		double3 y = height[indexP].y + min_.y;
+		if(pos.x>=min_.x && pos.z>=min_.z && pos.x<=max_.x && pos.z<=max_.z){
+			if(y>=pos.y){
+				double3 pInter = make_double3(pos.x,y,pos.z);
+				float r = 0;
+				if(length(newVel[indexP])>0 && elast>0 && length(newVel[indexP])>0)
+		 			r = elast*length(pos - pInter)/(dt*length(newVel[indexP]));
+				double3 nInter = approximateNormale_Combined(normX0[indexP],normX1[indexP],
+						 normZ0[indexP],normZ1[indexP]);
+				nInter = normalize(nInter);
+               			double3 V;
+				V.x = newVel[indexP].x - (1+r)*dot(newVel[indexP],nInter)*nInter.x;
+				V.y = newVel[indexP].y - (1+r)*dot(newVel[indexP],nInter)*nInter.y;
+				V.z = newVel[indexP].z - (1+r)*dot(newVel[indexP],nInter)*nInter.z;
+				newVel[indexP] = make_double3(V.x,V.y,V.z);
+				newPos[indexP].y = y;
+			}
+		}
+	}
+}
+/******************************************************************************************/
+/******************************************************************************************/
+}
+/******************************************************************************************/
+/******************************************************************************************/

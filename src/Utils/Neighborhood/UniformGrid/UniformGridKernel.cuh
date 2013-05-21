@@ -1,0 +1,39 @@
+#ifndef __UNIFORM_GRID_KERNEL_
+#define __UNIFORM_GRID_KERNEL_
+
+#include <UniformGrid.cuh>
+
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+extern "C"
+{
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void createCell_Kernel(double xC, double yC, double zC, double l, double w, double d,
+				  float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, double3* m_dPos, int* nbParticles);
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void reinitCells_Kernel(int* nbParticles, int nbCellsX, int nbCellsY, int nbCellsZ);
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void storeParticles_Kernel(double3* positions, uint nbBodies, int* nbParticles, int* indexParticles, float sizecell, 
+				      float3 Min, int nbCellsX, int nbCellsY, int nbCellsZ);
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCellsY_MC, uint nbCellsZ_MC, double scale,
+			           float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, int* nbParticles, int* indexParticles,
+				   double3* pos, double* radius, uint nbBodies);
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales, float scale, uint nbV,
+			                       float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
+					       int* nbParticles, int* indexParticles,
+				               double3* pos, double* radius, double* mass, double* densities, uint nbBodies);
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void searchNeighbooring_Kernel(double3* positions, double* radius, int* indexParticles, int* nbParticles, int nbCellsX, int nbCellsY, 					          int nbCellsZ, float sizeCell, float3 Min, double scale, partVoisine voisines, uint nbBodies);
+
+}
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+#endif

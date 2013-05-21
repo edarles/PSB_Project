@@ -1,0 +1,57 @@
+#include <HeuristicMergeSplitt_Rest_Density.h>
+#include <HeuristicMergeSplitt.cuh>
+
+/**************************************************************************************/
+/**************************************************************************************/
+HeuristicMergeSplitt_Rest_Density::HeuristicMergeSplitt_Rest_Density(unsigned int nbBodies):HeuristicMergeSplitt(nbBodies)
+{
+	this->restDensityMax = 0;
+}
+/**************************************************************************************/
+HeuristicMergeSplitt_Rest_Density::HeuristicMergeSplitt_Rest_Density(unsigned int nbBodies, Vector3 viewer, float distanceMax)
+				    :HeuristicMergeSplitt(nbBodies)
+{
+	this->viewer = viewer;
+	this->distanceMax = distanceMax;
+}
+/**************************************************************************************/
+HeuristicMergeSplitt_Rest_Density::HeuristicMergeSplitt_Rest_Density(const HeuristicMergeSplitt_Rest_Density& H)
+				     :HeuristicMergeSplitt(H)
+{
+	this->viewer = H.viewer;
+	this->distanceMax = H.distanceMax;
+}
+/**************************************************************************************/
+HeuristicMergeSplitt_Rest_Density::~HeuristicMergeSplitt_Rest_Density()
+{
+}
+/**************************************************************************************/
+/**************************************************************************************/
+Viewer HeuristicMergeSplitt_Rest_Density::getViewer()
+{
+	return viewer;
+}
+/**************************************************************************************/
+float HeuristicMergeSplitt_Rest_Density::getDistanceMax()
+{
+	return distanceMax;
+}
+/**************************************************************************************/
+/**************************************************************************************/
+void HeuristicMergeSplitt_Rest_Density::setViewer(Vector3 viewer)
+{
+	this->viewer = viewer;
+}
+/**************************************************************************************/
+void HeuristicMergeSplitt_Rest_Density::setDistanceMax(float distanceMax)
+{
+	this->distanceMax = distanceMax;
+}
+/**************************************************************************************/
+/**************************************************************************************/
+void HeuristicMergeSplitt_Rest_Density::evaluateFunction(float* pos, float* vel, float* forces)
+{
+	evaluateHeuristic_Rest_Density(pos, viewer, distanceMax, nbBodies, m_dRes);
+}
+/**************************************************************************************/
+/**************************************************************************************/

@@ -1,0 +1,157 @@
+#include <windowConfiguration_Emitter_Mesh.h>
+
+/********************************************************************************************/
+/********************************************************************************************/
+WindowConfiguration_Emitter_Mesh::WindowConfiguration_Emitter_Mesh(GLWidget *widget)
+{	
+	buttonLoad  = new QPushButton(tr("File"),this);
+	connect(buttonLoad, SIGNAL(clicked()), this , SLOT(loadFile()));
+
+	maxEmissionLabel = new QLabel("Emission per face",this);
+ 	maxEmission = new QSpinBox(this);
+	maxEmission->setMinimum(1);
+	maxEmission->setMaximum(10000);
+	maxEmission->setValue(100);
+	connect(maxEmission, SIGNAL(valueChanged(int)), this, SLOT(displayMesh(int))); 
+	durationTimeLabel = new QLabel("Duration Time",this);
+ 	durationTime = new QSpinBox(this);
+	maxEmission->setMinimum(1);
+	maxEmission->setMaximum(10000);
+	durationTime->setValue(1.0);
+	connect(durationTime, SIGNAL(valueChanged(int)), this, SLOT(displayMesh(int))); 
+
+	velocityLabel = new QLabel("Velocity particles",this);
+	VX = new QDoubleSpinBox(this);
+	VY = new QDoubleSpinBox(this);
+	VZ = new QDoubleSpinBox(this);
+	VX->setValue(0.0); VY->setValue(0.0); VZ->setValue(0.0);
+	connect(VX, SIGNAL(valueChanged(double)), this, SLOT(displayMesh(double))); 
+	connect(VY, SIGNAL(valueChanged(double)), this, SLOT(displayMesh(double))); 
+	connect(VZ, SIGNAL(valueChanged(double)), this, SLOT(displayMesh(double))); 
+
+	QVBoxLayout *layout1 = new QVBoxLayout();
+
+	QGridLayout *grid4 = new QGridLayout();
+	grid4->addWidget(maxEmissionLabel,0,0);
+	grid4->addWidget(maxEmission,0,1);
+	layout1->addLayout(grid4);
+
+	QGridLayout *grid5 = new QGridLayout();
+	grid5->addWidget(durationTimeLabel,0,0);
+	grid5->addWidget(durationTime,0,1);
+	layout1->addLayout(grid5);
+	
+	QGridLayout *grid6 = new QGridLayout();
+	grid6->addWidget(velocityLabel,0,0);
+	grid6->addWidget(VX,0,1);
+	grid6->addWidget(VY,0,2);
+	grid6->addWidget(VZ,0,3);
+	layout1->addLayout(grid6);
+
+	QGridLayout *grid1 = new QGridLayout();
+	grid1->addWidget(buttonLoad,0,0);
+	layout1->addLayout(grid1);
+
+	QGridLayout *grid7 = new QGridLayout();
+	buttonOK = new QPushButton(tr("OK"),this);
+	connect(buttonOK, SIGNAL(clicked()), this , SLOT(accept()));
+	buttonCancel = new QPushButton(tr("Cancel"),this);
+        connect(buttonCancel, SIGNAL(clicked()), this , SLOT(cancel()));
+	grid7->addWidget(buttonOK,0,0);
+	grid7->addWidget(buttonCancel,0,1);
+
+	layout = new QVBoxLayout();
+	layout->addLayout(layout1);
+	layout->addLayout(grid7);
+
+	setLayout(layout);
+	setWindowTitle("Configuration");
+	
+	//B = new EmitterMesh(0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	this->glWidget = widget;
+	//this->glWidget->getDisplay()->displayEmitter(B);
+}
+/********************************************************************************************/
+WindowConfiguration_Emitter_Mesh::~WindowConfiguration_Emitter_Mesh()
+{
+}
+/********************************************************************************************/
+/********************************************************************************************/
+void WindowConfiguration_Emitter_Mesh::accept()
+{
+	System *system = glWidget->getSystem();
+	system->addEmitter(B);
+	system->emitParticles();
+	close();
+}
+/********************************************************************************************/
+void WindowConfiguration_Emitter_Mesh::cancel()
+{
+	close();
+}
+/********************************************************************************************/
+/********************************************************************************************/
+EmitterMesh* WindowConfiguration_Emitter_Mesh::getEmitter()
+{
+	return B;
+}
+/********************************************************************************************/
+/********************************************************************************************/
+void WindowConfiguration_Emitter_Mesh::loadFile()
+{
+	QStringList type_load;
+ 	current_dir = "Ressources/OBJ/";
+ 	type_load << "OBJ file (*.obj)";
+ 	std::string filename = getOpenFileName("Specify a OBJ file", type_load,0);
+ 	if (filename != ""){
+		ObjLoader loader;
+		mesh = loader.load(filename.c_str());
+		if(B!=NULL) delete(B);
+		B = new EmitterMesh(mesh, 0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+  	}	
+}
+/********************************************************************************************/
+void WindowConfiguration_Emitter_Mesh::displayMesh(double d)
+{
+	if(B==NULL) delete(B);
+	B = new EmitterMesh(mesh, 0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	glWidget->getDisplay()->displayEmitter(B);
+}
+/********************************************************************************************/
+void WindowConfiguration_Emitter_Mesh::displayMesh(int d)
+{
+	if(B==NULL) delete(B);
+	B = new EmitterMesh(mesh, 0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	glWidget->getDisplay()->displayEmitter(B);
+}
+/********************************************************************************************/
+/********************************************************************************************/
+string WindowConfiguration_Emitter_Mesh::getOpenFileName(const QString & caption,
+                                    const QStringList & filters,
+                                    int * ind_filter)
+{
+   QString filename;
+   QFileDialog open_dialog(0, caption, current_dir.path());
+
+   if (ind_filter != NULL) *ind_filter = -1;
+   open_dialog.setFilters(filters);
+   open_dialog.setAcceptMode(QFileDialog::AcceptOpen);
+   open_dialog.setFileMode(QFileDialog::ExistingFile);
+
+   if (open_dialog.exec())
+   {
+      filename = open_dialog.selectedFiles().at(0);
+      current_dir = open_dialog.directory();
+
+      if (ind_filter != NULL)
+      {
+         for ((*ind_filter) = 0;
+               filters.at(*ind_filter) != open_dialog.selectedFilter();
+               (*ind_filter)++);
+      }
+      return filename.toStdString();
+   }
+   return std::string("");
+}
+/********************************************************************************************/
+/********************************************************************************************/

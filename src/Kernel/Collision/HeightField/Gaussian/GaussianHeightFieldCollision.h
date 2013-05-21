@@ -1,0 +1,33 @@
+#ifndef _GAUSSIAN_HEIGHT_FIELD_COLLISION_
+#define _GAUSSIAN_HEIGHT_FIELD_COLLISION_
+
+#include <GaussianHeightField.h>
+#include <HeightFieldCollision.h>
+
+using namespace std;
+using namespace Utils;
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+class Gaussian_HeightFieldCollision : public Gaussian_HeightField, public HeightFieldCollision 
+{
+/*****************************************************************************************************/
+	public:
+		Gaussian_HeightFieldCollision();
+		Gaussian_HeightFieldCollision(float elast);
+		Gaussian_HeightFieldCollision(const Gaussian_HeightFieldCollision&);
+		~Gaussian_HeightFieldCollision();
+/*****************************************************************************************************/
+		void create(Vector3 origin, float length, float width, double dx, double dz, 
+			    double A, double p1, double p2, float elast);
+/*****************************************************************************************************/
+		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+		             float dt, int nbBodiesP);
+/*****************************************************************************************************/
+		void display(GLenum, GLenum, Vector3 color);
+		void displayNormales(Vector3 color);
+};
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+#endif
+/*****************************************************************************************************/
+/*****************************************************************************************************/

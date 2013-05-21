@@ -1,0 +1,37 @@
+#ifndef _EMITTER_ELIPSOIDE_
+#define _EMITTER_ELIPSOIDE_
+
+#include <Emitter.h>
+
+template <class T>
+class EmitterElipsoide : public Emitter 
+{
+	public:
+		EmitterElipsoide();
+		EmitterElipsoide(Vector3 center, float sizeX, float sizeZ, unsigned int minEmission, 
+				  unsigned int maxEmission, unsigned int durationTime, Vector3 velocityEmission);
+
+		EmitterElipsoide(const EmitterElipsoide<T>&);
+		~EmitterElipsoide();
+
+		Vector3 getCenter();
+		float   getSizeX();
+		float   getSizeZ();
+		T*	getData();
+
+		void    setCenter(Vector3 center);
+		void    setSizeX(float sizeX);
+		void    setSizeZ(float sizeZ);
+		void	setData(T* data);
+
+		vector<Particle*> emitParticles();
+		void		  display(Vector3 color);
+
+	private:
+
+		T* 	data;
+		Vector3 center;
+		float   sizeX, sizeZ;
+	
+};
+#endif

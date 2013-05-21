@@ -1,0 +1,162 @@
+#include <SimulationData_SPHSystem.h>
+
+/**********************************************************************************/
+/**********************************************************************************/
+SimulationData_SPHSystem::SimulationData_SPHSystem():SimulationData(0.02,0.02,Vector3(0,0,1))
+{
+	// Default : Water
+	restDensity = 998.29;
+	viscosity = 3.5;
+	surfaceTension = 0.0728;
+	threshold = 7.065;
+	gasStiffness = 3;
+	kernelParticles = 20;
+	supportRadius = 0.0457;
+        particleRadius = supportRadius/2;
+}
+/**********************************************************************************/
+SimulationData_SPHSystem::SimulationData_SPHSystem(float particleRadius, float mass, Vector3 color,
+					 	   float restDensity, float viscosity, float surfaceTension,
+					 	   float gasStiffness, float kernelParticles)
+		         :SimulationData(particleRadius, mass, color)
+{
+	this->restDensity = restDensity;
+	this->viscosity = viscosity;
+	this->surfaceTension = surfaceTension;
+	this->threshold = sqrt(restDensity/kernelParticles);
+	this->gasStiffness = gasStiffness;
+	this->kernelParticles = kernelParticles;
+	this->supportRadius = powf((3*mass*kernelParticles)/(4*M_PI*restDensity),0.333);
+        this->particleRadius = this->supportRadius/2;
+}
+/**********************************************************************************/
+SimulationData_SPHSystem::SimulationData_SPHSystem(const SimulationData_SPHSystem& S)
+			 :SimulationData(S)
+{
+}
+/**********************************************************************************/
+SimulationData_SPHSystem::~SimulationData_SPHSystem()
+{
+}
+/**********************************************************************************/
+/**********************************************************************************/
+float SimulationData_SPHSystem::getRestDensity()
+{
+	return restDensity;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getViscosity()
+{
+	return viscosity;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getSurfaceTension()
+{
+	return surfaceTension;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getThreshold()
+{
+	return threshold;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getGasStiffness()
+{
+	return gasStiffness;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getKernelParticles()
+{
+	return kernelParticles;
+}
+/**********************************************************************************/
+float SimulationData_SPHSystem::getSupportRadius()
+{
+	return supportRadius;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setRestDensity(float restDensity)
+{
+	this->restDensity = restDensity;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setViscosity(float viscosity)
+{
+	this->viscosity = viscosity;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setSurfaceTension(float surfaceTension)
+{
+	this->surfaceTension = surfaceTension;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setThreshold(float threshold)
+{
+	this->threshold = threshold;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setGasStiffness(float gasStiffness)
+{
+	this->gasStiffness = gasStiffness;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setKernelParticles(float kernelParticles)
+{
+	this->kernelParticles = kernelParticles;
+}
+/**********************************************************************************/
+void  SimulationData_SPHSystem::setSupportRadius(float supportRadius)
+{
+	this->supportRadius = supportRadius;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+bool SimulationData_SPHSystem::loadConfiguration(const char* filename)
+{
+  TiXmlDocument doc(filename);
+  if (doc.LoadFile()){
+
+	TiXmlHandle hDoc(&doc);
+	TiXmlElement* elem;
+	TiXmlElement* hRoot = doc.FirstChildElement( "Fluid_Material" );
+	if(hRoot){
+		hRoot->QueryFloatAttribute("visualizationRadius",&this->particleRadius);
+		hRoot->QueryFloatAttribute("particle_mass",&this->particleMass);
+		hRoot->QueryFloatAttribute("restDensity",&this->restDensity);
+		hRoot->QueryFloatAttribute("viscosity",&this->viscosity);
+		hRoot->QueryFloatAttribute("surfaceTension",&this->surfaceTension);
+		hRoot->QueryFloatAttribute("threshold",&this->threshold);
+		hRoot->QueryFloatAttribute("gasStiffness",&this->gasStiffness);
+		hRoot->QueryFloatAttribute("kernelParticles",&this->kernelParticles);
+		hRoot->QueryFloatAttribute("supportRadius",&this->supportRadius);
+		return true;
+	}
+	return false;
+    }
+    else
+	return false;
+}
+/**********************************************************************************/
+bool SimulationData_SPHSystem::saveConfiguration(const char* filename)
+{
+	TiXmlDocument doc;
+	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "", "" );
+	doc.LinkEndChild( decl );
+	TiXmlElement * elmt = new TiXmlElement( "Fluid_Material" );
+        doc.LinkEndChild(elmt);
+	elmt->SetAttribute("name","Fluid_Material");
+	elmt->SetDoubleAttribute("visualizationRadius",this->particleRadius);
+	elmt->SetDoubleAttribute("particle_mass",this->particleMass);
+	elmt->SetDoubleAttribute("restDensity",this->restDensity);
+	elmt->SetDoubleAttribute("viscosity",this->viscosity);
+	elmt->SetDoubleAttribute("surfaceTension",this->surfaceTension);
+	elmt->SetDoubleAttribute("threshold",this->threshold);
+	elmt->SetDoubleAttribute("gasStiffness",this->gasStiffness);
+	elmt->SetDoubleAttribute("kernelParticles",this->kernelParticles);
+	elmt->SetDoubleAttribute("supportRadius",this->supportRadius);
+	doc.SaveFile(filename);
+	return true;
+}
+/**********************************************************************************/
+/**********************************************************************************/

@@ -1,0 +1,27 @@
+#include <SimulationDataLoader.h>
+#include <iostream>
+using namespace std;
+
+namespace Utils {
+
+SimulationDataLoader::SimulationDataLoader()
+{
+	data = NULL;
+}
+SimulationDataLoader::~SimulationDataLoader()
+{
+	delete(data);
+}
+void SimulationDataLoader::printInfo()
+{
+   cout<<"gravity: "<<data->getGravity().x()<<" "<<data->getGravity().y()<<" "<<data->getGravity().z() << endl;
+   cout<<"particle radius: "<<data->getParticleRadius()<<endl;
+   cout<<"particle mass: "<<data->getParticleMass()<<endl;
+   cout<<"time step: "<<data->getDeltaTime()<<endl;
+}
+SimulationData* SimulationDataLoader::getSimulationData()
+{
+	return data;
+}
+
+}

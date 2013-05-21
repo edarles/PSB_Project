@@ -1,0 +1,113 @@
+#include "ObjLoader.h"
+ 
+using namespace std;
+
+namespace Utils {
+
+ObjLoader::ObjLoader():MeshLoader()
+{
+}
+ObjLoader::~ObjLoader()
+{
+}
+
+Mesh ObjLoader::load( const char *filename)
+{
+	Mesh M;
+	std::string f(filename);
+	std::string kind = f.substr(f.length()-3,3);
+	if ( kind=="obj")
+	{
+	std::ifstream in(filename);
+	if(!in.good())
+	{
+		cerr << "ERROR: ObjLoader::loadObj(" << filename << ") file is not good" << endl;
+		exit(-1);
+	}
+
+	char buffer[255];
+
+        string str;
+	vector<Vector3> vs;
+	vector<Vector2> vt;
+	vector<Vector3> vn;
+
+	while(!in.eof())
+	{
+                in >> str;
+		if (str == "v" )
+		{
+			float x,y,z;
+                        in >> x >> y >> z;  
+	                vs.push_back(Vector3(x,y,z));
+		}
+		else if(str == "vt")
+		{
+			float u,v;
+                        in >> u >> v;
+			vt.push_back(Vector2(u,v));
+		}
+		else if (str == "vn")
+		{       
+			float xn,yn,zn;
+			in >> xn >> yn >> zn;
+			vn.push_back(Vector3(xn,yn,zn));
+		}
+		else if (str == "f") 
+		{
+				//f v/vt/vn v/vt/vn v/vt/vn 
+				Triangle t;
+                                if(vt.size()>0 && vn.size()>0){
+				    Vector3 v0,v1,v2;
+				    int ind0, ind1, ind2;
+				    int indT0, indT1, indT2;
+				    int indN0, indN1, indN2;
+				    char c;
+				    in >> ind0 >> c >> indN0 >> c >> indT0 >> ind1 >> c >> indN1 >> c >> indT1 >> ind2 >> c >> indN2 >> c >> indT2;
+				   // printf("ind:%d %d %d\n",ind0,ind1,ind2);
+				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
+				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
+				    t.calculateNormale();
+				  }
+                                   
+                                if(vt.size()>0 && vn.size()==0){
+				    Vector3 v0,v1,v2;
+				    int ind0, ind1, ind2;
+				    int indT0, indT1, indT2;
+				    in >> ind0 >> indT0 >> ind1 >> indT1 >> ind2 >> indT2;
+				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
+				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
+				    t.calculateNormale();
+				}
+
+				if (vt.size()==0 && vn.size()>0){
+				    Vector3 v0,v1,v2;
+				    int ind0, ind1, ind2;
+				    int indN0, indN1, indN2;
+				    in >> ind0 >> indN0 >> ind1  >> indN1 >> ind2  >> indN2;
+				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
+				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
+				    t.calculateNormale();
+				}
+				
+                                if(vn.size()==0 && vt.size()==0){
+                                    Vector3 v0,v1,v2;
+				    int ind0, ind1, ind2;
+				    in >> ind0 >> ind1  >> ind2;
+				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
+				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
+				    t.calculateNormale();
+				}
+				M.addFace(t);
+		}
+	}
+	std::cout << "# f.size()        " << M.getFaces().size()-1 << endl;
+	std::cout << "# v.size()        " << vs.size()-1 << endl;
+	}
+	return M;
+}
+
+}
+
+
+

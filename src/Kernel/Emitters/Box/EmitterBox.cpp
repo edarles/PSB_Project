@@ -1,0 +1,90 @@
+#include <EmitterBox.h>
+#include <typeinfo>
+#include <Particle.h>
+#include <CudaParticle.h>
+#include <SphParticle.h>
+#include <PciSphParticle.h>
+
+/************************************************************************************************/
+/************************************************************************************************/
+EmitterBox::EmitterBox():Emitter(),Box()
+{
+}
+/************************************************************************************************/
+EmitterBox::EmitterBox(Vector3 center, float sizeX, float sizeY, float sizeZ,Vector3 velocityEmission)
+	   :Emitter(Vector3(0,0,0),0,0,1,velocityEmission),Box()
+{
+	create(center,sizeX,sizeY,sizeZ);
+}
+/************************************************************************************************/
+EmitterBox::EmitterBox(const EmitterBox &C):Emitter(C),Box(C)
+{
+}
+/************************************************************************************************/
+EmitterBox::~EmitterBox()
+{
+}
+/************************************************************************************************/
+/************************************************************************************************/
+vector<Particle*> EmitterBox::emitParticles()
+{
+	if(data!=NULL){
+		vector<Particle*> particles;
+		for(float z=(center.z()-sizeZ/2); z<=(center.z()+sizeZ/2); z+=data->getParticleRadius()*2) {
+        		for(float y=(center.y()-sizeY/2); y<=(center.y()+sizeY/2); y+=data->getParticleRadius()*2) {
+				for(float x=(center.x()-sizeX/2); x<=(center.x()+sizeX/2); x+=data->getParticleRadius()*2) {
+					float dx = x + worldPosition.x();
+					float dy = y + worldPosition.y();
+					float dz = z + worldPosition.z();
+					Vector3 pos(dx,dy,dz);
+
+					if(typeid(*data)==typeid(SimulationData_SimpleSystem)){
+						Particle *p = new Particle(pos,velocityEmission, data->getParticleMass(),
+									   data->getParticleRadius(), data->getColor());
+						particles.push_back(p);
+					}
+					if(typeid(*data)==typeid(SimulationData_CudaSystem)){
+						SimulationData_CudaSystem* dataCuda = (SimulationData_CudaSystem*) data;
+						CudaParticle *p = new CudaParticle(pos,velocityEmission,
+							   dataCuda->getParticleMass(), dataCuda->getParticleRadius(), dataCuda->getColor(),
+						           dataCuda->getInteractionRadius(), dataCuda->getSpring(), 
+						           dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
+						//printf("H:%f S:%f D:%f S:%f A:%f\n",dataCuda->getInteractionRadius(),dataCuda->getSpring(), 
+						  //         dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
+						particles.push_back(p);
+					}
+					if(typeid(*data)==typeid(SimulationData_SPHSystem)){
+						SimulationData_SPHSystem* dataSPH = (SimulationData_SPHSystem*) data;
+						SPHParticle *p = new SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
+					 		dataSPH->getParticleRadius(), dataSPH->getColor(), 
+							dataSPH->getSupportRadius(), dataSPH->getKernelParticles(), 0,
+					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
+					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), dataSPH->getViscosity());
+						particles.push_back(p);
+					}
+					if(typeid(*data)==typeid(SimulationData_PCI_SPHSystem)){
+						SimulationData_PCI_SPHSystem* dataSPH = (SimulationData_PCI_SPHSystem*) data;
+						PCI_SPHParticle *p = new PCI_SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
+					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 
+							dataSPH->getKernelParticles(), 0,
+					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
+					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), 
+							dataSPH->getViscosity(),dataSPH->getTemperature());
+						particles.push_back(p);
+					}
+				}
+            		}
+        	}
+	currentTime++;
+	return particles;
+    	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
+
+void EmitterBox::display(Vector3 color)
+{
+	Box::display(color);
+}
+
+

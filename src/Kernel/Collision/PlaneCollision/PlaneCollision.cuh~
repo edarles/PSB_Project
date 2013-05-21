@@ -1,0 +1,6 @@
+extern "C"
+{
+/**************************************************************************************************************************************/
+void collisionPlan_CUDA(double* oldPos, double* newPos, double* oldVel, double* newVel, Vector3 A, Vector3 B, 
+			Vector3 C, Vector3 D, Vector3 N, float elast, float dt, int nbBodiesP);
+}

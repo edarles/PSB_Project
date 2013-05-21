@@ -1,0 +1,205 @@
+#include <Box.h>
+#include <stdio.h>
+
+/**********************************************************************************/
+/**********************************************************************************/
+namespace Utils
+{
+/**********************************************************************************/
+/**********************************************************************************/
+Box::Box():ObjectGeo()
+{
+	create(Vector3(0,0,0),1.0,1.0,1.0);
+}
+/**********************************************************************************/
+Box::Box(vector<Quadrilateral> faces):ObjectGeo()
+{
+	assert(faces.size()==6);
+	this->faces.clear();
+	for(unsigned int i=0;i<faces.size();i++)
+		this->faces.push_back(faces[i]);
+	calculateMinMax();
+}
+/**********************************************************************************/
+Box::Box(const Box& B):ObjectGeo()
+{
+	this->faces.clear();
+	for(unsigned int i=0;i<B.faces.size();i++)
+		this->faces.push_back(B.faces[i]);
+	this->center = B.center;
+	this->sizeX = B.sizeX;
+	this->sizeY = B.sizeY;
+	this->sizeZ = B.sizeZ;
+	this->min = B.min;
+	this->max = B.max;
+}
+/**********************************************************************************/
+Box::~Box()
+{
+	this->faces.clear();
+}
+/**********************************************************************************/
+/**********************************************************************************/
+vector<Quadrilateral> Box::getFaces()
+{
+	return faces;
+}
+/**********************************************************************************/
+Quadrilateral Box::getFace(unsigned int i)
+{
+	assert(i<6);
+	return faces[i];
+}
+/**********************************************************************************/
+Vector3 Box::getCenter()
+{
+	return center;
+}
+/**********************************************************************************/
+float	Box::getSizeX()
+{
+	return sizeX;
+}
+/**********************************************************************************/
+float	Box::getSizeY()
+{
+	return sizeY;
+}
+/**********************************************************************************/
+float	Box::getSizeZ()
+{
+	return sizeZ;
+}
+/**********************************************************************************/
+Vector3 Box::getMin()
+{
+	return min;
+}
+/**********************************************************************************/
+Vector3 Box::getMax()
+{
+	return max;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+void Box::setFaces(vector<Quadrilateral> faces)
+{
+	assert(faces.size()==6);
+	this->faces.clear();
+	for(unsigned int i=0;i<faces.size();i++)
+		this->faces.push_back(faces[i]);
+}
+/**********************************************************************************/
+void  Box::setFace(unsigned int i, Quadrilateral  Q)
+{
+	assert(i<6);
+	this->faces[i] = Q;
+}
+/**********************************************************************************/
+void	Box::setCenter(Vector3 center)
+{
+	this->center = center;
+}
+/**********************************************************************************/
+void	Box::setSizeX(float sizeX)
+{
+	this->sizeX = sizeX;
+}
+/**********************************************************************************/
+void	Box::setSizeY(float sizeY)
+{
+	this->sizeY = sizeY;
+}
+/**********************************************************************************/
+void	Box::setSizeZ(float sizeZ)
+{
+	this->sizeZ = sizeZ;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+void  Box::display(Vector3 color)
+{
+	for(unsigned int i=0;i<faces.size();i++)
+		faces[i].display(color);
+}
+/**********************************************************************************/	
+void  Box::displayNormale(Vector3 color)
+{
+	for(unsigned int i=0;i<faces.size();i++)
+		faces[i].displayNormale(color);
+}
+/**********************************************************************************/
+/**********************************************************************************/
+void  Box::create(Vector3 origin, float length, float depth, float width)
+{
+	this->center = origin;
+	this->sizeX = length;
+	this->sizeY = depth;
+	this->sizeZ = width;
+
+ 	Vector3 V0(origin.x()-(length/2), origin.y()-(depth/2), origin.z()-(width/2));
+ 	Vector3 V1(origin.x()+(length/2), origin.y()-(depth/2), origin.z()-(width/2));
+ 	Vector3 V2(origin.x()+(length/2), origin.y()+(depth/2), origin.z()-(width/2));
+	Vector3 V3(origin.x()-(length/2), origin.y()+(depth/2), origin.z()-(width/2));
+	Vector3 V4(origin.x()-(length/2), origin.y()-(depth/2), origin.z()+(width/2));
+	Vector3 V5(origin.x()+(length/2), origin.y()-(depth/2), origin.z()+(width/2));
+	Vector3 V6(origin.x()+(length/2), origin.y()+(depth/2), origin.z()+(width/2));
+	Vector3 V7(origin.x()-(length/2), origin.y()+(depth/2), origin.z()+(width/2));
+
+	vector<Quadrilateral> Q;
+	Q.push_back(Quadrilateral(V0,V1,V5,V4));
+	Q.push_back(Quadrilateral(V2,V3,V7,V6));
+	Q.push_back(Quadrilateral(V0,V4,V7,V3));
+	Q.push_back(Quadrilateral(V5,V1,V2,V6));
+	Q.push_back(Quadrilateral(V1,V0,V3,V2));
+	Q.push_back(Quadrilateral(V4,V5,V6,V7));
+        setFaces(Q);
+
+	calculateMinMax();
+}
+/**********************************************************************************/
+/**********************************************************************************/
+void  Box::calculateMinMax()
+{
+	Vector3 min(1000000,100000,100000);	
+	Vector3 max = -min;
+	for(unsigned int i=0;i<faces.size();i++){
+
+		if(faces[i].getVertex(0).x()>=max.x()) max.setX(faces[i].getVertex(0).x());
+		if(faces[i].getVertex(0).y()>=max.y()) max.setY(faces[i].getVertex(0).y());
+		if(faces[i].getVertex(0).z()>=max.z()) max.setZ(faces[i].getVertex(0).z());
+
+		if(faces[i].getVertex(1).x()>=max.x()) max.setX(faces[i].getVertex(1).x());
+		if(faces[i].getVertex(1).y()>=max.y()) max.setY(faces[i].getVertex(1).y());
+		if(faces[i].getVertex(1).z()>=max.z()) max.setZ(faces[i].getVertex(1).z());
+
+		if(faces[i].getVertex(2).x()>=max.x()) max.setX(faces[i].getVertex(2).x());
+		if(faces[i].getVertex(2).y()>=max.y()) max.setY(faces[i].getVertex(2).y());
+		if(faces[i].getVertex(2).z()>=max.z()) max.setZ(faces[i].getVertex(2).z());
+
+		if(faces[i].getVertex(3).x()>=max.x()) max.setX(faces[i].getVertex(3).x());
+		if(faces[i].getVertex(3).y()>=max.y()) max.setY(faces[i].getVertex(3).y());
+		if(faces[i].getVertex(3).z()>=max.z()) max.setZ(faces[i].getVertex(3).z());
+
+		if(faces[i].getVertex(0).x()<=min.x()) min.setX(faces[i].getVertex(0).x());
+		if(faces[i].getVertex(0).y()<=min.y()) min.setY(faces[i].getVertex(0).y());
+		if(faces[i].getVertex(0).z()<=min.z()) min.setZ(faces[i].getVertex(0).z());
+
+		if(faces[i].getVertex(1).x()<=min.x()) min.setX(faces[i].getVertex(1).x());
+		if(faces[i].getVertex(1).y()<=min.y()) min.setY(faces[i].getVertex(1).y());
+		if(faces[i].getVertex(1).z()<=min.z()) min.setZ(faces[i].getVertex(1).z());
+
+		if(faces[i].getVertex(2).x()<=min.x()) min.setX(faces[i].getVertex(2).x());
+		if(faces[i].getVertex(2).y()<=min.y()) min.setY(faces[i].getVertex(2).y());
+		if(faces[i].getVertex(2).z()<=min.z()) min.setZ(faces[i].getVertex(2).z());
+
+		if(faces[i].getVertex(3).x()<=min.x()) min.setX(faces[i].getVertex(3).x());
+		if(faces[i].getVertex(3).y()<=min.y()) min.setY(faces[i].getVertex(3).y());
+		if(faces[i].getVertex(3).z()<=min.z()) min.setZ(faces[i].getVertex(3).z());
+	}
+	this->min = min;
+	this->max = max;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+}

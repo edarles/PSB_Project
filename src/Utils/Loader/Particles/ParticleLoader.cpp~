@@ -1,0 +1,29 @@
+#include "ParticleLoader.h"
+
+namespace Utils {
+
+ParticleLoader::ParticleLoader()
+{
+}
+
+ParticleLoader::~ParticleLoader()
+{
+	particles.clear();
+}
+void ParticleLoader::printInfo()
+{
+	cout << "nb particles: " << particles.size() << endl;
+}
+
+vector<Particle> ParticleLoader::getParticles()
+{
+	return particles;
+}
+Particle ParticleLoader::getParticle(unsigned int i)
+{
+	assert(i<particles.size());
+	return particles[i];
+}
+
+}
+

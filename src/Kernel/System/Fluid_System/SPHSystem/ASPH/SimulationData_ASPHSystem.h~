@@ -1,0 +1,37 @@
+#ifndef SIMULATION_DATA_ASPH_SYSTEM
+#define SIMULATION_DATA_ASPH_SYSTEM
+
+#include <SimulationData_SPHSystem.h>
+
+/**********************************************************************************/
+/**********************************************************************************/
+class SimulationData_ASPHSystem : public SimulationData_SPHSystem {
+
+	public:
+
+/**********************************************************************************/
+/**********************************************************************************/
+		SimulationData_ASPHSystem();
+		SimulationData_ASPHSystem(float particleRadius, float mass,      float deltaTime, 
+					  float restDensity,    float viscosity, float surfaceTension,
+					  float gasStiffness,   float kernelParticles, unsigned int nbChildrenMax);
+
+		~SimulationData_ASPHSystem();
+
+/**********************************************************************************/
+/**********************************************************************************/
+		bool loadConfiguration(const char* filename);
+		bool saveConfiguration(const char* filename);
+
+	private:
+
+		unsigned int nbChildrenMax;
+/**********************************************************************************/
+/**********************************************************************************/
+		
+/**********************************************************************************/
+/**********************************************************************************/
+};
+/**********************************************************************************/
+/**********************************************************************************/
+#endif

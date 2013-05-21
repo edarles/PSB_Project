@@ -1,0 +1,12 @@
+#ifndef __LINEAR_HEIGHT_FIELD_CUDA_
+#define __LINEAR_HEIGHT_FIELD_CUDA_
+/*****************************************************************************/
+/*****************************************************************************/
+#include <common.cuh>
+
+extern "C"
+{
+	void   LinearHeightField_calculateHeight_CUDA(double* m_pos, double a, double b, uint nbPos);
+}
+
+#endif

@@ -1,0 +1,8 @@
+#include <common.cuh>
+
+extern "C" {
+
+void integrateSystem(double* oldPos, double* newPos, double* oldVel, double* newVel, 
+		     double* forces, double* mass, SimulationData_SimpleSystem *data, int start, int numBodies);
+
+}

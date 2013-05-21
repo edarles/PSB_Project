@@ -1,0 +1,129 @@
+#include <ASphParticle.>
+
+/**************************************************************************************/
+/**************************************************************************************/
+ASPHParticle::ASPHParticle():SPHParticle()
+{
+	active = true;
+	canBeMerged = false;
+	canBeSplitted = false;
+	children.clear();
+}
+/**************************************************************************************/
+ASPHParticle::ASPHParticle(Vector3 pos, Vector3 vel, double mass):SphParticle(pos,vel,mass)
+{
+	active = true;
+	canBeMerged = false;
+	canBeSplitted = false;
+	children.clear();
+}
+/**************************************************************************************/
+ASPHParticle::ASPHParticle(Vector3 pos, Vector3 vel, double mass, float density, float pressure, 
+			   float densityRest, float interactionRadius, float viscosity)
+			   :SphParticle(pos,vel,mass,density,pressure,densityRest,interactionRadius,viscosity);
+{
+	active = true;
+	canBeMerged = false;
+	canBeSplitted = false;
+	children.clear();
+}
+/**************************************************************************************/
+ASPHParticle::ASPHParticle(const ASPHParticle& A):SphParticle(A)
+{
+	this->active = A.active;
+	this->canBeMerged = A.canBeMerge;
+	this->canBeSplitted = A.canBeSplitted;
+	this->children.clear();
+	for(unsigned int i=0;i<A.children.size();i++)
+		this->children.push_back(A.children[i]);
+}
+/**************************************************************************************/
+ASphParticle::~ASPHParticle()
+{
+	children.clear();
+}
+/**************************************************************************************/
+/**************************************************************************************/
+bool ASphParticle::getActive()
+{
+	return active;
+}
+bool ASphParticle::getCanBeMerged()
+{
+	return canBeMerged;
+}
+/**************************************************************************************/
+bool ASphParticle::getCanBeSplitted()
+{
+	return canBeSplitted;
+}
+/**************************************************************************************/
+vector<ASPHParticle*> ASphParticle::getChildren()
+{
+	return children;
+}
+/**************************************************************************************/
+ASPHParticle* ASphParticle::getChild(unsigned int i)
+{
+	assert(i<children.size);
+	return children[i];
+}
+/**************************************************************************************/
+unsigned int ASphParticle::getNbChildren()
+{
+	return children.size();
+}
+/**************************************************************************************/
+/**************************************************************************************/
+void ASphParticle::setActive(bool active)
+{
+	this->active = active;
+}
+/**************************************************************************************/
+void ASphParticle::setCanBeMerged(bool canBeMerged)
+{
+	this->canBeMerged = canBeMerged;
+}
+/**************************************************************************************/
+void ASphParticle::setCanBeSplitted(bool canBeSplitted)
+{
+	this->canBeSplitted = canBeSplitted;
+}
+/**************************************************************************************/
+void ASphParticle::setChildren(vector<ASPHParticle> children)
+{
+	for(unsigned int i=0; i<children.size(); i++)
+		this->children.push_back(children[i];
+}
+/**************************************************************************************/
+void ASphParticle::setChild(unsigned int i, ASPHParticle* P)
+{
+	assert(i<children.size());
+	children[i] = P;
+}
+/**************************************************************************************/
+void ASphParticle::addChild(ASPHParticle* P)
+{
+	children.push_back(P);
+}
+/**************************************************************************************/
+void removeChild()
+{
+	children.pop_back();
+}
+/**************************************************************************************/
+void removeChild(unsigned int i)
+{
+	vector<ASPH> tempChild;
+	tempChild.clear();
+	for(unsigned int j=0;j<children.size();j++){
+		if(i!=j)
+			tempChild[k] = children[j];
+		k++;
+	}
+	this->children.clear();
+	setChildren(tempChild);
+}
+/**************************************************************************************/
+/**************************************************************************************/
+

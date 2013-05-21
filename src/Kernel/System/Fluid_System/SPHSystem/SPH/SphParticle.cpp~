@@ -1,0 +1,173 @@
+/**************************************************************************************/
+/**************************************************************************************/
+#include <SphParticle.h>
+
+/**************************************************************************************/
+/**************************************************************************************/
+SPHParticle::SPHParticle():Particle()
+{
+	// By default: Water
+	kernelParticles = 20;
+	interactionRadius = 0.0457;
+	density = 0;
+	restDensity = 998.29;
+	pressure = 0;
+	gasStiffness = 3;
+	threshold = 7.065;
+	surfaceTension = 0.0728;
+	viscosity = 3.5;
+	color = Vector3(0,0,1);
+	velInterAv = Vector3(0,0,0);
+	velInterAp = Vector3(0,0,0);
+}
+/**************************************************************************************/	
+SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRadius, Vector3 color,
+			 float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
+			 float gasStiffness, float threshold, float surfaceTension, float viscosity)
+	    :Particle(pos,vel,mass,particleRadius,color)
+{
+	this->kernelParticles = kernelParticles;
+	this->interactionRadius = interactionRadius;
+	this->density = density;
+	this->restDensity = restDensity;
+	this->pressure = pressure;
+	this->gasStiffness = gasStiffness;
+	this->threshold = threshold;
+	this->surfaceTension = surfaceTension;
+	this->viscosity = viscosity;
+	this->velInterAv = vel;
+	this->velInterAp = this->velInterAv;
+}
+/**************************************************************************************/
+SPHParticle::SPHParticle(const SPHParticle& P):Particle(P)
+{
+	this->kernelParticles = P.kernelParticles;
+	this->interactionRadius = P.interactionRadius;
+	this->density = P.density;
+	this->restDensity = P.restDensity;
+	this->pressure = P.pressure;
+	this->gasStiffness = P.gasStiffness;
+	this->threshold = P.threshold;
+	this->surfaceTension = P.surfaceTension;
+	this->viscosity = P.viscosity;
+	this->velInterAv = P.velInterAv;
+	this->velInterAp = P.velInterAp;
+}
+/**************************************************************************************/
+SPHParticle::~SPHParticle()
+{
+}
+/**************************************************************************************/
+/**************************************************************************************/
+float SPHParticle::getKernelParticles()
+{
+	return kernelParticles;
+}
+/**************************************************************************************/
+float SPHParticle::getInteractionRadius()
+{
+	return interactionRadius;
+}
+/**************************************************************************************/
+float SPHParticle::getDensity()
+{
+	return density;
+}
+/**************************************************************************************/
+float SPHParticle::getRestDensity()
+{
+	return restDensity;
+}
+/**************************************************************************************/
+float SPHParticle::getPressure()
+{
+	return pressure;
+}
+/**************************************************************************************/
+float SPHParticle::getGasStiffness()
+{
+	return gasStiffness;
+}
+/**************************************************************************************/
+float SPHParticle::getThreshold()
+{
+	return threshold;
+}
+/**************************************************************************************/
+float SPHParticle::getSurfaceTension()
+{
+	return surfaceTension;
+}
+/**************************************************************************************/
+float SPHParticle::getViscosity()
+{
+	return viscosity;
+}
+/**************************************************************************************/
+Vector3 SPHParticle::getVelInterAv()
+{
+	return velInterAv;
+}
+/**************************************************************************************/
+Vector3 SPHParticle::getVelInterAp()
+{
+	return velInterAp;
+}
+/**************************************************************************************/
+/**************************************************************************************/
+void  SPHParticle::setKernelParticles(float kernelParticles)
+{
+	this->kernelParticles = kernelParticles;
+}
+/**************************************************************************************/
+void  SPHParticle::setInteractionRadius(float interactionRadius)
+{
+	this->interactionRadius = interactionRadius;
+}
+/**************************************************************************************/
+void  SPHParticle::setDensity(float density)
+{
+	this->density = density;
+}
+/**************************************************************************************/
+void  SPHParticle::setRestDensity(float restDensity)
+{
+	this->restDensity = restDensity;
+}
+/**************************************************************************************/
+void  SPHParticle::setPressure(float pressure)
+{
+	this->density = density;
+}
+/**************************************************************************************/
+void  SPHParticle::setGasStiffness(float gasStiffness)
+{
+	this->gasStiffness = gasStiffness;
+}
+/**************************************************************************************/
+void  SPHParticle::setThreshold(float threshold)
+{
+	this->threshold = threshold;
+}
+/**************************************************************************************/
+void  SPHParticle::setSurfaceTension(float surfaceTension)
+{
+	this->surfaceTension = surfaceTension;
+}
+/**************************************************************************************/
+void  SPHParticle::setViscosity(float viscosity)
+{
+	this->viscosity = viscosity;
+}
+/**************************************************************************************/
+void  SPHParticle::setVelInterAv(Vector3 velInterAv)
+{
+	this->velInterAv = velInterAv;
+}
+/**************************************************************************************/
+void  SPHParticle::setVelInterAp(Vector3 velInterAp)
+{
+	this->velInterAp = velInterAp;
+}
+/**************************************************************************************/
+/**************************************************************************************/

@@ -1,0 +1,8 @@
+#include <ParticleExporter.h>
+
+ParticleExporter::ParticleExporter()
+{
+}
+ParticleExporter::~ParticleExporter()
+{
+}

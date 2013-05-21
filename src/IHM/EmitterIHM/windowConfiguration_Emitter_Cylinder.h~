@@ -1,0 +1,52 @@
+#ifndef WINDOW_CONFIGURATION_EMITTER_CYLINDER_H
+#define WINDOW_CONFIGURATION_EMITTER_CYLINDER_H
+
+#include <QWidget>
+#include <QtGui>
+#include <QMainWindow>
+#include <QtCore/QDir>
+#include <glWidget.h>
+
+#include <WindowConfiguration_Data_SimpleSystem.h>
+#include <WindowConfiguration_Data_SPHSystem.h>
+#include <WindowConfiguration_Data_PCI_SPHSystem.h>
+#include <WindowConfiguration_Data_CudaSystem.h>
+
+//************************************************************************/
+//************************************************************************/
+class WindowConfiguration_Emitter_Cylinder : public QWidget
+{
+    Q_OBJECT
+
+//************************************************************************/
+public:
+
+    WindowConfiguration_Emitter_Cylinder(GLWidget *glWidget);
+    ~WindowConfiguration_Emitter_Cylinder();
+
+    EmitterCylinder *getEmitter();
+
+public slots:
+
+    void accept();
+    void cancel();
+    void displayCylinder(double);
+
+private:
+	
+    EmitterCylinder *B;
+    GLWidget *glWidget;
+    
+    QPushButton *buttonOK;
+    QPushButton *buttonCancel;
+
+    WindowConfiguration_Data *configData;
+
+    QVCylinderLayout *layout;
+
+    QDoubleSpinBox *OX, *OY, *OZ, *DX, *DY, *DZ, *length, *radius, *VX, *VY, *VZ;
+    QLabel *originLabel, *directionLabel, *lengthLabel, *radiusLabel, *velocityLabel;
+    
+};
+
+#endif

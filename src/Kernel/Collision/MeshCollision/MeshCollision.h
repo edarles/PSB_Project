@@ -1,0 +1,36 @@
+#ifndef _MESH_COLLISION_
+#define _MESH_COLLISION_
+
+#include <vector>
+#include <assert.h>
+#include <ObjectCollision.h>
+#include <common.cuh>
+#include <string.h>
+#include <Mesh.h>
+
+using namespace std;
+using namespace Utils;
+
+class MeshCollision : public ObjectCollision, public Mesh {
+
+	public:
+		MeshCollision();
+		MeshCollision(float elast, float friction, bool is_container);
+		MeshCollision(const MeshCollision&);
+
+		~MeshCollision();
+
+		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+		             float dt, int nbBodiesP);
+
+		void display(GLenum, GLenum, Vector3 color);
+		void displayNormales(Vector3 color);
+
+		void storeFacesOnGPU();
+
+		// storage vertices and normales of triangles in GPU
+		float* m_F[3];
+		float* m_N[1];
+};
+
+#endif

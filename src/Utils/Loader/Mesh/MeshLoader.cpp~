@@ -1,0 +1,49 @@
+#include "MeshLoader.h"
+
+namespace Utils {
+
+MeshLoader::MeshLoader()
+{
+}
+
+MeshLoader::~MeshLoader()
+{
+	triangles.clear();
+}
+void MeshLoader::printInfo()
+{
+	cout << "f: " << triangles.size() << endl;
+}
+
+vector<Triangle> MeshLoader::getTriangles()
+{
+	return triangles;
+}
+Triangle MeshLoader::getTriangle(unsigned int i)
+{
+	assert(i<triangles.size());
+	return triangles[i];
+}
+
+void MeshLoader::boundingBox(Vector3 &minV, Vector3&maxV)
+{
+	assert(triangles.size()>0);
+	minV = triangles[0].getVertex(0);
+	maxV = triangles[0].getVertex(0);
+	for(unsigned int i = 1; i < triangles.size(); i++)
+	{
+		for(unsigned int j=0; j<triangles[i].getVertexs().size(); j++)
+		{
+			minV.setX(std::min(triangles[i].getVertex(j).x(),minV.x()));
+			minV.setY(std::min(triangles[i].getVertex(j).y(),minV.y()));
+			minV.setZ(std::min(triangles[i].getVertex(j).z(),minV.z()));
+		
+			maxV.setX(std::max(triangles[i].getVertex(j).x(),maxV.x()));
+			maxV.setY(std::max(triangles[i].getVertex(j).y(),maxV.y()));
+			maxV.setZ(std::max(triangles[i].getVertex(j).z(),maxV.z()));
+		}
+	}
+}
+
+}
+
