@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Fluid_Material  name="Water"
+		 visualizationRadius="0.02"
+		 particle_mass="0.02"
+		 deltaTime="0.01"
+		 restDensity="998.29"
+		 viscosity="3.5"
+		 surfaceTension="0.0728"
+		 threshold="7.065"
+		 gasStiffness="3"
+		 kernelParticles="20"
+		 supportRadius="0.0457">
+</Fluid_Material>

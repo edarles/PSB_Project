@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Fluid_Material  name="Mucus"
+		 visualizationRadius="0.04"
+		 particle_mass="0.04"
+		 deltaTime="0.01"
+		 restDensity="1000"
+		 viscosity="36"
+		 surfaceTension="6"
+		 threshold="5"
+		 gasStiffness="5"
+		 kernelParticles="40"
+		 supportRadius="0.0726">
+</Fluid_Material>

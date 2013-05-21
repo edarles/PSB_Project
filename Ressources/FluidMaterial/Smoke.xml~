@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Fluid_Material  name="Smoke">
+	<radiusVisualization value="0.00005"/>
+	<particle_mass value="0.00005"/>
+	<deltaTime value="0.01"/>
+	<restDensity value="0.59"/>
+	<viscosity value="0.01"/>
+	<surfaceTension value="0"/>
+	<threshold value="0"/>
+	<gasStiffness value="4"/>
+	<kernelParticles value="12"/>
+	<supportRadius value="0.0624"/>
+</Fluid_Material>

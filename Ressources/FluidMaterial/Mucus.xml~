@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Fluid_Material  name="Mucus">
+	<radiusVisualization value="0.04"/>
+	<particle_mass value="0.04"/>
+	<deltaTime value="0.01"/>
+	<restDensity value="1000"/>
+	<viscosity value="36"/>
+	<surfaceTension value="6"/>
+	<threshold value="5"/>
+	<gasStiffness value="5"/>
+	<kernelParticles value="40"/>
+	<supportRadius value="0.0726"/>
+</Fluid_Material>
