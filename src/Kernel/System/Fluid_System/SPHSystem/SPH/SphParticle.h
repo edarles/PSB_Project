@@ -14,6 +14,10 @@ class SPHParticle : public Particle {
 			 float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
 			 float gasStiffness, float threshold, float surfaceTension, float viscosity);
 
+		SPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3 velInterAp, double mass, float particleRadius, Vector3 color,
+			 float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
+			 float gasStiffness, float threshold, float surfaceTension, float viscosity);
+
 		SPHParticle(const SPHParticle&);
 
 		~SPHParticle();

@@ -1,29 +1,42 @@
 #include <ParticleLoader_XML.h>
 #include <tinyxml.h>
-
 using namespace std;
-
+/**************************************************************************************/
+/**************************************************************************************/
 namespace Utils {
-
+/**************************************************************************************/
 ParticleLoader_XML::ParticleLoader_XML():ParticleLoader()
 {
 }
+/**************************************************************************************/
 ParticleLoader_XML::~ParticleLoader_XML()
 {
 }
-vector<Particle*> ParticleLoader_XML::load(const char *filename)
+/**************************************************************************************/
+/**************************************************************************************/
+vector<Particle*> ParticleLoader_XML::load(System *S, const char *filename)
 {
   vector<Particle*> particles;
   TiXmlDocument doc(filename);
   if (!doc.LoadFile()) return particles;
   else {
-	TiXmlHandle hDoc(&doc);
+	if(typeid(*S) == typeid(SimpleSystem))
+		return loadSimpleSystem(doc);
+
+	if(typeid(*S) == typeid(CudaSystem))
+		return loadCudaSystem(doc);
+  }
+ }
+/**************************************************************************************/
+/**************************************************************************************/
+vector<Particle*> ParticleLoader_XML::loadSimpleSystem(TiXmlDocument doc)
+{
+  	vector<Particle*> particles;
+  	TiXmlHandle hDoc(&doc);
 	TiXmlElement* elem;
 	TiXmlElement* hRoot = doc.FirstChildElement( "Particles" );
         elem=hDoc.FirstChildElement().Element();
 	if(string(elem->Attribute("name"))=="Simple System"){
-		int mass;
-		hRoot->QueryIntAttribute("mass", &mass);
 		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
 		for( partElement; partElement; partElement=partElement->NextSiblingElement())
 		{
@@ -37,12 +50,127 @@ vector<Particle*> ParticleLoader_XML::load(const char *filename)
 			vel->QueryDoubleAttribute("X", &vx);
 			vel->QueryDoubleAttribute("Y", &vy);
 			vel->QueryDoubleAttribute("Z", &vz);
-			Particle *p = new Particle(Vector3(x,y,z),Vector3(vx,vy,vz),mass);
+			double mass, radius;
+			partElement->QueryDoubleAttribute("mass",&mass); 
+			partElement->QueryDoubleAttribute("radius",&radius); 
+			double cx,cy,cz;
+			TiXmlElement* color = partElement->FirstChildElement("color");
+			color->QueryDoubleAttribute("X", &cx);
+			color->QueryDoubleAttribute("Y", &cy);
+			color->QueryDoubleAttribute("Z", &cz);
+			Particle *p = new Particle(Vector3(x,y,z),Vector3(vx,vy,vz),mass,radius,Vector3(cx,cy,cz));
 			particles.push_back(p);
 		}
 	}
-   }
-   return particles;
- }
+   	return particles;
+}
+/**************************************************************************************/
+/**************************************************************************************/
+vector<Particle*> ParticleLoader_XML::loadCudaSystem(TiXmlDocument doc)
+{
+  	vector<Particle*> particles;
+  	TiXmlHandle hDoc(&doc);
+	TiXmlElement* elem;
+	TiXmlElement* hRoot = doc.FirstChildElement( "Particles" );
+        elem=hDoc.FirstChildElement().Element();
+	if(string(elem->Attribute("name"))=="Cuda System"){
+		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
+		printf("load CudaSystem\n");
+		for( partElement; partElement; partElement=partElement->NextSiblingElement())
+		{
+			double mass, radius, interactionRadius, spring, damping, shear, attraction;
+			partElement->QueryDoubleAttribute("mass",&mass); 
+			partElement->QueryDoubleAttribute("radius",&radius); 
+		        partElement->QueryDoubleAttribute("interactionRadius",&interactionRadius);
+			partElement->QueryDoubleAttribute("spring",&spring);
+			partElement->QueryDoubleAttribute("damping",&damping);
+			partElement->QueryDoubleAttribute("shear",&shear);
+			partElement->QueryDoubleAttribute("attraction",&attraction);
+			TiXmlElement* position = partElement->FirstChildElement("position");
+			double x,y,z;
+			position->QueryDoubleAttribute("X", &x);
+			position->QueryDoubleAttribute("Y", &y);
+			position->QueryDoubleAttribute("Z", &z);
+			TiXmlElement* vel = partElement->FirstChildElement("velocity");
+			double vx,vy,vz;
+			vel->QueryDoubleAttribute("X", &vx);
+			vel->QueryDoubleAttribute("Y", &vy);
+			vel->QueryDoubleAttribute("Z", &vz);
+			double cx,cy,cz;
+			TiXmlElement* color = partElement->FirstChildElement("color");
+			color->QueryDoubleAttribute("X", &cx);
+			color->QueryDoubleAttribute("Y", &cy);
+			color->QueryDoubleAttribute("Z", &cz);
+			CudaParticle *p = new CudaParticle(Vector3(x,y,z),Vector3(vx,vy,vz),mass,radius,Vector3(cx,cy,cz),
+			   	     interactionRadius, spring, damping, shear, attraction);
+			particles.push_back(p);
+		}
+	}
+   	return particles;
+}
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+vector<Particle*> ParticleLoader_XML::loadSPHSystem(TiXmlDocument doc)
+{
+  	vector<Particle*> particles;
+  	TiXmlHandle hDoc(&doc);
+	TiXmlElement* elem;
+	TiXmlElement* hRoot = doc.FirstChildElement( "Particles" );
+        elem=hDoc.FirstChildElement().Element();
+	if(string(elem->Attribute("name"))=="SPH System"){
+		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
+		printf("load SPHSystem\n");
+		for( partElement; partElement; partElement=partElement->NextSiblingElement())
+		{
+			double mass, radius, interactionRadius, kernelParticles, restDensity, 
+			       gasStiffness, threshold, surfaceTension, viscosity;
+			partElement->QueryDoubleAttribute("mass",&mass);
+			partElement->QueryDoubleAttribute("radius",&radius);
+			partElement->QueryDoubleAttribute("kernelParticles",&kernelParticles);
+			partElement->QueryDoubleAttribute("interactionRadius",&interactionRadius);
+			partElement->QueryDoubleAttribute("restDensity",&restDensity);
+			partElement->QueryDoubleAttribute("gasStiffness",&gasStiffness);
+			partElement->QueryDoubleAttribute("threshold",&threshold);
+			partElement->QueryDoubleAttribute("surfaceTension",&surfaceTension);
+			partElement->QueryDoubleAttribute("viscosity",&viscosity);
+
+			TiXmlElement* position = partElement->FirstChildElement("position");
+			double x,y,z;
+			position->QueryDoubleAttribute("X", &x);
+			position->QueryDoubleAttribute("Y", &y);
+			position->QueryDoubleAttribute("Z", &z);
+			TiXmlElement* vel = partElement->FirstChildElement("velocity");
+			double vx,vy,vz;
+			vel->QueryDoubleAttribute("X", &vx);
+			vel->QueryDoubleAttribute("Y", &vy);
+			vel->QueryDoubleAttribute("Z", &vz);
+			TiXmlElement* velInterAv = partElement->FirstChildElement("velocityInterAv");
+			double vav_x,vav_y,vav_z;
+			velInterAv->QueryDoubleAttribute("X", &vav_x);
+			velInterAv->QueryDoubleAttribute("Y", &vav_y);
+			velInterAv->QueryDoubleAttribute("Z", &vav_z);
+			TiXmlElement* velInterAp = partElement->FirstChildElement("velocityInterAp");
+			double vap_x,vap_y,vap_z;
+			velInterAp->QueryDoubleAttribute("X", &vap_x);
+			velInterAp->QueryDoubleAttribute("Y", &vap_y);
+			velInterAp->QueryDoubleAttribute("Z", &vap_z);
+			double cx,cy,cz;
+			TiXmlElement* color = partElement->FirstChildElement("color");
+			color->QueryDoubleAttribute("X", &cx);
+			color->QueryDoubleAttribute("Y", &cy);
+			color->QueryDoubleAttribute("Z", &cz);
+			SPHParticle *p = new SPHParticle(Vector3(x,y,z),Vector3(vx,vy,vz),Vector3(vav_x,vav_y,vav_z), 
+				     Vector3(vap_x,vap_y,vap_z),mass,radius,Vector3(cx,cy,cz),
+			   	     interactionRadius, kernelParticles, 0, restDensity, 0, gasStiffness,
+				     threshold,surfaceTension,viscosity);
+			particles.push_back(p);
+		}
+	}
+   	return particles;
+}
 
 }
+/**************************************************************************************/
+/**************************************************************************************/

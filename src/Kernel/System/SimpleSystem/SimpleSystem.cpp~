@@ -15,6 +15,7 @@ SimpleSystem::SimpleSystem():System()
     m_hVel[0] = m_hVel[1] = 0;
     m_dMass = 0;
     m_dParticleRadius = 0;
+
     init();
 }
 
@@ -29,11 +30,10 @@ SimpleSystem::~SimpleSystem()
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
-void SimpleSystem::init(vector<Particle*> particles)
+void SimpleSystem::init(vector<Particle*> result)
 {
       this->particles.clear();
-      for(unsigned int i=0;i<particles.size();i++)
-		this->particles.push_back(particles[i]);
+      this->particles.insert(particles.end(),result.begin(),result.end());
       _initialize(0,particles.size());
 }
 /*****************************************************************************/
@@ -160,6 +160,13 @@ void SimpleSystem::update()
     integrate();
     // Collision
     collide();
+
+    for(uint i=0;i<particles.size();i++){
+//		particles[i]->setOldPos(Vector3(m_hPos[0][i*3],m_hPos[0][i*3+1],m_hPos[0][i*3+2]));
+		particles[i]->setNewPos(Vector3(m_hPos[1][i*3],m_hPos[1][i*3+1],m_hPos[1][i*3+2]));
+//		particles[i]->setOldVel(Vector3(m_hVel[0][i*3],m_hVel[0][i*3+1],m_hVel[0][i*3+2]));
+		particles[i]->setNewVel(Vector3(m_hVel[1][i*3],m_hVel[1][i*3+1],m_hVel[1][i*3+2]));
+    }
 }
 /*****************************************************************************/
 void SimpleSystem::evaluateForcesExt()

@@ -7,6 +7,13 @@
 #include <assert.h>
 
 #include <Particle.h>
+#include <System.h>
+#include <SimpleSystem.h>
+#include <CudaSystem.h>
+#include <CudaParticle.h>
+#include <SPHSystem.h>
+#include <SphParticle.h>
+#include <typeinfo>
 
 using namespace std;
 
@@ -17,13 +24,8 @@ class ParticleLoader
 	public:
 		ParticleLoader();
 		~ParticleLoader();
-
-		enum TypeLoader
-		{
-        		POSITION_AND_VELOCITY,
-        		POSITION_AND_VELOCITY_AND_DENSITY
-    		};			
-		virtual vector<Particle*> load(const char *filename, TypeLoader typeLoader) = 0;
+	
+		virtual vector<Particle*> load(System* S, const char *filename) = 0;
 };
 
 }

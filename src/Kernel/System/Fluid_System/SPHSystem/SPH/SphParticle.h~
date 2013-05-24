@@ -11,7 +11,7 @@ class SPHParticle : public Particle {
 /**************************************************************************************/
 		SPHParticle();
 		SPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRadius, Vector3 color,
-			 float interactionRadius, float density, float restDensity, float pressure,
+			 float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
 			 float gasStiffness, float threshold, float surfaceTension, float viscosity);
 
 		SPHParticle(const SPHParticle&);
@@ -20,6 +20,7 @@ class SPHParticle : public Particle {
 
 /**************************************************************************************/
 /**************************************************************************************/
+		float	 getKernelParticles();
 		float    getInteractionRadius();
 		float    getDensity();
 		float    getRestDensity();
@@ -33,6 +34,7 @@ class SPHParticle : public Particle {
 
 /**************************************************************************************/
 /**************************************************************************************/
+		void  setKernelParticles(float kernelParticles);
 		void  setInteractionRadius(float interactionRadius);
 		void  setDensity(float density);
 		void  setRestDensity(float restDensity);
@@ -45,6 +47,7 @@ class SPHParticle : public Particle {
 		void  setVelInterAp(Vector3 velInterAp);
 	private:
 /**************************************************************************************/
+		float kernelParticles;
 		float interactionRadius;
 		float density;
 		float restDensity;

@@ -30,11 +30,10 @@ SimpleSystem::~SimpleSystem()
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
-void SimpleSystem::init(vector<Particle*> particles)
+void SimpleSystem::init(vector<Particle*> result)
 {
       this->particles.clear();
-      for(unsigned int i=0;i<particles.size();i++)
-		this->particles.push_back(particles[i]);
+      this->particles.insert(particles.end(),result.begin(),result.end());
       _initialize(0,particles.size());
 }
 /*****************************************************************************/

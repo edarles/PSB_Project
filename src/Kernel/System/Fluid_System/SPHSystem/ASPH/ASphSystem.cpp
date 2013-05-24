@@ -1,23 +1,6 @@
-#include <GLee.h>
-
-#include <cutil.h>
-#include <cstdlib>
-#include <cstdio>
-#include <string.h>
-#include <cuda_runtime_api.h>
-#include <cuda.h>
-#include <device_launch_parameters.h>
-#include <cuda_gl_interop.h>
-#include <cutil.h>
-#include <cuda_runtime_api.h>
-
+#include <AsphSystem.h>
 #include <SPHSystem.h>
-#include <System.cuh>
 #include <SPHSystem.cuh>
-#include <Collision.cuh>
-#include <ForceExt.cuh>
-#include <typeinfo>
-#include <MeshCollision.h>
 
 /*****************************************************************************/
 /*****************************************************************************/

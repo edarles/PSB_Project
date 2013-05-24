@@ -9,13 +9,17 @@ namespace Utils {
 class ParticleExporter_XML : public ParticleExporter {
 
  public:
+
 	ParticleExporter_XML();
 	~ParticleExporter_XML();
 
 	void _export(const char* filename,  System *S);
 
+ private:
+
 	void _export_SimpleParticles(TiXmlDocument doc, TiXmlElement *elmPart, System *S);
 	void _export_CudaParticles(TiXmlDocument doc, TiXmlElement *elmPart, System *S);
+	void _export_SPHParticles(TiXmlDocument doc, TiXmlElement *elmtPart, SPHSystem *S);
 };
 
 }

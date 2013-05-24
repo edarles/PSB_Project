@@ -38,6 +38,24 @@ SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRa
 	this->velInterAv = Vector3(0,0,0);
 	this->velInterAp = Vector3(0,0,0);//this->velInterAv;
 }
+/**************************************************************************************/	
+SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3 velInterAp, double mass, float particleRadius, Vector3 color,
+			 float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
+			 float gasStiffness, float threshold, float surfaceTension, float viscosity)
+	    :Particle(pos,vel,mass,particleRadius,color)
+{
+	this->kernelParticles = kernelParticles;
+	this->interactionRadius = interactionRadius;
+	this->density = density;
+	this->restDensity = restDensity;
+	this->pressure = pressure;
+	this->gasStiffness = gasStiffness;
+	this->threshold = threshold;
+	this->surfaceTension = surfaceTension;
+	this->viscosity = viscosity;
+	this->velInterAv = velInterAv;
+	this->velInterAp = velInterAp;
+}
 /**************************************************************************************/
 SPHParticle::SPHParticle(const SPHParticle& P):Particle(P)
 {

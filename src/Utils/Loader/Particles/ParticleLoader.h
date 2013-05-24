@@ -7,6 +7,13 @@
 #include <assert.h>
 
 #include <Particle.h>
+#include <System.h>
+#include <SimpleSystem.h>
+#include <CudaSystem.h>
+#include <CudaParticle.h>
+#include <SphSystem.h>
+#include <SphParticle.h>
+#include <typeinfo>
 
 using namespace std;
 
@@ -18,7 +25,7 @@ class ParticleLoader
 		ParticleLoader();
 		~ParticleLoader();
 	
-		virtual vector<Particle*> load(const char *filename) = 0;
+		virtual vector<Particle*> load(System* S, const char *filename) = 0;
 };
 
 }

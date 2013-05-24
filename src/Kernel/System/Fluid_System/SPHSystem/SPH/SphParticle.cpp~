@@ -35,8 +35,8 @@ SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRa
 	this->threshold = threshold;
 	this->surfaceTension = surfaceTension;
 	this->viscosity = viscosity;
-	this->velInterAv = vel;
-	this->velInterAp = this->velInterAv;
+	this->velInterAv = Vector3(0,0,0);
+	this->velInterAp = Vector3(0,0,0);//this->velInterAv;
 }
 /**************************************************************************************/
 SPHParticle::SPHParticle(const SPHParticle& P):Particle(P)

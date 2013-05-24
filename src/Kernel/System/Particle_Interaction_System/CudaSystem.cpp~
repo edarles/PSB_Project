@@ -77,12 +77,14 @@ void CudaSystem::init()
 
 }
 /*****************************************************************************/
-void CudaSystem::init(vector<Particle*> particles)
+void CudaSystem::init(vector<Particle*> result)
 {
-      this->particles.clear();
-      for(unsigned int i=0;i<particles.size();i++)
-		this->particles.push_back(particles[i]);
-      _initialize(0,particles.size());
+    particles.clear();
+    if(result.size()>0){
+	    unsigned int nbAv = particles.size();
+	    particles.insert(particles.end(),result.begin(),result.end());
+    	    _initialize(nbAv,particles.size());
+    }
 }
 /*****************************************************************************/
 void CudaSystem::_initialize(int begin, int numParticles)
@@ -209,7 +211,7 @@ void CudaSystem::update()
 
     reinitCells(grid);
     storeParticles(grid,m_dPos[1],particles.size());
-    searchNeighbooring(m_dPos[1],m_dInteractionRadius, &(*grid), 1, voisines, particles.size());
+    searchNeighbooring(m_dPos[1],m_dInteractionRadius, grid, 1, voisines, particles.size());
 
     // evaluate forces
     evaluateForcesExt();
@@ -254,5 +256,4 @@ void CudaSystem::collide()
 			   particles[0]->getParticleRadius(), dt, particles.size());
 
     	copyArrayFromDevice(m_hPos[1], m_dPos[1], 0, sizeof(double)*3*particles.size());
-    	//copyArrayFromDevice(m_hVel[1], m_dVel[1], 0, sizeof(double)*3*particles.size());
 }

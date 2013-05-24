@@ -77,12 +77,14 @@ void CudaSystem::init()
 
 }
 /*****************************************************************************/
-void CudaSystem::init(vector<Particle*> particles)
+void CudaSystem::init(vector<Particle*> result)
 {
-      this->particles.clear();
-      for(unsigned int i=0;i<particles.size();i++)
-		this->particles.push_back(particles[i]);
-      _initialize(0,particles.size());
+    particles.clear();
+    if(result.size()>0){
+	    unsigned int nbAv = particles.size();
+	    particles.insert(particles.end(),result.begin(),result.end());
+    	    _initialize(nbAv,particles.size());
+    }
 }
 /*****************************************************************************/
 void CudaSystem::_initialize(int begin, int numParticles)
@@ -100,13 +102,13 @@ void CudaSystem::_initialize(int begin, int numParticles)
     for(int i=begin;i<numParticles;i++){
 	 CudaParticle* p   = (CudaParticle*) particles[i];
 	
-	 m_hPos[0][i*3]   = p->getOldPos().x();
-	 m_hPos[0][(i*3)+1] = p->getOldPos().y();
-	 m_hPos[0][(i*3)+2] = p->getOldPos().z();
+	 m_hPos[0][i*3]   = p->getNewPos().x();
+	 m_hPos[0][(i*3)+1] = p->getNewPos().y();
+	 m_hPos[0][(i*3)+2] = p->getNewPos().z();
 
-         m_hVel[0][i*3]   = p->getOldVel().x();
-	 m_hVel[0][(i*3)+1] = p->getOldVel().y();
-	 m_hVel[0][(i*3)+2] = p->getOldVel().z();
+         m_hVel[0][i*3]   = p->getNewVel().x();
+	 m_hVel[0][(i*3)+1] = p->getNewVel().y();
+	 m_hVel[0][(i*3)+2] = p->getNewVel().z();
 
          m_hPos[1][(i*3)]   = p->getNewPos().x();
 	 m_hPos[1][(i*3)+1] = p->getNewPos().y();
@@ -209,7 +211,7 @@ void CudaSystem::update()
 
     reinitCells(grid);
     storeParticles(grid,m_dPos[1],particles.size());
-    searchNeighbooring(m_dPos[1],m_dInteractionRadius, &(*grid), 1, voisines, particles.size());
+    searchNeighbooring(m_dPos[1],m_dInteractionRadius, grid, 1, voisines, particles.size());
 
     // evaluate forces
     evaluateForcesExt();

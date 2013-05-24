@@ -339,11 +339,11 @@ void SPHSystem::integrate()
 void SPHSystem::interpolateVelocities()
 {
     interpolateSPHVelocities(m_dVelInterAv, m_dVelInterAp, m_dVel[0], m_dVel[1], particles.size());
-/*
-    copyArrayFromDevice(m_hVel[0], m_dVel[0], 0, sizeof(double)*3*particles.size());
+
+    copyArrayFromDevice(m_hPos[1], m_dPos[0], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVel[1], m_dVel[1], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVelInterAp, m_dVelInterAp, 0, sizeof(double)*3*particles.size());
-    copyArrayFromDevice(m_hVelInterAv, m_dVelInterAv, 0, sizeof(double)*3*particles.size());*/
+    copyArrayFromDevice(m_hVelInterAv, m_dVelInterAv, 0, sizeof(double)*3*particles.size());
 } 
 /*****************************************************************************/
 void SPHSystem::evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCellsZ, double scale)

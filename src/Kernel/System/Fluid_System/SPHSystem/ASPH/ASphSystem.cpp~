@@ -74,6 +74,7 @@ void ASPHSystem::update()
     }
 }
 /*************************************************************************************/
+/*************************************************************************************/
 void ASPHSystem::checkMergedSplitted()
 {
 	resMerged = heuristics.evaluateFunction(m_dPos[1],m_dVel[1],FExt->m_F);
