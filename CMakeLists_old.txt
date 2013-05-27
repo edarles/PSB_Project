@@ -10,7 +10,7 @@ set(CMAKE_CC_COMPILER "/usr/bin/gcc")
 SET(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-5.0)
 SET(CUDA_SDK_ROOT_DIR /usr/local/cuda-5.0)
 SET(CUDA_INCLUDE_DIRS /usr/local/cuda-5.0/include)
-SET(CUDA_CUDART_LIBRARY /usr/local/cuda-5.0/lib64/libcudart.so)
+SET(CUDA_CUDART_LIBRARY /usr/local/cuda-5.0/lib/libcudart.so /usr/local/cuda-5.0/lib/libcudadevrt.a /usr/local/cuda-5.0/lib/libcublas_device.a)
 
 
 option ( PTXAS_OPTION "Activate --ptxas-options=-v option." OFF )
@@ -18,20 +18,21 @@ if ( PTXAS_OPTION )
    SET( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "--ptxas-options=-v" )
 endif()
 
-find_library(QTCORE_LIBRARY NAMES "QtCore" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(QTGUI_LIBRARY NAMES "QtGui" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(QGLVIEWER_QT4_LIBRARY NAMES "qglviewer-qt4" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(GLQT4_LIBRARY NAMES "QtOpenGL" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(GLU_LIBRARY NAMES "GLU" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(GLEE_LIBRARY NAMES "glee" PATHS "/usr/lib" REQUIRED)
-find_library(GLEW_LIBRARY NAMES "GLEW" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(GL_LIBRARY NAMES "GL" PATHS "/usr/lib/" REQUIRED)
-find_library(GLEWMX_LIBRARY NAMES "GLEWmx" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(GLUT_LIBRARY NAMES "glut" PATHS "/usr/lib/x86_64-linux-gnu/" REQUIRED)
-find_library(CUDA_LIBRARY NAMES "cuda" PATHS "/usr/lib")
-find_library(CUDART_LIBRARY NAMES "cudart" PATHS "/usr/local/cuda-5.0/lib64" REQUIRED)
-find_library(TINYXML_LIBRARY NAMES "tinyxml" PATHS "/usr/lib" REQUIRED)
 
+find_library(QTCORE_LIBRARY NAMES "QtCore" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
+find_library(QTGUI_LIBRARY NAMES "QtGui" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
+find_library(QGLVIEWER_QT4_LIBRARY NAMES "qglviewer-qt4" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
+find_library(QT_OPENGL_LIBRARY NAMES "QtOpenGL" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
+find_library(GLU_LIBRARY NAMES "GLU" PATHS "/usr/lib" REQUIRED)
+find_library(GLEE_LIBRARY NAMES "GLee" PATHS "/usr/local/lib" REQUIRED)
+find_library(GLEW_LIBRARY NAMES "GLEW" PATHS "/usr/lib" REQUIRED)
+find_library(GLEWMX_LIBRARY NAMES "GLEWmx" PATHS "/usr/lib/" REQUIRED)
+find_library(GLUT_LIBRARY NAMES "glut" PATHS "/usr/lib" REQUIRED)
+find_library(CUDA_LIBRARY NAMES "cuda" PATHS "/usr/local/cuda-5.0/lib")
+find_library(CUDART_LIBRARY NAMES "cudart" PATHS "/usr/local/cuda-5.0/lib" REQUIRED)
+find_library(CUDADEVRT_LIBRARY NAMES "libcudadevrt.a" PATHS "/usr/local/cuda-5.0/lib" REQUIRED)
+find_library(CUBLAS_LIBRARY NAMES "libcublas_device.a" PATHS "/usr/local/cuda-5.0/lib" REQUIRED)
+find_library(TINYXML_LIBRARY NAMES "tinyxml" PATHS "/usr/lib" REQUIRED)
 
 link_directories(/usr/local/lib)
 link_directories(/usr/lib)
@@ -85,8 +86,6 @@ include_directories(src/Kernel/Collision/HeightField/Linear)
 include_directories(src/Kernel/Collision/HeightField/Periodic)
 include_directories(src/Kernel/Collision/HeightField/Gaussian)
 include_directories(src/Kernel/Collision/HeightField/Combined)
-#include_directories(src/Kernel/Collision/HeightField/Animated) #MATHIAS
-
 
 include_directories(src/Kernel/Emitters)
 include_directories(src/Kernel/Emitters/Box)
@@ -100,8 +99,6 @@ include_directories(src/Kernel/Surface)
 include_directories(src/Kernel/Surface/SPH)
 
 include_directories(src/Kernel/Extras)
-include_directories(src/Kernel/Extras/AnimatedHeightField)
-include_directories(src/Kernel/Extras/AnimatedHeightField/Periodic)
 
 include_directories(src/Utils)
 
@@ -118,8 +115,6 @@ include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Linear)
 include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Periodic)
 include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Gaussian)
 include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Combined)
-#include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Animated)
-
 
 include_directories(src/Utils/Exporter/Particles)
 include_directories(src/Utils/Exporter/Particles/Txt)
@@ -135,8 +130,6 @@ include_directories(src/Utils/Loader/Particles/XML)
 include_directories(src/Utils/Loader/SimulationData)
 
 include_directories(src/Utils/MC)
-
-include_directories(src/IHM/ExtrasIHM/HeightField/)
 
 #"-gencode arch=compute_11,code=sm_11 -gencode arch=compute_20,code=sm_20 -gencode arch=compute_30,code=sm_30 -gencode arch=compute_35,code=sm_35")
 INCLUDE(/usr/share/cmake-2.8/Modules/FindCUDA.cmake)
@@ -184,12 +177,7 @@ SET(CUDA_FILES
 			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision_Kernel.cu
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cu
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision_Kernel.cu
-            src/Kernel/Extras/AnimatedHeightField/Periodic/AnimatedPeriodicHeightField.cu#MATHIAS
-            src/Kernel/Extras/AnimatedHeightField/Periodic/AnimatedPeriodicHeightField_Kernel.cu#MATHIAS
-                        
-                      
-			
-                        src/Utils/Geometry/ComplexObjects/HeightField/HeightField.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/HeightField.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/HeightField_Kernel.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Linear/LinearHeightField.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Linear/LinearHeightField_Kernel.cu
@@ -197,8 +185,6 @@ SET(CUDA_FILES
 			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField_Kernel.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField_Kernel.cu
-			#src/Utils/Geometry/ComplexObjects/HeightField/Animated/AnimatedHeightField.cu #MATHIAS
-			#src/Utils/Geometry/ComplexObjects/HeightField/Animated/AnimatedHeightField_Kernel.cu #MATHIAS
 			src/Utils/Neighborhood/UniformGrid/UniformGrid.cu
 			src/Utils/Neighborhood/UniformGrid/UniformGridKernel.cu
 			src/Utils/MC/MarchingCube.cu
@@ -211,14 +197,18 @@ SET(App_sources
 			src/Kernel/System/SimulationDatas.cpp
 			src/Kernel/System/SimulationData.cpp
 			src/Kernel/System/shaders.cpp
+
 			src/Kernel/System/SimpleSystem/SimpleSystem.cpp
 			src/Kernel/System/SimpleSystem/SimulationData_SimpleSystem.cpp
+
 			src/Kernel/System/Particle_Interaction_System/CudaParticle.cpp
 			src/Kernel/System/Particle_Interaction_System/CudaSystem.cpp
 			src/Kernel/System/Particle_Interaction_System/SimulationData_CudaSystem.cpp
+
 			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphParticle.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphSystem.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/SPH/SimulationData_SPHSystem.cpp
+
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphParticle.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/SimulationData_PCI_SPHSystem.cpp
@@ -242,7 +232,6 @@ SET(App_sources
 			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision.cpp
 			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision.cpp
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cpp
-                       
 
 			src/Kernel/Emitters/Emitters.cpp
 			src/Kernel/Emitters/Emitter.cpp
@@ -255,9 +244,6 @@ SET(App_sources
 
 			src/Kernel/Surface/Surface.cpp
 			src/Kernel/Surface/SPH/SurfaceSPH.cpp
-
-                        src/Kernel/Extras/AnimatedHeightField/AnimatedHeightField.cpp #MATHIAS
-                        src/Kernel/Extras/AnimatedHeightField/Periodic/AnimatedPeriodicHeightField.cpp #MATHIAS
 
 			src/Utils/Loader/Mesh/MeshLoader.cpp
 			src/Utils/Loader/Mesh/OBJ/ObjLoader.cpp
@@ -284,8 +270,6 @@ SET(App_sources
 			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField.cpp
 			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField.cpp
 			src/Utils/Geometry/ComplexObjects/HeightField/Combined/CombinedHeightField.cpp
-			#src/Utils/Geometry/ComplexObjects/HeightField/Animated/AnimatedHeightField.cpp #MATHIAS
-                        
 
 			src/IHM/window.cpp
 			src/IHM/sceneWindow.cpp
@@ -302,8 +286,6 @@ SET(App_sources
 			src/IHM/CollisionIHM/HeightField/windowConfiguration_PeriodicHeightField.cpp
 			src/IHM/CollisionIHM/HeightField/windowConfiguration_GaussianHeightField.cpp
 			src/IHM/CollisionIHM/HeightField/windowConfiguration_CombinedHeightField.cpp
-			src/IHM/ExtrasIHM/HeightField/windowConfiguration_AnimatedHeightField.cpp #MATHIAS
-			
 			src/IHM/EmitterIHM/windowConfiguration_Emitter_Box.cpp
 			src/IHM/EmitterIHM/windowConfiguration_Emitter_Elipsoide.cpp
 			src/IHM/EmitterIHM/windowConfiguration_Emitter_Mesh.cpp
@@ -338,7 +320,6 @@ QT4_WRAP_CPP(MOC_headers src/IHM/glWidget.h
 			 src/IHM/CollisionIHM/HeightField/windowConfiguration_PeriodicHeightField.h
 			 src/IHM/CollisionIHM/HeightField/windowConfiguration_GaussianHeightField.h
 			 src/IHM/CollisionIHM/HeightField/windowConfiguration_CombinedHeightField.h
-			 src/IHM/ExtrasIHM/HeightField/windowConfiguration_AnimatedHeightField.h #MATHIAS
 			 src/IHM/EmitterIHM/windowConfiguration_Emitter_Box.h
 			 src/IHM/EmitterIHM/windowConfiguration_Emitter_Elipsoide.h
 			 src/IHM/EmitterIHM/windowConfiguration_Emitter_Mesh.h
@@ -354,11 +335,11 @@ QT4_WRAP_CPP(MOC_headers src/IHM/glWidget.h
 			 src/IHM/SimulationDataIHM/WindowConfiguration_Data_CudaSystem.h
 )
 
-set(PARTICLES_LIBRARIES ${QTCORE_LIBRARY} ${QTGUI_LIBRARY}  ${GLQT4_LIBRARY} ${QGLVIEWER_QT4_LIBRARY} ${GL_LIBRARY} ${GLU_LIBRARY} ${GLEE_LIBRARY} ${GLEW_LIBRARY} ${GLEWMX_LIBRARY} ${GLUT_LIBRARY} ${CUDA_LIBRARY}  ${CUDART_LIBRARY} ${TINYXML_LIBRARY})
+set(PARTICLES_LIBRARIES ${QTCORE_LIBRARY} ${QTGUI_LIBRARY}  ${QT_OPENGL_LIBRARY} ${QGLVIEWER_QT4_LIBRARY} ${GLU_LIBRARY} ${GLEE_LIBRARY} ${GLEW_LIBRARY} ${GLEWMX_LIBRARY} ${GLUT_LIBRARY} ${CUDA_LIBRARY} ${CUDADEVRT_LIBRARY} ${CUDART_LIBRARY} ${CUBLAS_LIBRARY} ${TINYXML_LIBRARY})
 
 CUDA_COMPILE(CUDA_FILES_O ${CUDA_FILES})
-CUDA_ADD_EXECUTABLE(bin/PSB ${App_sources} ${MOC_headers} ${CUDA_FILES_O} )
-TARGET_LINK_LIBRARIES(bin/PSB ${PARTICLES_LIBRARIES} ${CUDA_LIBRARIES})
+CUDA_ADD_EXECUTABLE(bin/oldSPH ${App_sources} ${MOC_headers} ${CUDA_FILES_O} )
+TARGET_LINK_LIBRARIES(bin/oldSPH ${PARTICLES_LIBRARIES} ${CUDA_LIBRARIES})
 
 message ( "CUDA_VERSION_STRING: " ${CUDA_VERSION_STRING} )
 message ( "CUDA_TOOLKIT_ROOT_DIR: " ${CUDA_TOOLKIT_ROOT_DIR} )
