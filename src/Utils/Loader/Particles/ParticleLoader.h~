@@ -11,7 +11,7 @@
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
 #include <CudaParticle.h>
-#include <SPHSystem.h>
+#include <SphSystem.h>
 #include <SphParticle.h>
 #include <typeinfo>
 

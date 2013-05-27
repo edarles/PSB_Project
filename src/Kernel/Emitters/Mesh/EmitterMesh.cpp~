@@ -58,7 +58,8 @@ vector<Particle*> EmitterMesh::emitParticles()
 				if(typeid(*data)==typeid(SimulationData_SPHSystem)){
 						SimulationData_SPHSystem* dataSPH = (SimulationData_SPHSystem*) data;
 						SPHParticle *p = new SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
-					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 0,
+					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 
+							dataSPH->getKernelParticles(), 0,
 					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
 					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), dataSPH->getViscosity());
 						particles.push_back(p);
@@ -66,7 +67,8 @@ vector<Particle*> EmitterMesh::emitParticles()
 				if(typeid(*data)==typeid(SimulationData_PCI_SPHSystem)){
 						SimulationData_PCI_SPHSystem* dataSPH = (SimulationData_PCI_SPHSystem*) data;
 						PCI_SPHParticle *p = new PCI_SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
-					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 0,
+					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(),
+							dataSPH->getKernelParticles(), 0,
 					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
 					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), 
 							dataSPH->getViscosity(),dataSPH->getTemperature());

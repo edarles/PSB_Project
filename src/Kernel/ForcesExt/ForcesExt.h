@@ -28,6 +28,8 @@ class ForcesExt {
 		void _initialize(uint nbBodies);
 		void _finalize();
 
+		void init(uint nbBodies);
+
 	private:
 
 		vector<ForceExt*> forces;

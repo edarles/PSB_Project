@@ -49,8 +49,8 @@ vector<Particle*> EmitterBox::emitParticles()
 							   dataCuda->getParticleMass(), dataCuda->getParticleRadius(), dataCuda->getColor(),
 						           dataCuda->getInteractionRadius(), dataCuda->getSpring(), 
 						           dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
-						printf("H:%f S:%f D:%f S:%f A:%f\n",dataCuda->getInteractionRadius(),dataCuda->getSpring(), 
-						           dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
+						//printf("H:%f S:%f D:%f S:%f A:%f\n",dataCuda->getInteractionRadius(),dataCuda->getSpring(), 
+						  //         dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
 						particles.push_back(p);
 					}
 					if(typeid(*data)==typeid(SimulationData_SPHSystem)){

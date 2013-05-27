@@ -37,46 +37,12 @@ vector<Particle*> EmitterBox::emitParticles()
 					float dy = y + worldPosition.y();
 					float dz = z + worldPosition.z();
 					Vector3 pos(dx,dy,dz);
-
-					if(typeid(*data)==typeid(SimulationData_SimpleSystem)){
-						Particle *p = new Particle(pos,velocityEmission, data->getParticleMass(),
-									   data->getParticleRadius(), data->getColor());
-						particles.push_back(p);
-					}
-					if(typeid(*data)==typeid(SimulationData_CudaSystem)){
-						SimulationData_CudaSystem* dataCuda = (SimulationData_CudaSystem*) data;
-						CudaParticle *p = new CudaParticle(pos,velocityEmission,
-							   dataCuda->getParticleMass(), dataCuda->getParticleRadius(), dataCuda->getColor(),
-						           dataCuda->getInteractionRadius(), dataCuda->getSpring(), 
-						           dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
-						//printf("H:%f S:%f D:%f S:%f A:%f\n",dataCuda->getInteractionRadius(),dataCuda->getSpring(), 
-						  //         dataCuda->getDamping(), dataCuda->getShear(), dataCuda->getAttraction());
-						particles.push_back(p);
-					}
-					if(typeid(*data)==typeid(SimulationData_SPHSystem)){
-						SimulationData_SPHSystem* dataSPH = (SimulationData_SPHSystem*) data;
-						SPHParticle *p = new SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
-					 		dataSPH->getParticleRadius(), dataSPH->getColor(), 
-							dataSPH->getSupportRadius(), dataSPH->getKernelParticles(), 0,
-					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
-					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), dataSPH->getViscosity());
-						particles.push_back(p);
-					}
-					if(typeid(*data)==typeid(SimulationData_PCI_SPHSystem)){
-						SimulationData_PCI_SPHSystem* dataSPH = (SimulationData_PCI_SPHSystem*) data;
-						PCI_SPHParticle *p = new PCI_SPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
-					 		dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 
-							dataSPH->getKernelParticles(), 0,
-					 		dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
-					 		dataSPH->getThreshold(), dataSPH->getSurfaceTension(), 
-							dataSPH->getViscosity(),dataSPH->getTemperature());
-						particles.push_back(p);
-					}
+					addParticle(pos,&particles);
 				}
             		}
         	}
-	currentTime++;
-	return particles;
+		currentTime++;
+		return particles;
     	}
 }
 /************************************************************************************************/

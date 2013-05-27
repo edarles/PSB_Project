@@ -3,6 +3,7 @@
 
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
+#include <SphSystem.h>
 
 namespace Utils {
 

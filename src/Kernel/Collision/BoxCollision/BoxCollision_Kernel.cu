@@ -24,9 +24,9 @@ __global__ void collisionBox(int nbBodies, double3* newPos, double3* oldVel, dou
    
     	if(length(nInter)>0){
 		nInter = normalize(nInter);
-		float r = 0;
-		if(length(newVel[indexP])>0)
-			r = elast*length(newPos[indexP] - pInter)/(dt*length(newVel[indexP]));
+		double r = 0;
+		//if(length(newVel[indexP])>0)
+		//	r = elast*length(newPos[indexP] - pInter)/(dt*length(newVel[indexP]));
 		newPos[indexP] = pInter;
 		newVel[indexP] = newVel[indexP] - (1+r)*dot(newVel[indexP],nInter)*nInter;
     }

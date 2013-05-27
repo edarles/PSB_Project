@@ -52,6 +52,8 @@ class Emitter {
 		Vector3  velocityEmission;
 		unsigned int durationTime;
 		unsigned int currentTime;
+
+		void   addParticle(Vector3 pos, vector<Particle*> *particles);
 };
 
 #endif

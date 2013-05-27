@@ -28,10 +28,10 @@ public slots:
 
 private:
 
-    QDoubleSpinBox *particleRadius, *particleMass, *restDensity, *viscosity, *surfaceTension, *gasStiffness, *kernelParticles, *temperature;
+    QDoubleSpinBox *particleRadius, *particleMass, *restDensity, *viscosity, *surfaceTension, *gasStiffness, *kernelParticles;
     QPushButton *colorButton;
     QLabel *particleRadiusLabel, *particleMassLabel, *restDensityLabel, *viscosityLabel, *surfaceTensionLabel, 
-	   *gasStiffnessLabel, *kernelParticlesLabel, *temperatureLabel;
+	   *gasStiffnessLabel, *kernelParticlesLabel;
 
     QColor color;
     

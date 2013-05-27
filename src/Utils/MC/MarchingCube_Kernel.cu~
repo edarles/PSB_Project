@@ -135,12 +135,7 @@ __device__ void polygoniseCell_MarchingCube(double3 pG0, double3 pG1, double3 pG
 			nbIndex[indexCell] = nbIndex[indexCell] + 1; 
 			indexs[indexCell*nbIndexMax_perCell + nbInd] = nbInd;
 			vertexs[indexCell*nbVertexMax_perCell + nbInd] = P[TriTable[CubeIndex][i+j]];
-			//printf("vertex:%f %f %f\n",vertexs[indexCell*nbVertexMax_perCell + nbInd].x,vertexs[indexCell*nbVertexMax_perCell + nbInd].y,vertexs[indexCell*nbVertexMax_perCell + nbInd].z);
 		}
-		uint nbInd = nbIndex[indexCell];
-		normales[indexCell*nbVertexMax_perCell+nbT] = computeNormale_Kernel(vertexs[indexCell*nbVertexMax_perCell + nbInd-2],
-							                            vertexs[indexCell*nbVertexMax_perCell + nbInd-1],
-							                            vertexs[indexCell*nbVertexMax_perCell + nbInd]);
 		nbT++;
 	}
 }

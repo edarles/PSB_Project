@@ -57,7 +57,7 @@ __global__ void internalForces(double3* pos, double3* vel, double* mass, double*
 				double pV1 = pressure[index1]/(density[index1]*density[index1]);
 				double pV2 = pressure[index2]/(density[index2]*density[index2]);
 				double a = M_PI*pow(radius[index2],6);
-				double3 m_k = P1P2_N*(-45*pow(radius[index2]-d,2)/a);;				
+				double3 m_k = P1P2_N*(-45*pow(radius[index2]-d,2)/a);			
 				forcePressure[index1] = forcePressure[index1] + m_k*(pV1+pV2)*mass[index2];
 	
                 		// Viscosity force
@@ -90,6 +90,23 @@ __global__ void internalForces(double3* pos, double3* vel, double* mass, double*
 	}
 }
 
+/******************************************************************************************************************/
+/******************************************************************************************************************/
+__global__ void integrateSPH_LeapFrog_Forces(double3* velInterAv, double3* velInterAp, double3* oldPos, double3* newPos, 
+				      double3* forcesViscosity, double3* forcesSurface, double3* forcesPressure, double3* forcesAccum,
+				      double*  densities, float dt, uint nbBodies)
+{
+   uint index =  __umul24(blockIdx.x, blockDim.x) + threadIdx.x;
+   if(index<nbBodies){
+		// LEAP-FROG SCHEME (see [Kelager06])
+		velInterAv[index] = velInterAp[index];
+		double3 F = forcesAccum[index] + forcesViscosity[index] + forcesPressure[index] + forcesSurface[index];
+		velInterAp[index] = velInterAp[index] + (F/densities[index])*dt; 
+		oldPos[index] = newPos[index];
+		newPos[index] = newPos[index] + velInterAp[index]*dt;
+
+   }
+}
 /******************************************************************************************************************/
 /******************************************************************************************************************/
 __global__ void integrateSPH_LeapFrog(double3* velInterAv, double3* velInterAp, double3* oldPos, double3* newPos, 

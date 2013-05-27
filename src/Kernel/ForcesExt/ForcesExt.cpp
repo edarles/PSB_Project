@@ -1,5 +1,6 @@
 #include <ForcesExt.h>
 #include <ForceExt.cuh>
+#include <cuda.h>
 #include <typeinfo>
 
 #include <common.cuh>
@@ -47,6 +48,18 @@ void ForcesExt::_initialize(uint nbBodies)
        // initialize forces accumulator buffer and store it in GPU
 	unsigned int memSize = sizeof(double) * 3 * nbBodies;
 	allocateArray((void**)&m_F, memSize);
+}
+/*****************************************************************************************************/
+void ForcesExt::init(uint nbBodies)
+{
+	double* F = new double[3*nbBodies];
+	for(uint i=0;i<nbBodies;i++){
+		F[i*3] = 0;
+		F[i*3+1] = 0;
+		F[i*3+2] = 0;
+	}
+	copyArrayToDevice(m_F,F,0,sizeof(double)*3*nbBodies);
+	delete[] F;
 }
 /*****************************************************************************************************/
 void ForcesExt::_finalize()

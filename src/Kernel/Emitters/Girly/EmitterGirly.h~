@@ -17,7 +17,7 @@ class EmitterGirly : public Emitter
 		void		  display(Vector3 color);
 
 	protected:
-		void addParticle(Vector3 pos, vector<Particle*> particles);
+		void addParticle(Vector3 pos, vector<Particle*> *particles);
 
 };
 

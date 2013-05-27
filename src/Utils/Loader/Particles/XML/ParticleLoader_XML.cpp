@@ -28,6 +28,9 @@ vector<Particle*> ParticleLoader_XML::load(System *S, const char *filename)
 
 	if(typeid(*S) == typeid(SPHSystem))
 		return loadSPHSystem(doc);
+
+	if(typeid(*S) == typeid(PCI_SPHSystem))
+		return loadSPHSystem(doc);
   }
  }
 /**************************************************************************************/

@@ -13,7 +13,7 @@ class SimulationData_PCI_SPHSystem : public SimulationData_SPHSystem {
 		SimulationData_PCI_SPHSystem();
 		SimulationData_PCI_SPHSystem(float particleRadius, float mass, Vector3 color,
 					     float restDensity, float viscosity, float surfaceTension,
-					     float gasStiffness, float kernelParticles, float temperature);
+					     float gasStiffness, float kernelParticles);
 
 		SimulationData_PCI_SPHSystem(const SimulationData_PCI_SPHSystem&);
 
@@ -21,21 +21,8 @@ class SimulationData_PCI_SPHSystem : public SimulationData_SPHSystem {
 
 /**********************************************************************************/
 /**********************************************************************************/
-		float getTemperature();
-
-/**********************************************************************************/
-/**********************************************************************************/
-		void  setTemperature(float);
-
-/**********************************************************************************/
-/**********************************************************************************/
 		virtual bool loadConfiguration(const char* filename);
 		virtual bool saveConfiguration(const char* filename);
-
-	protected:
-/**********************************************************************************/
-/**********************************************************************************/
-		float temperature;
 /**********************************************************************************/
 /**********************************************************************************/
 };

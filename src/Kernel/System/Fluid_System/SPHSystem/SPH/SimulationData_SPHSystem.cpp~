@@ -16,18 +16,18 @@ SimulationData_SPHSystem::SimulationData_SPHSystem():SimulationData(0.02,0.02,Ve
 }
 /**********************************************************************************/
 SimulationData_SPHSystem::SimulationData_SPHSystem(float particleRadius, float mass, Vector3 color,
-					 	   float restDensity, float viscosity, float surfaceTension, float threshold,
+					 	   float restDensity, float viscosity, float surfaceTension,
 					 	   float gasStiffness, float kernelParticles)
 		         :SimulationData(particleRadius, mass, color)
 {
 	this->restDensity = restDensity;
 	this->viscosity = viscosity;
 	this->surfaceTension = surfaceTension;
-	this->threshold = threshold;
+	this->threshold = sqrt(restDensity/kernelParticles);
 	this->gasStiffness = gasStiffness;
 	this->kernelParticles = kernelParticles;
 	this->supportRadius = powf((3*mass*kernelParticles)/(4*M_PI*restDensity),0.333);
-        this->particleRadius = this->supportRadius/2;
+        this->particleRadius = pow(3*this->particleMass/(4*M_PI*this->restDensity),0.333);//powf((3*mass*kernelParticles)/(4*M_PI*restDensity),0.333);//this->supportRadius/2;
 }
 /**********************************************************************************/
 SimulationData_SPHSystem::SimulationData_SPHSystem(const SimulationData_SPHSystem& S)

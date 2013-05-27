@@ -19,34 +19,19 @@ public:
 
 protected: // methods
     
-    void evaluateChangesFields();
-  
     void _initialize(int begin, int numParticles);
 
     double* m_restore_dPos[2];
     double* m_restore_velInterAv;
     double* m_restore_velInterAp;
+    double* m_densityError;
 
     double* m_hRestore_posAv;
     double* m_hRestore_posAp;
     double* m_hRestore_velInterAv;
     double* m_hRestore_velInterAp;
 
-    double* m_densityError;
     double  errorThreshold;
-
-    double* m_temperatures;
-    double* m_hTemperatures;
-
-    double* m_kernelParticles;
-    double* m_hKernelParticles;
-
-    double* m_DT;
-    double* m_DVisc;
-    double* m_DRestDens;
-    double* m_DMass;
-
-    int nbIt;
 };
 
 #endif //

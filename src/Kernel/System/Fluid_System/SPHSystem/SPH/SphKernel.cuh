@@ -23,6 +23,10 @@ __global__ void internalForces(double3* pos, double3* vel, double* mass, double*
 __global__ void integrateSPH_LeapFrog(double3* velInterAv, double3* velInterAp, double3* oldPos, double3* newPos, 
 				      double3* forces, double*  densities, float dt, uint nbBodies);
 
+__global__ void integrateSPH_LeapFrog_Forces(double3* velInterAv, double3* velInterAp, double3* oldPos, double3* newPos, 
+				      double3* forcesViscosity, double3* forcesSurface, double3* forcesPressure, double3* forcesAccum,
+				      double*  densities, float dt, uint nbBodies);
+
 __global__ void interpolateSPH_velocities(double3* velInterAv, double3* velInterAp, double3* oldVel, double3* newVel, uint numBodies);
 }
 #endif

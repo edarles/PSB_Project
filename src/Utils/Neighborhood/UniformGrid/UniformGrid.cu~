@@ -3,7 +3,6 @@
 #include <cuda.h>
 #include <GL/gl.h>
 #include <stdio.h>
-#include <cuPrintf.cuh>
 #include <stdint.h>
 #include <QDataStream>
 #include <QFile>

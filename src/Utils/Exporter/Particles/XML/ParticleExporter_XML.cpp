@@ -1,7 +1,4 @@
 #include <ParticleExporter_XML.h>
-#include <typeinfo>
-#include <CudaParticle.h>
-#include <SphParticle.h>
 
 namespace Utils {
 /***********************************************************************/
@@ -32,6 +29,9 @@ void ParticleExporter_XML::_export(const char* filename, System *S)
 
 	if(typeid(*S) == typeid(SPHSystem))
 		_export_SPHParticles(doc,elmtPart,(SPHSystem*)S);
+
+	if(typeid(*S) == typeid(PCI_SPHSystem))
+		_export_SPHParticles(doc,elmtPart,(PCI_SPHSystem*)S);
 
 	doc.SaveFile(filename);
 

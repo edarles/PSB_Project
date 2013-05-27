@@ -23,7 +23,7 @@ class ForcesExt {
 		void addForce(ForceExt*);
 
 		//gpu storage accumulator forces
-		float* m_F;
+		double* m_F;
 
 		void _initialize(uint nbBodies);
 		void _finalize();

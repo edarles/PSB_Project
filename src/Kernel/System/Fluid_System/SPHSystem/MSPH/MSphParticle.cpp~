@@ -1,0 +1,38 @@
+#include <MSphParticle.h>
+/********************************************************************************************************************/
+/********************************************************************************************************************/
+MSPHParticle::MSPHParticle():PCI_SPHParticle()
+{
+}
+/********************************************************************************************************************/
+MSPHParticle::MSPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRadius, Vector3 color,
+			   float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
+			   float gasStiffness, float threshold, float surfaceTension, float viscosity,float temperature)
+	     :PCI_SPHParticle(pos,vel,mass,particleRadius,color,interactionRadius,kernelParticles,density,restDensity,pressure,
+			      gasStiffness,threshold,surfaceTension,viscosity)
+{
+	this->temperature = temperature;
+}
+/********************************************************************************************************************/
+MSPHParticle::MSPHParticle(const MSPHParticle& P):PCI_SPHParticle(P)
+{
+	this->temperature = P.temperature;
+}
+/********************************************************************************************************************/
+~MSPHParticle::MSPHParticle()
+{
+}
+/********************************************************************************************************************/
+/********************************************************************************************************************/
+float MSPHParticle::getTemperature()
+{
+	return temperature;
+}
+/********************************************************************************************************************/
+/********************************************************************************************************************/
+void MSPHParticle::setTemperature(float temperature)
+{
+	this->temperature = temperature;
+}
+/********************************************************************************************************************/
+/********************************************************************************************************************/

@@ -12,10 +12,9 @@ extern "C"
 __global__ void createCell_Kernel(double xC, double yC, double zC, double l, double w, double d,
 				  float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, double3* m_dPos, int* nbParticles)
 {
-	uint indexX =   __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
-	uint indexY =   __mul24(blockIdx.y,blockDim.y) + threadIdx.y;
-	uint indexZ =   __mul24(blockIdx.z,blockDim.z) + threadIdx.z;
-
+	uint indexX =   __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	uint indexY =   __umul24(blockIdx.y,blockDim.y) + threadIdx.y;
+	uint indexZ =   __umul24(blockIdx.z,blockDim.z) + threadIdx.z;
 	if(indexX<nbCellsX && indexY<nbCellsY && indexZ<nbCellsZ)
 	{
 		uint indexCell = indexX + indexY*nbCellsX + indexZ*nbCellsX*nbCellsY;
@@ -30,10 +29,9 @@ __global__ void createCell_Kernel(double xC, double yC, double zC, double l, dou
 /****************************************************************************************************************************/
 __global__ void reinitCells_Kernel(int* nbParticles, int nbCellsX, int nbCellsY, int nbCellsZ)
 {
-	uint indexX =   __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
-	uint indexY =   __mul24(blockIdx.y,blockDim.y) + threadIdx.y;
-	uint indexZ =   __mul24(blockIdx.z,blockDim.z) + threadIdx.z;
-
+	uint indexX =   __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	uint indexY =   __umul24(blockIdx.y,blockDim.y) + threadIdx.y;
+	uint indexZ =   __umul24(blockIdx.z,blockDim.z) + threadIdx.z;
 	if(indexX<nbCellsX && indexY<nbCellsY && indexZ<nbCellsZ)
 	{
 		uint indexCell = indexX + indexY*nbCellsX + indexZ*nbCellsX*nbCellsY;
@@ -45,7 +43,7 @@ __global__ void reinitCells_Kernel(int* nbParticles, int nbCellsX, int nbCellsY,
 __global__ void storeParticles_Kernel(double3* positions, uint nbBodies, int* nbParticles, int* indexParticles, float sizeCell, 
 				      float3 Min, int nbCellsX, int nbCellsY, int nbCellsZ)
 {
-	uint indexP =  __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	uint indexP =  __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
 	if(indexP < nbBodies){
 		int i = floor((positions[indexP].x-Min.x)/sizeCell);
 		int j = floor((positions[indexP].y-Min.y)/sizeCell);
@@ -61,7 +59,7 @@ __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, in
 					  int nbCellsX, int nbCellsY, int nbCellsZ, float sizeCell, float3 Min, double scale,
 					  partVoisine voisines, uint nbBodies)
 {
-	uint indexP =  __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	uint indexP =  __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
 	if(indexP < nbBodies)
 	{
 		voisines.nbVoisines[indexP] = 0;
@@ -104,7 +102,6 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 	uint indexX =   __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
 	uint indexY =   __mul24(blockIdx.y,blockDim.y) + threadIdx.y;
 	uint indexZ =   __mul24(blockIdx.z,blockDim.z) + threadIdx.z;
-
 	if(indexX<nbCellsX_MC && indexY<nbCellsY_MC && indexZ<nbCellsZ_MC)
 	{
 		double iso = 0;
@@ -124,15 +121,11 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 							for(uint n=0;n<nbParticles[indexC];n++){
 								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
 								if(indexP2<nbBodies){
-								double3 pos2 = pos[indexP2];
-								double r = radius[indexP2]/scale;
-								double d = sqrt(powf(pos1.x-pos2.x,2)+powf(pos1.y-pos2.y,2)+powf(pos1.z-pos2.z,2));
-								if(d<=r){
-									//double D = d/r;
-									//iso+=powf(1-D,2);
-									//double h = powf(r,6);
-									iso += (1/powf(r,6))*powf(r*r-d*d,3);
-								}
+									double3 pos2 = pos[indexP2];
+									double r = radius[indexP2]/scale;
+									double d = length(pos1 - pos2);
+									if(d<=r)
+										iso += (1/powf(r,6))*powf(r*r-d*d,3);
 								}
 							}
 						}
@@ -140,9 +133,7 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 				}
 			}
 		}
-		//pos_MC[indexC_MC].w = sqrt(iso);
 		pos_MC[indexC_MC].w = iso;
-		//printf("iso:%f\n",pos_MC[indexC_MC].w);
 	}		
 }
 /****************************************************************************************************************************/
@@ -152,7 +143,7 @@ __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales,
 					       int* nbParticles, int* indexParticles,
 				               double3* pos, double* radius, double* mass, double* densities, uint nbBodies)
 {
-	uint index = __mul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	uint index = __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
 
 	if(index<nbV)
 	{
@@ -214,6 +205,61 @@ __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales,
 		normales[index].y = -dpy/N;
 		normales[index].z = -dpz/N;
 		}
+	}		
+}
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
+__global__ void computeNormales_Vertexs_Kernel2(double3* posV, double3* normales, float scale, uint nbV,
+			                        float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
+					        int* nbParticles, int* indexParticles,
+				                double3* pos, double* radius, double* mass, double* density, uint nbBodies)
+{
+	uint index = __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
+	if(index<nbV)
+	{
+		int I = floor((posV[index].x-Min.x)/sizeCell);
+		int J = floor((posV[index].y-Min.y)/sizeCell);
+		int K = floor((posV[index].z-Min.z)/sizeCell);
+
+		normales[index] = make_double3(0,0,0);
+		double3 pos1 = posV[index];
+
+		int nbC = 2;//floor(1/scale);
+		for(int i=I-nbC;i<=I+nbC;i++){
+			for(int j=J-nbC;j<=J+nbC;j++){
+				for(int k=K-nbC;k<=K+nbC;k++){
+					if(i>=0 && j>=0 && k>=0 && i < nbCellsX && j < nbCellsY && k < nbCellsZ){
+						int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY;
+						if(nbParticles[indexC]>0){
+							for(uint n=0;n<nbParticles[indexC];n++){
+								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
+								if(indexP2<nbBodies){
+									double3 pos2 = pos[indexP2];
+									double r = radius[indexP2]/scale;
+									for(int nbP = 0; nbP<6; nbP++){
+									double3 P1P2 = pos1 - pos2;
+									double d = length(P1P2);
+									if(d<=r){
+										// normale evaluation
+										double b = 32*M_PI*powf(radius[indexP2],9);
+										double mk = -945/b;
+										normales[index] = normales[index] + P1P2*
+										(mass[indexP2]/density[indexP2])*pow((radius[indexP2]*
+										radius[indexP2])-(d*d),2)*mk;
+									}	
+								}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		double lN = length(normales[index]);
+		if(lN<=0)
+			printf("Normale à 0\n");
+		else 
+			normales[index] = -normales[index]/lN;
 	}		
 }
 /****************************************************************************************************************************/

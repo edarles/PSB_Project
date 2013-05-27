@@ -190,6 +190,7 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 void SurfaceSPH::draw()
 {
 	glColor3f(1,1,1);
+	double d = 0.1;
 	if(indexs_cpu.size()>0){
 		glShadeModel(GL_SMOOTH);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -203,6 +204,27 @@ void SurfaceSPH::draw()
 			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x(),vertexs_cpu[indexs_cpu[i+2]].y(),vertexs_cpu[indexs_cpu[i+2]].z());
 			glNormal3f(normales_cpu[indexs_cpu[i+2]].x(),normales_cpu[indexs_cpu[i+2]].y(),normales_cpu[indexs_cpu[i+2]].z());
 			glEnd();
+
+			glColor3f(1,0,0);
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i]].x(),vertexs_cpu[indexs_cpu[i]].y(),vertexs_cpu[indexs_cpu[i]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i]].x()+normales_cpu[indexs_cpu[i]].x()*d,
+				   vertexs_cpu[indexs_cpu[i]].y()+normales_cpu[indexs_cpu[i]].y()*d,
+			           vertexs_cpu[indexs_cpu[i]].z()+normales_cpu[indexs_cpu[i]].z()*d);
+			glEnd();
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i+1]].x(),vertexs_cpu[indexs_cpu[i+1]].y(),vertexs_cpu[indexs_cpu[i+1]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i+1]].x()+normales_cpu[indexs_cpu[i+1]].x()*d,
+				   vertexs_cpu[indexs_cpu[i+1]].y()+normales_cpu[indexs_cpu[i+1]].y()*d,
+			           vertexs_cpu[indexs_cpu[i+1]].z()+normales_cpu[indexs_cpu[i+1]].z()*d);
+			glEnd();
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x(),vertexs_cpu[indexs_cpu[i+2]].y(),vertexs_cpu[indexs_cpu[i+2]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x()+normales_cpu[indexs_cpu[i+2]].x()*d,
+				   vertexs_cpu[indexs_cpu[i+2]].y()+normales_cpu[indexs_cpu[i+2]].y()*d,
+			           vertexs_cpu[indexs_cpu[i+2]].z()+normales_cpu[indexs_cpu[i+2]].z()*d);
+			glEnd();
+
 		}
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}		

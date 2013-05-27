@@ -190,6 +190,7 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 void SurfaceSPH::draw()
 {
 	glColor3f(1,1,1);
+	double d = 0.1;
 	if(indexs_cpu.size()>0){
 		glShadeModel(GL_SMOOTH);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -203,6 +204,26 @@ void SurfaceSPH::draw()
 			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x(),vertexs_cpu[indexs_cpu[i+2]].y(),vertexs_cpu[indexs_cpu[i+2]].z());
 			glNormal3f(normales_cpu[indexs_cpu[i+2]].x(),normales_cpu[indexs_cpu[i+2]].y(),normales_cpu[indexs_cpu[i+2]].z());
 			glEnd();
+			glColor3f(1,0,0);
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i]].x(),vertexs_cpu[indexs_cpu[i]].y(),vertexs_cpu[indexs_cpu[i]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i]].x()+normales_cpu[indexs_cpu[i]].x()*d,
+				   vertexs_cpu[indexs_cpu[i]].y()+normales_cpu[indexs_cpu[i]].y()*d,
+			           vertexs_cpu[indexs_cpu[i]].z()+normales_cpu[indexs_cpu[i]].z()*d);
+			glEnd();
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i+1]].x(),vertexs_cpu[indexs_cpu[i+1]].y(),vertexs_cpu[indexs_cpu[i+1]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i+1]].x()+normales_cpu[indexs_cpu[i+1]].x()*d,
+				   vertexs_cpu[indexs_cpu[i+1]].y()+normales_cpu[indexs_cpu[i+1]].y()*d,
+			           vertexs_cpu[indexs_cpu[i+1]].z()+normales_cpu[indexs_cpu[i+1]].z()*d);
+			glEnd();
+			glBegin(GL_LINES);
+			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x(),vertexs_cpu[indexs_cpu[i+2]].y(),vertexs_cpu[indexs_cpu[i+2]].z());
+			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x()+normales_cpu[indexs_cpu[i+2]].x()*d,
+				   vertexs_cpu[indexs_cpu[i+2]].y()+normales_cpu[indexs_cpu[i+2]].y()*d,
+			           vertexs_cpu[indexs_cpu[i+2]].z()+normales_cpu[indexs_cpu[i+2]].z()*d);
+			glEnd();
+
 		}
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}		
@@ -233,9 +254,9 @@ bool SurfaceSPH::exportOBJ(const char* filename)
 
 		for(unsigned long i=0;i<vertexs_cpu.size();i++)
 			//fprintf(f,"v %f %f %f\n",vertexs_cpu[i].x(),vertexs_cpu[i].z(),vertexs_cpu[i].y());
-			fprintf(f,"v %f %f %f\n",vertexs_cpu[i].x()*2,vertexs_cpu[i].z()*2,vertexs_cpu[i].y()*2+1);
+			fprintf(f,"v %.5f %.5f %.5f\n",vertexs_cpu[i].x()*2,vertexs_cpu[i].z()*2,vertexs_cpu[i].y()*2+1);
 		for(unsigned long i=0;i<normales_cpu.size();i++)
-			fprintf(f,"vn %f %f %f\n",normales_cpu[i].x(),normales_cpu[i].z(),normales_cpu[i].y());
+			fprintf(f,"vn %.5f %.5f %.5f\n",normales_cpu[i].x(),normales_cpu[i].z(),normales_cpu[i].y());
 		
 		fprintf(f,"usemtl fluid_mtl\n");
 		fprintf(f,"s off\n");

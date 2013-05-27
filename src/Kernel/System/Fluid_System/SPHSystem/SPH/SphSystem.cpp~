@@ -47,12 +47,11 @@ SPHSystem::~SPHSystem()
 }
 
 /*****************************************************************************/
-void SPHSystem::init(vector<Particle*> particles)
+void SPHSystem::init(vector<Particle*> result)
 {
-      this->particles.clear();
-      for(unsigned int i=0;i<particles.size();i++)
-		this->particles.push_back(particles[i]);
-      _initialize(0,particles.size());
+     this->particles.clear();
+     this->particles.insert(particles.end(),result.begin(),result.end());
+     _initialize(0,particles.size());
 }
 /*****************************************************************************/
 void SPHSystem::init()
@@ -194,7 +193,7 @@ void SPHSystem::_initialize(int begin, int numParticles)
     if(gridCreated==false){
 	SPHParticle* p   = (SPHParticle*) particles[0];
 	grid = (UniformGrid*)malloc(sizeof(UniformGrid));
-	createGrid(0,0,0,1.5,1.5,1.5,p->getInteractionRadius(),grid);
+	createGrid(0,0,0,1.0,1.0,1.0,p->getInteractionRadius(),grid);
         gridCreated = true;
     }
  
@@ -278,7 +277,7 @@ void SPHSystem::update()
 
     reinitCells(grid);
     storeParticles(grid,m_dPos[1],particles.size());
-    searchNeighbooring(m_dPos[1],m_interactionRadius, &(*grid), 1, voisines, particles.size());
+    searchNeighbooring(m_dPos[1],m_interactionRadius, grid, 1, voisines, particles.size());
 
     // evaluate densities, normales and pressure, viscosity and surface tension forces
     evaluateDensitiesForces();
@@ -331,7 +330,6 @@ void SPHSystem::collide()
 void SPHSystem::integrate()
 {
     integrateSPHSystem(m_dVelInterAv, m_dVelInterAp, m_dPos[0], m_dPos[1], FExt->m_F, m_density,dt,particles.size());
-  //  copyArrayFromDevice(m_hPos[0], m_dPos[0], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hPos[1], m_dPos[1], 0, sizeof(double)*3*particles.size());
 }
 
@@ -340,7 +338,7 @@ void SPHSystem::interpolateVelocities()
 {
     interpolateSPHVelocities(m_dVelInterAv, m_dVelInterAp, m_dVel[0], m_dVel[1], particles.size());
 
-    copyArrayFromDevice(m_hPos[1], m_dPos[0], 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(m_hPos[1], m_dPos[1], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVel[1], m_dVel[1], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVelInterAp, m_dVelInterAp, 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVelInterAv, m_dVelInterAv, 0, sizeof(double)*3*particles.size());
@@ -355,7 +353,7 @@ void SPHSystem::evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCe
 /*****************************************************************************/
 void SPHSystem::computeNormales_Vertex(double* posV, double* normales, float scale, uint nbV)
 {
-	computeNormales_Vertex_CUDA(posV, normales, scale, nbV,
+	computeNormales_Vertex_CUDA_v2(posV, normales, scale, nbV,
 			            grid, m_dPos[1], m_interactionRadius, m_dMass, m_density, particles.size());
 }
 /*****************************************************************************/

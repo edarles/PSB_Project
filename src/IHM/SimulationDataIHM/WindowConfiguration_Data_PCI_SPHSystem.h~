@@ -6,7 +6,7 @@
 #include <QMainWindow>
 #include <QtCore/QDir>
 #include <glWidget.h>
-#include <WindowConfiguration_Data_SPHSystem.h>
+#include <WindowConfiguration_Data.h>
 #include <SimulationData_PCI_SPHSystem.h>
 //************************************************************************/
 //************************************************************************/

@@ -4,35 +4,21 @@
 /***********************************************************************************************/
 SimulationData_PCI_SPHSystem::SimulationData_PCI_SPHSystem():SimulationData_SPHSystem()
 {
-	temperature = 0;
 }
 /***********************************************************************************************/
 SimulationData_PCI_SPHSystem::SimulationData_PCI_SPHSystem(float particleRadius, float mass, Vector3 color,
 					     		   float restDensity, float viscosity, float surfaceTension,
-					     		   float gasStiffness, float kernelParticles, float temperature);
+					     		   float gasStiffness, float kernelParticles)
 			     :SimulationData_SPHSystem(particleRadius,mass,color,restDensity,viscosity,surfaceTension,gasStiffness,kernelParticles)
 {
-	this->temperature = temperature;
 }
 /***********************************************************************************************/
 SimulationData_PCI_SPHSystem::SimulationData_PCI_SPHSystem(const SimulationData_PCI_SPHSystem& S):SimulationData_SPHSystem(S)
 {
-	this->temperature = S.temperature;
 }
 /***********************************************************************************************/
 SimulationData_PCI_SPHSystem::~SimulationData_PCI_SPHSystem()
 {
-}
-/***********************************************************************************************/
-/***********************************************************************************************/
-float SimulationData_PCI_SPHSystem::getTemperature()
-{
-	return temperature;
-}
-/***********************************************************************************************/
-void SimulationData_PCI_SPHSystem::setTemperature(float temperature)
-{
-	this->temperature = temperature;
 }
 /***********************************************************************************************/
 /***********************************************************************************************/
@@ -54,7 +40,6 @@ bool SimulationData_PCI_SPHSystem::loadConfiguration(const char* filename)
 		hRoot->QueryFloatAttribute("gasStiffness",&this->gasStiffness);
 		hRoot->QueryFloatAttribute("kernelParticles",&this->kernelParticles);
 		hRoot->QueryFloatAttribute("supportRadius",&this->supportRadius);
-		hRoot->QueryFloatAttribute("temperature",&this->temperature);
 		return true;
 	}
 	return false;
@@ -80,7 +65,6 @@ bool SimulationData_PCI_SPHSystem::saveConfiguration(const char* filename)
 	elmt->SetDoubleAttribute("gasStiffness",this->gasStiffness);
 	elmt->SetDoubleAttribute("kernelParticles",this->kernelParticles);
 	elmt->SetDoubleAttribute("supportRadius",this->supportRadius);
-	elmt->SetDoubleAttribute("temperature",this->temperature);
 	doc.SaveFile(filename);
 	return true;
 }

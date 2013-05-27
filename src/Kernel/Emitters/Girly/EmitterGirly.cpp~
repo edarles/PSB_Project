@@ -32,7 +32,7 @@ vector<Particle*> EmitterGirly::emitParticles()
 	if(currentTime<durationTime){
 		double res;
 		double eps = 0.001;
-		double step = 0.04;
+		double step = 0.02;
 		for(double x = -3.0; x<=3.0; x+=step){
 			for(double y = -3.0; y<=3.0; y+=step){
 				for(double z=-3.0; z<=3.0; z+=step){

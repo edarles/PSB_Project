@@ -121,15 +121,11 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 							for(uint n=0;n<nbParticles[indexC];n++){
 								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
 								if(indexP2<nbBodies){
-								double3 pos2 = pos[indexP2];
-								double r = radius[indexP2]/scale;
-								double d = sqrt(powf(pos1.x-pos2.x,2)+powf(pos1.y-pos2.y,2)+powf(pos1.z-pos2.z,2));
-								if(d<=r){
-									//double D = d/r;
-									//iso+=powf(1-D,2);
-									//double h = powf(r,6);
-									iso += (1/powf(r,6))*powf(r*r-d*d,3);
-								}
+									double3 pos2 = pos[indexP2];
+									double r = radius[indexP2]/scale;
+									double d = length(pos1 - pos2);
+									if(d<=r)
+										iso += (1/powf(r,6))*powf(r*r-d*d,3);
 								}
 							}
 						}
@@ -137,20 +133,17 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 				}
 			}
 		}
-		//pos_MC[indexC_MC].w = sqrt(iso);
 		pos_MC[indexC_MC].w = iso;
-		//printf("iso:%f\n",pos_MC[indexC_MC].w);
 	}		
 }
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
 __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales, float scale, uint nbV,
-			                       float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
-					       int* nbParticles, int* indexParticles,
-				               double3* pos, double* radius, double* mass, double* densities, uint nbBodies)
+			                        float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
+					        int* nbParticles, int* indexParticles,
+				                double3* pos, double* radius, double* mass, double* density, uint nbBodies)
 {
 	uint index = __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
-
 	if(index<nbV)
 	{
 		int I = floor((posV[index].x-Min.x)/sizeCell);
@@ -160,16 +153,7 @@ __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales,
 		normales[index] = make_double3(0,0,0);
 		double3 pos1 = posV[index];
 
-		double4 p[6];
-		double d = 0.04;
-		p[0] = make_double4(pos1.x+d,pos1.y,pos1.z,0);
-		p[1] = make_double4(pos1.x-d,pos1.y,pos1.z,0);
-		p[2] = make_double4(pos1.x,pos1.y+d,pos1.z,0);
-		p[3] = make_double4(pos1.x,pos1.y-d,pos1.z,0);
-		p[4] = make_double4(pos1.x,pos1.y,pos1.z+d,0);
-		p[5] = make_double4(pos1.x,pos1.y,pos1.z-d,0);
-
-		int nbC = floor(1/scale);
+		int nbC = 2;//floor(1/scale);
 		for(int i=I-nbC;i<=I+nbC;i++){
 			for(int j=J-nbC;j<=J+nbC;j++){
 				for(int k=K-nbC;k<=K+nbC;k++){
@@ -179,14 +163,18 @@ __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales,
 							for(uint n=0;n<nbParticles[indexC];n++){
 								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
 								if(indexP2<nbBodies){
-								double3 pos2 = pos[indexP2];
-								double r = radius[indexP2]/scale;
-								for(int nbP = 0; nbP<6; nbP++){
-									double3 P1P2 = make_double3(p[nbP].x-pos2.x,p[nbP].y-pos2.y,p[nbP].z-pos2.z);
+									double3 pos2 = pos[indexP2];
+									double r = radius[indexP2]/scale;
+									for(int nbP = 0; nbP<6; nbP++){
+									double3 P1P2 = pos1 - pos2;
 									double d = length(P1P2);
 									if(d<=r){
-										//double h = powf(r,6);
-										p[nbP].w += (1/powf(r,6))*powf(r*r-d*d,3);
+										// normale evaluation
+										double b = 32*M_PI*powf(radius[indexP2],9);
+										double mk = -945/b;
+										normales[index] = normales[index] + P1P2*
+										(mass[indexP2]/density[indexP2])*pow((radius[indexP2]*
+										radius[indexP2])-(d*d),2)*mk;
 									}	
 								}
 								}
@@ -196,21 +184,11 @@ __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales,
 				}
 			}
 		}
-		double dpx= (p[0].w-p[1].w)/(2*d);
-		double dpy= (p[2].w-p[3].w)/(2*d);
-		double dpz= (p[4].w-p[5].w)/(2*d);
-		double N = sqrt(dpx*dpx + dpy*dpy + dpz*dpz);
-		if(N<=0){
-			normales[index].x = 0;
-			normales[index].y = 1;
-			normales[index].z = 0;
-			//printf("Normale à 0\n");
-		}
-		else {
-		normales[index].x = -dpx/N;
-		normales[index].y = -dpy/N;
-		normales[index].z = -dpz/N;
-		}
+		double lN = length(normales[index]);
+		if(lN<=0)
+			printf("Normale à 0\n");
+		else 
+			normales[index] = -normales[index]/lN;
 	}		
 }
 /****************************************************************************************************************************/

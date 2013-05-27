@@ -63,6 +63,9 @@ void evaluateIso_CUDA(double* posMC, uint nbCellsX_MC, uint nbCellsY_MC, uint nb
 /*****************************************************************************/
 void computeNormales_Vertex_CUDA(double* posV, double* normales, float scale, uint nbV,
 			         UniformGrid *grid, double* pos, double* radius, double* mass, double* densities, uint nbBodies);
+void computeNormales_Vertex_CUDA_v2(double* posV, double* normales, float scale, uint nbV,
+			         UniformGrid *grid, double* pos, double* radius, double* mass, double* densities, uint nbBodies);
+
 /*****************************************************************************/
 /*** DISPLAY UNIFORM GRID ****************************************/
 /*****************************************************************************/

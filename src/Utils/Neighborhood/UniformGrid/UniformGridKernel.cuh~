@@ -25,10 +25,15 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 				   double3* pos, double* radius, uint nbBodies);
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
-__global__ void computeNormales_Vertexs_Kernel(double3* pos, double3* normales, float scale, uint nbV,
+__global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales, float scale, uint nbV,
 			                       float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
 					       int* nbParticles, int* indexParticles,
 				               double3* pos, double* radius, double* mass, double* densities, uint nbBodies);
+
+__global__ void computeNormales_Vertexs_Kernel2(double3* posV, double3* normales, float scale, uint nbV,
+			                        float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
+					        int* nbParticles, int* indexParticles,
+				                double3* pos, double* radius, double* mass, double* density, uint nbBodies);
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
 __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, int* indexParticles, int* nbParticles, int nbCellsX, int nbCellsY, 					          int nbCellsZ, float sizeCell, float3 Min, double scale, partVoisine voisines, uint nbBodies);

@@ -136,10 +136,6 @@ __device__ void polygoniseCell_MarchingCube(double3 pG0, double3 pG1, double3 pG
 			indexs[indexCell*nbIndexMax_perCell + nbInd] = nbInd;
 			vertexs[indexCell*nbVertexMax_perCell + nbInd] = P[TriTable[CubeIndex][i+j]];
 		}
-		uint nbInd = nbIndex[indexCell];
-		normales[indexCell*nbVertexMax_perCell+nbT] = computeNormale_Kernel(vertexs[indexCell*nbVertexMax_perCell + nbInd-2],
-							                            vertexs[indexCell*nbVertexMax_perCell + nbInd-1],
-							                            vertexs[indexCell*nbVertexMax_perCell + nbInd]);
 		nbT++;
 	}
 }
@@ -156,20 +152,6 @@ __device__ double3 vertexInterpolate_MarchingCube(double3 P1, double3 P2, double
    P.y = P1.y + mu * (P2.y - P1.y);
    P.z = P1.z + mu * (P2.z - P1.z);
    return(P);
-}
-/**************************************************************************************************************/
-/**************************************************************************************************************/
-__device__ double3 computeNormale_Kernel(double3 P0, double3 P1, double3 P2)
-{
-	double3 P0P1 = make_double3(P1.x-P0.x,P1.y-P0.y,P1.z-P0.z);
-	double3 P0P2 = make_double3(P2.x-P0.x,P2.y-P0.y,P2.z-P0.z);
-	double3 P;
-	P.x = P0P1.y*P0P2.z - P0P1.z*P0P2.y;
-	P.y = P0P1.z*P0P2.x - P0P1.x*P0P2.z;
-	P.z = P0P1.x*P0P2.y - P0P1.y*P0P2.x;
-	double n = sqrt(P.x*P.x + P.y*P.y + P.z*P.z);
-	P.x /= n; P.y /= n; P.z /= n;
-	return P;
 }
 /**************************************************************************************************************/
 /**************************************************************************************************************/

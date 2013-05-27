@@ -1,5 +1,4 @@
 #include <WindowConfiguration_Data_PCI_SPHSystem.h>
-
 /*********************************************************************************************/
 /*********************************************************************************************/
 WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(QWidget* widget):WindowConfiguration_Data(widget)
@@ -54,13 +53,6 @@ WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(Q
 	kernelParticles->setValue(20);
 	connect(kernelParticles, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
-        temperatureLabel = new QLabel("Temperature Particles",widget);
-	temperature = new QDoubleSpinBox(widget);
-	temperature->setMinimum(0.0);
-	temperature->setMaximum(100);
-	temperature->setValue(20);
-	connect(temperature, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
-
 	colorButton = new QPushButton("Particles color",this);
 	connect(colorButton, SIGNAL(pressed()),this, SLOT(setColor()));
 
@@ -101,11 +93,6 @@ WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(Q
 	grid7->addWidget(kernelParticles,0,1); 
 	layout1->addLayout(grid7);
 
-	QGridLayout *grid9 = new QGridLayout();
-	grid9->addWidget(temperatureLabel,0,0);
-	grid9->addWidget(temperature,0,1); 
-	layout1->addLayout(grid9);
-
 	QGridLayout *grid8 = new QGridLayout();
 	grid8->addWidget(colorButton,0,0); 
 	layout1->addLayout(grid8);
@@ -116,7 +103,7 @@ WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(Q
 	
 	data = new SimulationData_PCI_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
 		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
-		   kernelParticles->value(),temperature->value());
+		   kernelParticles->value());
 }
 /*********************************************************************************************/
 WindowConfiguration_Data_PCI_SPHSystem::~WindowConfiguration_Data_PCI_SPHSystem()
@@ -129,7 +116,7 @@ void WindowConfiguration_Data_PCI_SPHSystem::changeData(double newValue)
 	if(data!=NULL)	delete(data);
 	data = new SimulationData_PCI_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
 		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
-		   kernelParticles->value(),temperature->value());
+		   kernelParticles->value());
 }
 /*********************************************************************************************/
 /*********************************************************************************************/
@@ -138,8 +125,7 @@ void WindowConfiguration_Data_PCI_SPHSystem::changeData(QColor newValue)
 	if(data!=NULL)	delete(data);
 	data = new SimulationData_PCI_SPHSystem(particleRadius->value(),particleMass->value(),
 	       Vector3((double)(newValue.red()/255),(double)(newValue.green()/255),(double)(newValue.blue()/255)),
-	       restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),kernelParticles->value(),
-	       temperature->value());
+	       restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),kernelParticles->value());
 }
 /*********************************************************************************************/
 /*********************************************************************************************/

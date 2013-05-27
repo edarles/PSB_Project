@@ -10,9 +10,13 @@
 #include <System.h>
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
+#include <PciSphSystem.h>
+
 #include <CudaParticle.h>
 #include <SphSystem.h>
 #include <SphParticle.h>
+#include <PciSphParticle.h>
+
 #include <typeinfo>
 
 using namespace std;

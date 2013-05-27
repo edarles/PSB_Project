@@ -1,7 +1,5 @@
 #include <ParticleExporter_XML.h>
 #include <typeinfo>
-#include <CudaParticle.h>
-#include <SphParticle.h>
 
 namespace Utils {
 /***********************************************************************/
@@ -25,20 +23,23 @@ void ParticleExporter_XML::_export(const char* filename, System *S)
         doc.LinkEndChild(elmtPart);
 
 	if(typeid(*S) == typeid(SimpleSystem))
-		_export_SimpleParticles(doc,elmtPart,S);
+		_export_SimpleParticles(doc,elmtPart,(SimpleSystem*)S);
 
         if(typeid(*S) == typeid(CudaSystem))
-		_export_CudaParticles(doc,elmtPart,S);
+		_export_CudaParticles(doc,elmtPart,(CudaSystem*)S);
 
 	if(typeid(*S) == typeid(SPHSystem))
 		_export_SPHParticles(doc,elmtPart,(SPHSystem*)S);
+
+	if(typeid(*S) == typeid(PCI_SPHSystem))
+		_export_SPHParticles(doc,elmtPart,(PCI_SPHSystem*)S);
 
 	doc.SaveFile(filename);
 
 }
 /***********************************************************************/
 /***********************************************************************/
-void ParticleExporter_XML::_export_SimpleParticles(TiXmlDocument doc, TiXmlElement *elmtPart, System *S)
+void ParticleExporter_XML::_export_SimpleParticles(TiXmlDocument doc, TiXmlElement *elmtPart, SimpleSystem *S)
 {
 	elmtPart->SetAttribute("name","Simple System");
 	elmtPart->SetDoubleAttribute("dt",S->getDt());
@@ -53,8 +54,8 @@ void ParticleExporter_XML::_export_SimpleParticles(TiXmlDocument doc, TiXmlEleme
 	elmtPart->LinkEndChild(elmtGravity);
 
 	for(unsigned int i=0;i<particles.size();i++){
-			Vector3 pos = particles[i]->getNewPos();
-			Vector3 vel = particles[i]->getNewVel();
+			Vector3 pos = Vector3(S->m_hPos[1][i*3],S->m_hPos[1][i*3+1],S->m_hPos[1][i*3+2]);
+			Vector3 vel = Vector3(S->m_hVel[1][i*3],S->m_hVel[1][i*3+1],S->m_hVel[1][i*3+2]);
 			TiXmlElement * elmtParticle = new TiXmlElement( "Particle");
 			elmtParticle->SetAttribute("index", i);
 			elmtParticle->SetDoubleAttribute("mass",particles[i]->getMass());
@@ -80,7 +81,7 @@ void ParticleExporter_XML::_export_SimpleParticles(TiXmlDocument doc, TiXmlEleme
 }
 /***********************************************************************/
 /***********************************************************************/
-void ParticleExporter_XML::_export_CudaParticles(TiXmlDocument doc, TiXmlElement *elmtPart, System *S)
+void ParticleExporter_XML::_export_CudaParticles(TiXmlDocument doc, TiXmlElement *elmtPart, CudaSystem *S)
 {
 	elmtPart->SetAttribute("name","Cuda System");
 	elmtPart->SetDoubleAttribute("dt",S->getDt());
@@ -96,8 +97,8 @@ void ParticleExporter_XML::_export_CudaParticles(TiXmlDocument doc, TiXmlElement
 
 	for(unsigned int i=0;i<particles.size();i++){
 			CudaParticle* p = (CudaParticle*) particles[i];
-			Vector3 pos = particles[i]->getNewPos();
-			Vector3 vel = particles[i]->getNewVel();
+			Vector3 pos = Vector3(S->m_hPos[1][i*3],S->m_hPos[1][i*3+1],S->m_hPos[1][i*3+2]);
+			Vector3 vel = Vector3(S->m_hVel[1][i*3],S->m_hVel[1][i*3+1],S->m_hVel[1][i*3+2]);
 			TiXmlElement * elmtParticle = new TiXmlElement( "Particle");
 			elmtParticle->SetAttribute("index", i);
 			elmtParticle->SetDoubleAttribute("mass",particles[i]->getMass());

@@ -7,6 +7,7 @@
 #include <SimulationData_SimpleSystem.h>
 #include <SimulationData_CudaSystem.h>
 #include <SimulationData_SPHSystem.h>
+#include <SimulationData_PCI_SPHSystem.h>
 #include <Vector3.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
