@@ -14,6 +14,7 @@
 #include <vector>
 
 #include <AnimatedHeightField.h>
+#include <AnimatedPeriodicHeightField.h>
 #include <System.h>
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
@@ -53,8 +54,8 @@ using namespace std;
 
      SurfaceSPH* getSurface();
      
-     AnimatedHeightField* getAnimatedHF();
-     void setAnimatedHF(AnimatedHeightField * hf);
+     AnimatedPeriodicHeightField* getAnimatedHF();
+     void setAnimatedHF(AnimatedPeriodicHeightField * hf);
 
   //******************************************************************************
   // SURCHARGE DES FONCTIONS
@@ -87,7 +88,7 @@ using namespace std;
      //******************************************************************************
      SurfaceSPH *surface;
      
-     AnimatedHeightField *animatedHF;
+      AnimatedPeriodicHeightField *animatedHF;
 
      //******************************************************************************
      unsigned int frame_courante;

@@ -9,7 +9,6 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
 
    if(parent == NULL)
    {
-            std::cout<<"TROLOLO"<<std::endl;
          onglets = new QTabWidget();
              onglets->setGeometry(300, 200, 240, 160);
 
@@ -459,12 +458,12 @@ WindowConfiguration_AnimatedHeightField::~WindowConfiguration_AnimatedHeightFiel
 /****************************************************************************************************/
 void WindowConfiguration_AnimatedHeightField::accept()
 {
-	System *system = glWidget->getSystem();
-    //  MATHIAS -> peut être ajouter une méthode addAnimatedHeightField ???
-//    	system->addObjectCollision(H);
+    glWidget->setAnimatedHF(H);
 	glWidget->getDisplay()->setObjectIsCreate();
+    H->display(Vector3(255,255,255));
 	close();
 }
+/****************************************************************************************************/
 /****************************************************************************************************/
 void WindowConfiguration_AnimatedHeightField::cancel()
 {

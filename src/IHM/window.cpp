@@ -538,13 +538,10 @@ void Window::createPeriodicHeightFieldCollision()
 void Window::createAnimatedHeightFieldCollision()
 {
  System *S = glWidget->getSystem();
- if(S!=NULL) {
+// if(S!=NULL) {
 	WindowConfiguration_AnimatedHeightField *windowConfig = new WindowConfiguration_AnimatedHeightField(NULL,glWidget);
  	windowConfig->show();
- }
- else {
-	alertBox("Vous devez construire un système de particules avant d'effectuer cette opération !!",QMessageBox::Critical);
- }
+
 }
 
 
@@ -733,7 +730,7 @@ void Window::modeDisplay_DrawEmitters(bool b)
 //************************************************************************/
 void Window::play()
 {
- if(glWidget->getSystem()!=NULL){
+if(glWidget->getSystem()!=NULL || glWidget->getAnimatedHF() !=NULL){
  	glWidget->startAnimation();
  	glWidget->animate();
  }

@@ -21,12 +21,12 @@ SurfaceSPH* GLWidget::getSurface()
 	return surface;
 }
 
-AnimatedHeightField* GLWidget::getAnimatedHF()
+AnimatedPeriodicHeightField* GLWidget::getAnimatedHF()
 {
     return animatedHF;
 }
 
-void GLWidget::setAnimatedHF(AnimatedHeightField * hf)
+void GLWidget::setAnimatedHF(AnimatedPeriodicHeightField * hf)
 {
     animatedHF = hf;
 }
@@ -125,10 +125,16 @@ void GLWidget::draw()
 //******************************************************************************
 void GLWidget::animate()
 {
- system->update();
- //RAJOOUTER UPDATE
-// if(this->animatedHF)
-//     animatedHF->update();
+    
+ if(system !=NULL)
+ {
+    system->update();
+ }
+ if(this->animatedHF != NULL)
+ {
+     std::cout<<"Animation du HeightField"<<std::endl;
+     animatedHF->update();
+ }
  if(captureImage)
 	captureImagesSequence();
 }
