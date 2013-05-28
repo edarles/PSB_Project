@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <GL/gl.h>
 
+#include <vector_types.h>
+
 using namespace Utils;
 
 AnimatedPeriodicHeightField::AnimatedPeriodicHeightField()
@@ -87,18 +89,11 @@ void    AnimatedPeriodicHeightField::create(Vector3 origin, float length, float 
 
     //REPRENDRE CETTE IGNOMINIE
     
-    //	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax);
-    //    	Utils::HeightField::create(min_,max_,dx_,dz_);
-    
-//    Utils::Periodic_HeightField::generate();
-//    	Utils::Periodic_HeightField::display(Vector3(255,255,255));
+    Utils::Periodic_HeightField::generate();
+    Utils::Periodic_HeightField::display(Vector3(255,255,255));
     
     Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax);
     this->initialize();
-//	Periodic_HeightField::create(min_,max_,dx_,dz_);
-//	HeightField::generate();
-    curTime += t;
-
 }
 
 void AnimatedPeriodicHeightField::initialize()
@@ -146,14 +141,6 @@ void AnimatedPeriodicHeightField::initialize()
 	delete[] omega;
 }
 
-double AnimatedPeriodicHeightField::getCurtime() const {
-    return curTime;
-}
-
-void AnimatedPeriodicHeightField::setCurtime(double curTime) {
-    this->curTime = curTime;
-}
-
 void AnimatedPeriodicHeightField::display(Vector3 color)
 {
 	if(Periodic_HeightField::pos!=NULL){
@@ -195,10 +182,14 @@ void AnimatedPeriodicHeightField::displayNormale(Vector3 color)
     //normale = \nabla f = Vector3(drondf/drondx, drondf/drondy, drondf/drondz)
     Vector3 * N = new Vector3();
     double x, y, z;
-    double drondy;
+    double drondx;
+    double drondz;
+    double drondy = 1.0;
     for(int i=0;i<AMax;i++)
     {
-//        drondy += (m_A[i]*m_k[i]*cos(m_theta[i])*sin(m_k[i]*(Periodic_HeightField::pos[i]*cos(m_theta)+Periodic_HeightField::pos[i]->z*sin(m_theta[i]))-m_omega[i]*t+m_phi[i]) );
+        drondx += m_A[i]*m_k[i]*cos(m_theta[i])*sin(m_k[i]*(Periodic_HeightField::pos[0]*cos(m_theta[i])+Periodic_HeightField::pos[2]*sin(m_theta[i]))-m_omega[i]*t);
+        drondz += m_A[i]*m_k[i]*sin(m_theta[i])*sin(m_k[i]*(Periodic_HeightField::pos[0]*cos(m_theta[i])+Periodic_HeightField::pos[2]*sin(m_theta[i]))-m_omega[i]*t);
     }
-    drondy *= -1.0;
+    drondx *= -1.0;
+    drondz *= -1.0;
 }

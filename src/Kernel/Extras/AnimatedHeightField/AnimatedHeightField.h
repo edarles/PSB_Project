@@ -22,8 +22,14 @@ public:
     double getT() const;
     void setT(double t);
     
+    double getCurTime() const;
+    void setCurTime(double cur_time);
+    
+    void update();
+    
 protected:
-    float t;
+    double t;
+    double curTime;
 };
 
 #endif	/* ANIMATEDHEIGHTFIELD_H */

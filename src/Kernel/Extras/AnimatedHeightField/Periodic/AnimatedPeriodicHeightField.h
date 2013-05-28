@@ -31,11 +31,6 @@ public:
     
     void initialize();
     
-    double getCurtime() const;
-
-
-    void setCurtime(double curTime);
-    
     void display(Vector3 color);
     
     void displayNormale(Vector3 color);
@@ -43,8 +38,6 @@ public:
 private:
     //gpu store
     double *m_omega;
-    
-    double curTime; //to get the current step (sum of all timesteps done)
     
     double omegaMin, omegaMax;
 };

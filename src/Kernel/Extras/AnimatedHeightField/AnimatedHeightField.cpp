@@ -49,3 +49,19 @@ void AnimatedHeightField::setT(double t)
 {
     this->t = t;
 }
+
+double AnimatedHeightField::getCurTime() const
+{
+    return this->curTime;
+}
+
+void AnimatedHeightField::setCurTime(double cur_time)
+{
+    this->curTime = cur_time;
+}
+
+void AnimatedHeightField::AnimatedHeightField::update()
+{
+    this->curTime += this->t;
+    std::cout<<"Instant "<<this->curTime<<std::endl;
+}
