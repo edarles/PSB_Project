@@ -14,6 +14,7 @@
 #include <windowConfiguration_GaussianHeightField.h>
 #include <windowConfiguration_PeriodicHeightField.h>
 #include <windowConfiguration_CombinedHeightField.h>
+#include <windowConfiguration_AnimatedHeightField.h>//MATHIAS
 
 #include <windowConfiguration_Emitter_Box.h>
 #include <windowConfiguration_Emitter_Elipsoide.h>
@@ -261,6 +262,20 @@ Window::Window():QWidget()
     help_act->setShortcut(tr("H"));
     connect(help_act,SIGNAL(triggered()), this, SLOT(help()));
     menuHelp->addAction(help_act);
+    
+    //MENU EXTRA MATHIAS
+    menuExtras = new QMenu("&Extras");
+    
+    animated_heightfield = new QMenu(tr("&Animated Heightfield"),this);
+    
+    animated_heightfield_periodic = new QAction(tr("&Periodic"),this);
+    connect(animated_heightfield_periodic,SIGNAL(triggered()), this, SLOT(createAnimatedHeightFieldCollision()));
+    
+    floating_object = new QAction(tr("&Floating Object"),this);
+    
+    menuExtras->addMenu(animated_heightfield);
+    menuExtras->addAction(floating_object);
+    animated_heightfield->addAction(animated_heightfield_periodic);
    
    // AJOUT DES MENUS AU MENU BAR DE LA FENETRE
     menuBar->addMenu(menuFile);
@@ -270,6 +285,7 @@ Window::Window():QWidget()
     menuBar->addMenu(menuForcesExt);
     menuBar->addMenu(menuDisplay);
     menuBar->addMenu(menuAnimation);
+    menuBar->addMenu(menuExtras);
     menuBar->addMenu(menuHelp);
 
     mainLayout = new QVBoxLayout();
@@ -516,6 +532,23 @@ void Window::createPeriodicHeightFieldCollision()
 	alertBox("Vous devez construire un système de particules avant d'effectuer cette opération !!",QMessageBox::Critical);
  }
 }
+
+
+//************************************************************************/
+void Window::createAnimatedHeightFieldCollision()
+{
+ System *S = glWidget->getSystem();
+ if(S!=NULL) {
+	WindowConfiguration_AnimatedHeightField *windowConfig = new WindowConfiguration_AnimatedHeightField(NULL,glWidget);
+ 	windowConfig->show();
+ }
+ else {
+	alertBox("Vous devez construire un système de particules avant d'effectuer cette opération !!",QMessageBox::Critical);
+ }
+}
+
+
+
 //************************************************************************/
 void Window::createCombinedHeightFieldCollision()
 {

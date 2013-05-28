@@ -54,7 +54,7 @@ public slots:
      void createGaussianHeightFieldCollision();
      void createPeriodicHeightFieldCollision();
      void createCombinedHeightFieldCollision();
-//     void createAnimatedHeightFieldCollision(); //MATHIAS
+     void createAnimatedHeightFieldCollision(); //MATHIAS
      void loadFileCollision();
  
      //************************************************************************/
