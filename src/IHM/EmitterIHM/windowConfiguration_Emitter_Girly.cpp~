@@ -93,7 +93,7 @@ void WindowConfiguration_Emitter_Girly::cancel()
 }
 /***********************************************************************************/
 /***********************************************************************************/
-EmitterSphere* WindowConfiguration_Emitter_Girly::getEmitter()
+EmitterGirly* WindowConfiguration_Emitter_Girly::getEmitter()
 {
 	return B;
 }

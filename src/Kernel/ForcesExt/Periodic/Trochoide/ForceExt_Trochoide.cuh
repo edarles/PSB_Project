@@ -1,7 +1,19 @@
-#ifndef _FORCE_EXT_KERNEL_TROCHOIDE_H_
-#define _FORCE_EXT_KERNEL_TROCHOIDE_H_
-
-__global__ void evaluate_force_trochoide (uint nbBodies, double3* position, double3* accumForceBuff, double* mass,
-   			  		  float A, float k, float theta, float w, float phi, float t);
-
+#ifndef _FORCE_EXT_TROCHOIDE_CUDA_H_
+#define _FORCE_EXT_TROCHOIDE_CUDA_H_
+/**********************************************************************************************/
+/**********************************************************************************************/
+#include <ForceExt_Trochoide_Kernel.cuh>
+#include <common.cuh>
+/**********************************************************************************************/
+extern "C"
+{
+/**********************************************************************************************/
+void evaluate_forceExt_Trochoide_CUDA (double* position, double* accumForceBuff, double* mass,
+   			  	       float A, float k, float theta, float w, float phi, float t, uint nbBodies);
+/**********************************************************************************************/
+}
+/**********************************************************************************************/
+/**********************************************************************************************/
 #endif
+/**********************************************************************************************/
+/**********************************************************************************************/

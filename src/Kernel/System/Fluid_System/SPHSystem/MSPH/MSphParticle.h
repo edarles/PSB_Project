@@ -5,12 +5,18 @@
 #include <PciSphParticle.h>
 /**************************************************************************************/
 /**************************************************************************************/
-class MSPHParticle : public PCI_SPHParticle {
+class MSPHParticle : public SPHParticle {
 
 	public:
 /**************************************************************************************/
 		MSPHParticle();
+		
 		MSPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRadius, Vector3 color,
+			     float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
+			     float gasStiffness, float threshold, float surfaceTension, float viscosity,
+			     float temperature, Vector3 sigma, Vector3 beta, Vector3 g);
+
+		MSPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3 velInterAp, double mass, float particleRadius, Vector3 color,
 			     float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
 			     float gasStiffness, float threshold, float surfaceTension, float viscosity,
 			     float temperature, Vector3 sigma, Vector3 beta, Vector3 g);

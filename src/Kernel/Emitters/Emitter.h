@@ -1,16 +1,24 @@
 #ifndef _EMITTER_
 #define _EMITTER_
 
-#include <Particle.h>
-#include <vector>
 #include <SimulationData.h>
 #include <SimulationData_SimpleSystem.h>
 #include <SimulationData_CudaSystem.h>
 #include <SimulationData_SPHSystem.h>
 #include <SimulationData_PCI_SPHSystem.h>
+#include <SimulationData_MSPHSystem.h>
+
+#include <Particle.h>
+#include <CudaParticle.h>
+#include <SphParticle.h>
+#include <PciSphParticle.h>
+#include <MSphParticle.h>
+
+#include <vector>
 #include <Vector3.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <typeinfo>
 
 using namespace std;
 

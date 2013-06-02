@@ -18,6 +18,7 @@ class ForceExt_Trochoide : public ForceExt_Periodic {
 		ForceExt_Trochoide(const ForceExt_Trochoide& F);
 		~ForceExt_Trochoide();
 
+		void   evaluate(double* pos, double* acummForce, double* mass, uint nbBodies);
 };
 /*****************************************************************************************************/
 

@@ -1,7 +1,7 @@
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 #include <ForceExt_Trochoide.h>
-
+#include <ForceExt_Trochoide.cuh>
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 ForceExt_Trochoide::ForceExt_Trochoide():ForceExt_Periodic()
@@ -12,7 +12,7 @@ ForceExt_Trochoide::ForceExt_Trochoide(float A, float lambda, float theta, float
 {
 }
 /*****************************************************************************************************/
-ForceExt_Trochoide::ForceExt_Trochoide(const ForceExt_Trochoide& F):ForceExt(F)
+ForceExt_Trochoide::ForceExt_Trochoide(const ForceExt_Trochoide& F):ForceExt_Periodic(F)
 {
 }
 /*****************************************************************************************************/
@@ -21,3 +21,9 @@ ForceExt_Trochoide::~ForceExt_Trochoide()
 }
 /*****************************************************************************************************/
 /*****************************************************************************************************/
+void ForceExt_Trochoide::evaluate(double* pos, double* acummForce, double* mass, uint nbBodies)
+{
+	evaluate_forceExt_Trochoide_CUDA(pos,acummForce,mass,A, k, theta, w, phi, time,nbBodies);
+	cudaDeviceSynchronize();
+	time += step;
+}

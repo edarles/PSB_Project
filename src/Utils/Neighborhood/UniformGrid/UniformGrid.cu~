@@ -135,7 +135,7 @@ void displayGrid(UniformGrid *grid)
 	glColor3f(1,1,1);
 	float s = grid->sizeCell;
         grid->nbCellsZ = grid->nbCellsY;
-       // printf("size:%f nbC:%d %d %d\n",s,grid.nbCellsX,grid.nbCellsY,grid.nbCellsZ);
+    
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 	
 	for(unsigned int i=0;i<grid->nbCellsX;i++){
@@ -145,7 +145,6 @@ void displayGrid(UniformGrid *grid)
 				double xC = grid->m_hPos[indexCell*3];
 				double yC = grid->m_hPos[indexCell*3+1];
 				double zC = grid->m_hPos[indexCell*3+2];
-	//			printf("index:%d xC:%f yC:%f zC:%f\n",indexCell,xC,yC,zC);
 
 				glBegin(GL_POLYGON);
 				glVertex3f(xC-s/2,yC+s/2,zC-s/2);

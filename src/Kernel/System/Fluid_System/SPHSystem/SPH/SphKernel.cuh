@@ -1,6 +1,12 @@
 #ifndef _SPH_KERNEL_
 #define _SPH_KERNEL_
 
+#include <cuda.h>
+#include <vector_functions.h>
+#include <cuda_runtime_api.h>
+#include <cuda.h>
+#include <host_defines.h>
+
 extern "C" {
 
 typedef struct

@@ -11,7 +11,7 @@
 #include <WindowConfiguration_Data_SPHSystem.h>
 #include <WindowConfiguration_Data_PCI_SPHSystem.h>
 #include <WindowConfiguration_Data_CudaSystem.h>
-
+#include <WindowConfiguration_Data_MSPHSystem.h>
 //************************************************************************/
 //************************************************************************/
 class WindowConfiguration_Emitter_Girly : public QWidget
@@ -21,20 +21,20 @@ class WindowConfiguration_Emitter_Girly : public QWidget
 //************************************************************************/
 public:
 
-    WindowConfiguration_Emitter_Sphere(GLWidget *glWidget);
-    ~WindowConfiguration_Emitter_Sphere();
+    WindowConfiguration_Emitter_Girly(GLWidget *glWidget);
+    ~WindowConfiguration_Emitter_Girly();
 
-    EmitterSphere *getEmitter();
+    EmitterGirly *getEmitter();
 
 public slots:
 
     void accept();
     void cancel();
-    void displaySphere(double);
+    void displayEmitter(double);
 
 private:
 	
-    EmitterSphere *B;
+    EmitterGirly *B;
     GLWidget *glWidget;
     
     QPushButton *buttonOK;
@@ -44,8 +44,8 @@ private:
 
     QVBoxLayout *layout;
 
-    QDoubleSpinBox *OX, *OY, *OZ, *radius, *VX, *VY, *VZ;
-    QLabel *originLabel, *radiusLabel, *velocityLabel;
+    QDoubleSpinBox *VX, *VY, *VZ;
+    QLabel *velocityLabel;
     
 };
 

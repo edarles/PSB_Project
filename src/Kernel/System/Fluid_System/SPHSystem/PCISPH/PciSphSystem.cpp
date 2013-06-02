@@ -116,7 +116,7 @@ void PCI_SPHSystem::_initialize(int begin, int numParticles)
 	 m_hColors[i*4] = p->getColor().x();
 	 m_hColors[(i*4)+1] = p->getColor().y();
 	 m_hColors[(i*4)+2] = p->getColor().z();
-	 m_hColors[(i*4)+3] = 1;//0.5;
+	 m_hColors[(i*4)+3] = 1;
    }
     copyArrayToDevice(m_dPos[0], m_hPos[0], 0, sizeof(double)*3*numParticles);
     copyArrayToDevice(m_dVel[0], m_hVel[0], 0, sizeof(double)*3*numParticles);

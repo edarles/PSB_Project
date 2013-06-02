@@ -28,6 +28,12 @@ vector<Particle*> ParticleLoader_XML::load(System *S, const char *filename)
 
 	if(typeid(*S) == typeid(SPHSystem))
 		return loadSPHSystem(doc);
+
+	if(typeid(*S) == typeid(PCI_SPHSystem))
+		return loadSPHSystem(doc);
+
+	if(typeid(*S) == typeid(MSPHSystem))
+		return loadMSPHSystem(doc);
   }
  }
 /**************************************************************************************/
@@ -173,7 +179,68 @@ vector<Particle*> ParticleLoader_XML::loadSPHSystem(TiXmlDocument doc)
 	}
    	return particles;
 }
+/**************************************************************************************/
+/**************************************************************************************/
+vector<Particle*> ParticleLoader_XML::loadMSPHSystem(TiXmlDocument doc)
+{
+  	vector<Particle*> particles;
+  	TiXmlHandle hDoc(&doc);
+	TiXmlElement* elem;
+	TiXmlElement* hRoot = doc.FirstChildElement( "Particles" );
+        elem=hDoc.FirstChildElement().Element();
+	if(string(elem->Attribute("name"))=="MSPH System"){
+		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
+		printf("load SPHSystem\n");
+		for( partElement; partElement; partElement=partElement->NextSiblingElement())
+		{
+			double mass, radius, interactionRadius, kernelParticles, restDensity, 
+			       gasStiffness, threshold, surfaceTension, viscosity, temperature;
+			partElement->QueryDoubleAttribute("mass",&mass);
+			partElement->QueryDoubleAttribute("radius",&radius);
+			partElement->QueryDoubleAttribute("kernelParticles",&kernelParticles);
+			partElement->QueryDoubleAttribute("interactionRadius",&interactionRadius);
+			partElement->QueryDoubleAttribute("restDensity",&restDensity);
+			partElement->QueryDoubleAttribute("gasStiffness",&gasStiffness);
+			partElement->QueryDoubleAttribute("threshold",&threshold);
+			partElement->QueryDoubleAttribute("surfaceTension",&surfaceTension);
+			partElement->QueryDoubleAttribute("viscosity",&viscosity);
+			partElement->QueryDoubleAttribute("temperature",&temperature);
 
+			TiXmlElement* position = partElement->FirstChildElement("position");
+			double x,y,z;
+			position->QueryDoubleAttribute("X", &x);
+			position->QueryDoubleAttribute("Y", &y);
+			position->QueryDoubleAttribute("Z", &z);
+			TiXmlElement* vel = partElement->FirstChildElement("velocity");
+			double vx,vy,vz;
+			vel->QueryDoubleAttribute("X", &vx);
+			vel->QueryDoubleAttribute("Y", &vy);
+			vel->QueryDoubleAttribute("Z", &vz);
+			TiXmlElement* velInterAv = partElement->FirstChildElement("velocityInterAv");
+			double vav_x,vav_y,vav_z;
+			velInterAv->QueryDoubleAttribute("X", &vav_x);
+			velInterAv->QueryDoubleAttribute("Y", &vav_y);
+			velInterAv->QueryDoubleAttribute("Z", &vav_z);
+			TiXmlElement* velInterAp = partElement->FirstChildElement("velocityInterAp");
+			double vap_x,vap_y,vap_z;
+			velInterAp->QueryDoubleAttribute("X", &vap_x);
+			velInterAp->QueryDoubleAttribute("Y", &vap_y);
+			velInterAp->QueryDoubleAttribute("Z", &vap_z);
+			double cx,cy,cz;
+			TiXmlElement* color = partElement->FirstChildElement("color");
+			color->QueryDoubleAttribute("X", &cx);
+			color->QueryDoubleAttribute("Y", &cy);
+			color->QueryDoubleAttribute("Z", &cz);
+
+			MSPHParticle *p = new MSPHParticle(Vector3(x,y,z),Vector3(vx,vy,vz),Vector3(vav_x,vav_y,vav_z), 
+				     Vector3(vap_x,vap_y,vap_z),mass,radius,Vector3(cx,cy,cz),
+			   	     interactionRadius, kernelParticles, 0, restDensity, 0, gasStiffness,
+				     threshold,surfaceTension,viscosity,temperature,Vector3(0,0,0),Vector3(0,0,0),Vector3(0,0,0));
+			particles.push_back(p);
+		}
+	}
+   	return particles;
+}
 }
 /**************************************************************************************/
 /**************************************************************************************/

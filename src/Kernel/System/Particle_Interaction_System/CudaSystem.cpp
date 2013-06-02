@@ -3,9 +3,7 @@
 #include <CudaSystem.h>
 #include <System.cuh>
 #include <CudaSystem.cuh>
-#include <ForceExt.cuh>
-#include <typeinfo>
-
+#include <cuda.h>
 /*****************************************************************************/
 /*****************************************************************************/
 CudaSystem::CudaSystem():System()
@@ -225,21 +223,8 @@ void CudaSystem::update()
 /*****************************************************************************/
 void CudaSystem::evaluateForcesExt()
 {
-   for(unsigned int i=0;i<particles.size();i++){
-	m_hForce[(i*3)] = 0; m_hForce[(i*3)+1] = 0; m_hForce[(i*3)+2] = 0; 
-   }
-   copyArrayToDevice(FExt->m_F, m_hForce, 0, sizeof(double)*3*particles.size());
-   for(unsigned int i=0;i<FExt->getNbForces();i++){
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Constante)){
-			ForceExt_Constante* FC = (ForceExt_Constante*) FExt->getForce(i);
-			evaluate_ForceExt_Constante(particles.size(), FExt->m_F, m_dMass, FC); 
-		}
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Trochoide)){
-			ForceExt_Trochoide *T = (ForceExt_Trochoide*) FExt->getForce(i);
-			evaluate_ForceExt_Trochoide(particles.size(), m_hPos[1], FExt->m_F, m_dMass, T);	
-			T->setTime(T->getTime()+1); 
-		}
-   }
+   FExt->init(particles.size());
+   FExt->evaluate(m_dPos[0],FExt->m_F, m_dMass, particles.size());
    interactionSystem(m_dPos[0], m_dVel[0], FExt->m_F, m_dInteractionRadius, m_dSpring, m_dDamping,
 		     m_dShear, m_dAttraction, voisines, particles.size());
 }

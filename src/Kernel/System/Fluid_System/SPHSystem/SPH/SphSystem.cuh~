@@ -1,6 +1,11 @@
 #include <common.cuh>
 #include <SimulationData_SPHSystem.h>
 #include <SphKernel.cuh>
+#include <cuda.h>
+#include <vector_functions.h>
+#include <cuda_runtime_api.h>
+#include <cuda.h>
+#include <host_defines.h>
 
 extern "C" {
 
@@ -15,7 +20,4 @@ void interpolateSPHVelocities(double* velInterAv, double* velInterAp, double* ol
 void evaluate_densities_forces(double* pos, double* vel, double* mass, double* radius, double* densities, double* pressure, 
 			       double* normales, double* restDensities, double* viscosities, double *k, double* threshold, double* surfaceTension, 
 		               int numBodies, double* fPressure, double* fViscosity, double* fSurface, double* forcesAccum, partVoisine voisines);
-/**********************************************************************************************************/
-void evaluateSPH_Wjs(double* pos, double* radius, double scale, partVoisine voisines, int numBodies, double* m_wj);
-/**********************************************************************************************************/
 }

@@ -18,16 +18,16 @@ WindowConfiguration_Emitter_Sphere::WindowConfiguration_Emitter_Sphere(GLWidget 
 	OY = new QDoubleSpinBox(page1);
 	OZ = new QDoubleSpinBox(page1);
 	OX->setValue(0.0); OY->setValue(0.0); OZ->setValue(0.0);
-	connect(OX, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
-	connect(OY, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
-	connect(OZ, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
+	connect(OX, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
+	connect(OY, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
+	connect(OZ, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
  
 	radiusLabel = new QLabel("radius",page1);
  	radius = new QDoubleSpinBox(page1);
 	radius->setMinimum(0.1);
 	radius->setMaximum(1000);
 	radius->setValue(0.3);
-	connect(radius, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
+	connect(radius, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
 
 	velocityLabel = new QLabel("Velocity particles",page1);
 	VX = new QDoubleSpinBox(page1);
@@ -37,9 +37,9 @@ WindowConfiguration_Emitter_Sphere::WindowConfiguration_Emitter_Sphere(GLWidget 
 	VY->setMinimum(-10); VY->setMaximum(10);
 	VZ->setMinimum(-10); VZ->setMaximum(10);
 	VX->setValue(0.0); VY->setValue(0.0); VZ->setValue(0.0);
-	connect(VX, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
-	connect(VY, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
-	connect(VZ, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
+	connect(VX, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
+	connect(VY, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
+	connect(VZ, SIGNAL(valueChanged(double)), this, SLOT(displaySphere(double))); 
 
 	QVBoxLayout *layout1 = new QVBoxLayout();
 	QGridLayout *grid1 = new QGridLayout();

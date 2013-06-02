@@ -14,6 +14,7 @@ ForceExt_Periodic::ForceExt_Periodic():ForceExt()
 	f = 0;
 	phi = 0;
 	time = 0;
+	step = 0;
 }
 /*****************************************************************************************************/
 ForceExt_Periodic::ForceExt_Periodic(float A, float lambda, float theta, float f, float phi):ForceExt()
@@ -26,6 +27,7 @@ ForceExt_Periodic::ForceExt_Periodic(float A, float lambda, float theta, float f
 	this->k = 2*M_PI/lambda;
 	this->w = 2*M_PI*f;
 	this->time = 0;
+	step = 0.01;
 }
 /*****************************************************************************************************/
 ForceExt_Periodic::ForceExt_Periodic(const ForceExt_Periodic& F):ForceExt()
@@ -38,14 +40,10 @@ ForceExt_Periodic::ForceExt_Periodic(const ForceExt_Periodic& F):ForceExt()
 	this->k = F.k;
 	this->w = F.w;
 	this->time = F.time;
+	this->step = F.step;
 }
 /*****************************************************************************************************/
 ForceExt_Periodic::~ForceExt_Periodic()
-{
-}
-
-/*****************************************************************************************************/
-void ForceExt_Periodic::draw()
 {
 }
 /*****************************************************************************************************/
@@ -90,6 +88,11 @@ float ForceExt_Periodic::getTime()
 	return time;
 }
 /*****************************************************************************************************/
+float ForceExt_Periodic::getStep()
+{
+	return step;
+}
+/*****************************************************************************************************/
 /*****************************************************************************************************/
 void ForceExt_Periodic::setAmplitude(float A)
 {
@@ -129,6 +132,11 @@ void ForceExt_Periodic::setDephasage(float phi)
 void ForceExt_Periodic::setTime(float time)
 {
 	this->time = time;
+}
+/*****************************************************************************************************/
+void ForceExt_Periodic::setStep(float step)
+{
+	this->step = step;
 }
 /*****************************************************************************************************/
 /*****************************************************************************************************/

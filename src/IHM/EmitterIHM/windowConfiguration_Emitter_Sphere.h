@@ -11,6 +11,7 @@
 #include <WindowConfiguration_Data_SPHSystem.h>
 #include <WindowConfiguration_Data_PCI_SPHSystem.h>
 #include <WindowConfiguration_Data_CudaSystem.h>
+#include <WindowConfiguration_Data_MSPHSystem.h>
 
 //************************************************************************/
 //************************************************************************/

@@ -306,17 +306,7 @@ void SPHSystem::evaluateDensitiesForces()
 /*****************************************************************************/
 void SPHSystem::evaluateForcesExt()
 {
-   for(unsigned int i=0;i<FExt->getNbForces();i++){
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Constante)){
-			ForceExt_Constante* FC = (ForceExt_Constante*) FExt->getForce(i);
-			evaluate_ForceExt_Constante(particles.size(),FExt->m_F, m_density, FC); 
-		}
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Trochoide)){
-			ForceExt_Trochoide *T = (ForceExt_Trochoide*) FExt->getForce(i);
-			evaluate_ForceExt_Trochoide(particles.size(), m_hPos[1], FExt->m_F, m_density, T);	
-			T->setTime(T->getTime()+1); 
-		}
-   }
+   FExt->evaluate(m_dPos[1],FExt->m_F, m_density, particles.size());
 }
 
 /*****************************************************************************/

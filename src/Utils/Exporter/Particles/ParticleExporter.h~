@@ -4,6 +4,12 @@
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
 #include <SphSystem.h>
+#include <PciSphSystem.h>
+
+#include <Particle.h>
+#include <CudaParticle.h>
+#include <SphParticle.h>
+#include <PciSphParticle.h>
 
 namespace Utils {
 

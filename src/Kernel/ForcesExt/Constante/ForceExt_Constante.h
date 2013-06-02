@@ -18,7 +18,7 @@ class ForceExt_Constante : public ForceExt {
 		ForceExt_Constante(const ForceExt_Constante& F);
 		~ForceExt_Constante();
 
-		void draw();
+		void   evaluate(double* pos, double* acummForce, double* mass, uint nbBodies);
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 		Vector3 getDirection();

@@ -4,6 +4,7 @@
 #include <windowConfiguration_CudaSystem.h>
 #include <windowConfiguration_SPHSystem.h>
 #include <windowConfiguration_PCI_SPHSystem.h>
+#include <windowConfiguration_MSPHSystem.h>
 
 #include <windowConfiguration_Sphere.h>
 #include <windowConfiguration_Box.h>
@@ -24,6 +25,8 @@
 
 #include <windowConfiguration_ForceExt_Trochoide.h>
 #include <windowConfiguration_ForceExt_Constante.h>
+
+#include <windowConfiguration_AnimatedHeightField.h>
 
 #include <ParticleExporter_Txt.h>
 #include <ParticleExporter_XML.h>
@@ -105,9 +108,13 @@ Window::Window():QWidget()
     connect(fluidSystem_act, SIGNAL(triggered()), this, SLOT(fluidSystem()));
     menuParticles->addAction(fluidSystem_act);
 
-    PCI_fluidSystem_act = new QAction(tr("PCI SPH System"),this);
+    PCI_fluidSystem_act = new QAction(tr("PCISPH System"),this);
     connect(PCI_fluidSystem_act, SIGNAL(triggered()), this, SLOT(PCI_fluidSystem()));
     menuParticles->addAction(PCI_fluidSystem_act);
+ 
+    Mixing_fluidSystem_act = new QAction(tr("MSPH System"),this);
+    connect(Mixing_fluidSystem_act, SIGNAL(triggered()), this, SLOT(Mixing_fluidSystem()));
+    menuParticles->addAction(Mixing_fluidSystem_act);
 
     // MENU COLLISION
     menuCollision = new QMenu("&Collision");
@@ -237,18 +244,22 @@ Window::Window():QWidget()
     connect(modeDisplay_DrawEmitters_act, SIGNAL(toggled(bool)), this, SLOT(modeDisplay_DrawEmitters(bool)));
     menuDisplay->addAction(modeDisplay_DrawEmitters_act);
 
+    // MENU EXTRAS
+    menuExtras = new QMenu("&Extras");
+    menuExtras_AnimatedHeightField = new QMenu("&AnimatedHeightField");
+    createAnimatedHeightField_act = new QAction(tr("&Periodic"),this);
+    connect(createAnimatedHeightField_act , SIGNAL(triggered()), this, SLOT(createAnimatedHeightField()));
+    menuExtras_AnimatedHeightField->addAction(createAnimatedHeightField_act);
+    menuExtras->addMenu(menuExtras_AnimatedHeightField);
+
     // MENU ANIMATION
-    menuAnimation = new QMenu("&Animation");
-   
+    menuAnimation = new QMenu("&Animation");   
     play_act = new QAction(tr("Play"),this);
     connect(play_act, SIGNAL(triggered()), this, SLOT(play()));
-   
     stop_act = new QAction(tr("Stop"),this);
     connect(stop_act, SIGNAL(triggered()), this, SLOT(stop()));
-    
     captureFrames_act = new QAction(tr("Capture Video"),this);
     connect(captureFrames_act, SIGNAL(triggered()), this, SLOT(captureFrames()));
-  
     menuAnimation->addAction(play_act);
     menuAnimation->addAction(stop_act);
     menuAnimation->addSeparator();
@@ -256,7 +267,6 @@ Window::Window():QWidget()
 
    // MENU AIDE
     menuHelp = new QMenu("&Help");
-
     help_act = new QAction(tr("&Display"),this);
     help_act->setShortcut(tr("H"));
     connect(help_act,SIGNAL(triggered()), this, SLOT(help()));
@@ -269,6 +279,7 @@ Window::Window():QWidget()
     menuBar->addMenu(menuEmitters);
     menuBar->addMenu(menuForcesExt);
     menuBar->addMenu(menuDisplay);
+    menuBar->addMenu(menuExtras);
     menuBar->addMenu(menuAnimation);
     menuBar->addMenu(menuHelp);
 
@@ -426,6 +437,12 @@ void Window::fluidSystem()
 void Window::PCI_fluidSystem()
 {
    WindowConfiguration_PCI_SPHSystem *windowConfig = new WindowConfiguration_PCI_SPHSystem(glWidget);
+   windowConfig->show();
+}
+//************************************************************************/
+void Window::Mixing_fluidSystem()
+{
+   WindowConfiguration_MSPHSystem *windowConfig = new WindowConfiguration_MSPHSystem(glWidget);
    windowConfig->show();
 }
 
@@ -695,18 +712,27 @@ void Window::modeDisplay_DrawEmitters(bool b)
  glWidget->getDisplay()->setDrawEmitters(b);
 }
 //************************************************************************/
+// SLOTS MENU EXTRAS
+//************************************************************************/
+//************************************************************************/
+void Window::createAnimatedHeightField()
+{
+  WindowConfiguration_AnimatedHeightField *windowConfig = new WindowConfiguration_AnimatedHeightField(glWidget);
+  windowConfig->show();
+}
+//************************************************************************/
 // SLOTS MENU ANIMATION
 //************************************************************************/
 //************************************************************************/
 void Window::play()
 {
- if(glWidget->getSystem()!=NULL){
+ //if(glWidget->getSystem()!=NULL){
  	glWidget->startAnimation();
  	glWidget->animate();
- }
+ /*}
  else {
 	alertBox("Pas de de système à animer !!",QMessageBox::Critical);
- }
+ }*/
 }
 //************************************************************************/
 void Window::stop()

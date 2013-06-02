@@ -38,14 +38,14 @@ WindowConfiguration_Emitter_Cylinder::WindowConfiguration_Emitter_Cylinder(GLWid
  	length = new QDoubleSpinBox(page1);
 	length->setMinimum(0.1);
 	length->setMaximum(1000);
-	length->setValue(0.5);
+	length->setValue(0.8);
 	connect(length, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double)));
  
 	radiusLabel = new QLabel("radius",page1);
  	radius = new QDoubleSpinBox(page1);
 	radius->setMinimum(0.1);
 	radius->setMaximum(1000);
-	radius->setValue(0.1);
+	radius->setValue(0.3);
 	connect(radius, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
 
 	velocityLabel = new QLabel("Velocity particles",page1);

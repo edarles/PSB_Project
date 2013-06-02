@@ -9,6 +9,7 @@
 
 #include <WindowConfiguration_Data_SimpleSystem.h>
 #include <WindowConfiguration_Data_SPHSystem.h>
+#include <WindowConfiguration_Data_PCI_SPHSystem.h>
 #include <WindowConfiguration_Data_CudaSystem.h>
 
 //************************************************************************/

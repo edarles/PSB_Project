@@ -306,17 +306,7 @@ void SPHSystem::evaluateDensitiesForces()
 /*****************************************************************************/
 void SPHSystem::evaluateForcesExt()
 {
-   for(unsigned int i=0;i<FExt->getNbForces();i++){
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Constante)){
-			ForceExt_Constante* FC = (ForceExt_Constante*) FExt->getForce(i);
-			evaluate_ForceExt_Constante(particles.size(),FExt->m_F, m_density, FC); 
-		}
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Trochoide)){
-			ForceExt_Trochoide *T = (ForceExt_Trochoide*) FExt->getForce(i);
-			evaluate_ForceExt_Trochoide(particles.size(), m_hPos[1], FExt->m_F, m_density, T);	
-			T->setTime(T->getTime()+1); 
-		}
-   }
+  FExt->evaluate(m_dPos[0],FExt->m_F, m_dMass, particles.size());
 }
 
 /*****************************************************************************/
@@ -353,7 +343,7 @@ void SPHSystem::evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCe
 /*****************************************************************************/
 void SPHSystem::computeNormales_Vertex(double* posV, double* normales, float scale, uint nbV)
 {
-	computeNormales_Vertex_CUDA_v2(posV, normales, scale, nbV,
+	computeNormales_Vertex_CUDA (posV, normales, scale, nbV,
 			            grid, m_dPos[1], m_interactionRadius, m_dMass, m_density, particles.size());
 }
 /*****************************************************************************/

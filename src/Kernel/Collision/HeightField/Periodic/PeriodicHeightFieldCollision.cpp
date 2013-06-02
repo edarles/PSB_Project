@@ -30,7 +30,7 @@ void Periodic_HeightFieldCollision::create(Vector3 origin, float length, float w
 	Vector3 min_(origin.x()-length/2,origin.y(),origin.z()-width/2);
 	Vector3 max_(origin.x()+length/2,origin.y(),origin.z()+width/2);
 
-	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax);
+	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax,0,0);
 	HeightField::create(min_,max_,dx_,dz_);
 	HeightField::generate();
 }

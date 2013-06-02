@@ -20,6 +20,7 @@ class ParticleExporter_XML : public ParticleExporter {
 	void _export_SimpleParticles(TiXmlDocument doc, TiXmlElement *elmPart, SimpleSystem *S);
 	void _export_CudaParticles(TiXmlDocument doc, TiXmlElement *elmPart, CudaSystem *S);
 	void _export_SPHParticles(TiXmlDocument doc, TiXmlElement *elmtPart, SPHSystem *S);
+	void _export_MSPHParticles(TiXmlDocument doc, TiXmlElement *elmtPart, MSPHSystem *S);
 };
 
 }

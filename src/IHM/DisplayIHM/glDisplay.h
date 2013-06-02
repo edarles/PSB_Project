@@ -79,6 +79,7 @@ class GLWidget;
 	void displayParticles();
 	void displayCollisions();
 	void displayEmitters();
+	void displayAnimatedHeightField();
 
 	// Draw object creation during configuration
 	ObjectCollision *currentObj;

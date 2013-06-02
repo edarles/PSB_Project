@@ -1,8 +1,6 @@
 #include <GLee.h>
 #include <SimpleSystem.h>
 #include <System.cuh>
-#include <ForceExt.cuh>
-#include <typeinfo>
 
 /*****************************************************************************/
 /*****************************************************************************/
@@ -164,21 +162,8 @@ void SimpleSystem::update()
 /*****************************************************************************/
 void SimpleSystem::evaluateForcesExt()
 {
-   for(unsigned int i=0;i<particles.size();i++){
-	m_hForce[i] = 0; m_hForce[i+1] = 0; m_hForce[i+2] = 0; 
-   }
-   copyArrayToDevice(FExt->m_F, m_hForce, 0, sizeof(double)*3*particles.size());
-   for(unsigned int i=0;i<FExt->getNbForces();i++){
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Constante)){
-			ForceExt_Constante* FC = (ForceExt_Constante*) FExt->getForce(i);
-			evaluate_ForceExt_Constante(particles.size(), FExt->m_F, m_dMass, FC); 
-		}
-		if(typeid(*(FExt->getForce(i))) == typeid(ForceExt_Trochoide)){
-			ForceExt_Trochoide *T = (ForceExt_Trochoide*) FExt->getForce(i);
-			evaluate_ForceExt_Trochoide(particles.size(), m_dPos[0], FExt->m_F, m_dMass, T);	
-			T->setTime(T->getTime()+1); 
-		}
-   }
+   FExt->init(particles.size());
+   FExt->evaluate(m_dPos[0],FExt->m_F, m_dMass, particles.size());
 }
 /*****************************************************************************/
 void SimpleSystem::integrate()

@@ -18,8 +18,6 @@ class ForceExt_Periodic : public ForceExt {
 		ForceExt_Periodic(const ForceExt_Periodic& F);
 		~ForceExt_Periodic();
 
-		void draw();
-
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 		float getAmplitude();
@@ -30,6 +28,7 @@ class ForceExt_Periodic : public ForceExt {
 		float getFrequency();
 		float getDephasage();
 		float getTime();
+		float getStep();
 
 /*****************************************************************************************************/
 /*****************************************************************************************************/
@@ -41,10 +40,11 @@ class ForceExt_Periodic : public ForceExt {
 		void setFrequency(float);
 		void setDephasage(float);
 		void setTime(float);
+		void setStep(float);
 
 /*****************************************************************************************************/
 /*****************************************************************************************************/
-	private:
+	protected:
 
 		float A;
 		float lambda;
@@ -54,6 +54,7 @@ class ForceExt_Periodic : public ForceExt {
 		float f;
 		float phi;
 		float time;
+		float step;
 };
 /*****************************************************************************************************/
 

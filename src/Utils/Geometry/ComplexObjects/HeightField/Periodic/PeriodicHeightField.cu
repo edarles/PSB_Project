@@ -25,6 +25,16 @@ void PeriodicHeightField_calculateHeight_Normales_CUDA(double* m_pos, double* nx
 }
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
+void PeriodicHeightField_calculateHeight_Normales_Gradient_CUDA(double* m_pos, double* m_N,
+								double* A, double* k, double* theta, double* phi, uint nbFunc, uint nbPos)
+{
+	int numThreadsX, numBlocksX;
+   	computeGridSize(nbPos,numBlocksX, numThreadsX);
+        PeriodicHeightField_calculateHeight_Normales_Gradient_Kernel<<<numBlocksX, numThreadsX>>>((double3*) m_pos, (double3*) m_N,
+												   A,k,theta,phi,nbFunc, nbPos);
+}
+/****************************************************************************************************************************/
+/****************************************************************************************************************************/
 }
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/

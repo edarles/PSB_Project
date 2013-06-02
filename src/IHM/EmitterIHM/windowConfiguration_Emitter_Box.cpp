@@ -96,6 +96,9 @@ WindowConfiguration_Emitter_Box::WindowConfiguration_Emitter_Box(GLWidget *widge
 	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
 
+	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
+		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
 	QGridLayout *grid7 = new QGridLayout();
 	buttonOK = new QPushButton(tr("OK"),this);
 	connect(buttonOK, SIGNAL(clicked()), this , SLOT(accept()));

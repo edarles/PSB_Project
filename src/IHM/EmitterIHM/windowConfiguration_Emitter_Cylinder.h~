@@ -42,7 +42,7 @@ private:
 
     WindowConfiguration_Data *configData;
 
-    QVCylinderLayout *layout;
+    QVBoxLayout *layout;
 
     QDoubleSpinBox *OX, *OY, *OZ, *DX, *DY, *DZ, *length, *radius, *VX, *VY, *VZ;
     QLabel *originLabel, *directionLabel, *lengthLabel, *radiusLabel, *velocityLabel;

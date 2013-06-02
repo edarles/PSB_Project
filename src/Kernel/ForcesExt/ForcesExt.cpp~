@@ -58,7 +58,7 @@ void ForcesExt::init(uint nbBodies)
 		F[i*3+1] = 0;
 		F[i*3+2] = 0;
 	}
-	copyArrayToDevice(m_F,F,0,sizeof(double)*3*nbBodies,cudaMemcpyHostToDevice);
+	copyArrayToDevice(m_F,F,0,sizeof(double)*3*nbBodies);
 	delete[] F;
 }
 /*****************************************************************************************************/

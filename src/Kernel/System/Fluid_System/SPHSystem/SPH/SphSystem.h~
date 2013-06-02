@@ -59,7 +59,7 @@ public: // methods
     /*****************************************************************************************/
     void evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCellsZ, double scale);
     /*****************************************************************************************/
-    void computeNormales_Vertex(double* pos, double* normales, uint nbV);
+    void computeNormales_Vertex(double* pos, double* normales, float scale, uint nbV);
     /*****************************************************************************************/
 
     double* m_interactionRadius;

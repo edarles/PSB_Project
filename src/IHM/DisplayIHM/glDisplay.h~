@@ -44,10 +44,12 @@ class GLWidget;
 	GLenum getModeFace();
 	GLenum getModeRasterization();
 	bool   getDrawNormales_ObjCollision();
+	bool   getDrawEmitters();
 
 	void setModeFace(GLenum);
 	void setModeRasterization(GLenum);
 	void setDrawNormales_ObjCollision(bool);
+	void setDrawEmitters(bool);
 
 	// PUBLIC METHOD TO DRAW
 	void display();
@@ -71,6 +73,7 @@ class GLWidget;
 	GLenum modeFace;
 	GLenum modeRasterization;
 	bool   drawNormales_ObjCollision;
+	bool   drawEmitters;
 
 	// PRIVATE METHODS TO DRAW
 	void displayParticles();

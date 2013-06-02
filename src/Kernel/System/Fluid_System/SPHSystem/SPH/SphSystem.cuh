@@ -1,7 +1,6 @@
 #include <common.cuh>
 #include <SimulationData_SPHSystem.h>
 #include <SphKernel.cuh>
-
 extern "C" {
 
 /**********************************************************************************************************/

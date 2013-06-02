@@ -1,26 +1,11 @@
 #ifndef __SPH_SYSTEM_H__
 #define __SPH_SYSTEM_H__
 
-#include <assert.h>
-#include <math.h>
-#include <memory.h>
-#include <cstdio>
-#include <cstdlib>
-#include <algorithm>
-#include <typeinfo>
-
-#include <vector_functions.h>
-#include <cuda_runtime_api.h>
-#include <cuda.h>
-#include <host_defines.h>
-
 #include <SimulationData_SPHSystem.h>
 #include <SphParticle.h>
 #include <System.h>
 #include <MeshCollision.h>
-
 #include <SphSystem.cuh>
-#include <ForceExt.cuh>
 #include <UniformGrid.cuh>
 
 using namespace std;

@@ -1,26 +1,19 @@
+#include <ForceExt_Constante.cuh>
+#include <ForceExt_Constante_Kernel.cuh>
 
-#include <math_constants.h>
-#include <device_launch_parameters.h>
-#include <vector_types.h>
-#include <driver_types.h>
-#include <cuda_gl_interop.h>	 
-#include <stdio.h>
-
-#include <host_defines.h>
-#include <stdio.h> 
-#include <double3.h>
-
-//**************************************************************************************************************************************
-//**************************************************************************************************************************************
-__global__ void evaluate_force_constante (uint nbBodies, double3* accumForceBuff, double* mass, float3 direction, float amplitude)
+extern "C"
 {
-    uint indexP = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
-
-    if(indexP<nbBodies){
-	    accumForceBuff[indexP].x += (direction.x*amplitude)*mass[indexP];
-	    accumForceBuff[indexP].y += (direction.y*amplitude)*mass[indexP];
-	    accumForceBuff[indexP].z += (direction.z*amplitude)*mass[indexP];
-    }
+/**************************************************************************************************************************************/
+/**************************************************************************************************************************************/
+void evaluate_force_constante_CUDA(double* accumForceBuff, double* mass, Vector3 direction, float amplitude, uint nbBodies)
+{
+    int numBlocksX, numThreadsX;
+    computeGridSize(nbBodies, numBlocksX, numThreadsX);
+    
+    evaluate_force_constante_Kernel<<<numBlocksX,numThreadsX>>>((double3*)accumForceBuff,mass,
+							        make_float3(direction.x(),direction.y(),direction.z()),amplitude,nbBodies);
+    cudaDeviceSynchronize();
 }
-/*****************************************************************************************************/
-/*****************************************************************************************************/
+/**************************************************************************************************************************************/
+/**************************************************************************************************************************************/
+}

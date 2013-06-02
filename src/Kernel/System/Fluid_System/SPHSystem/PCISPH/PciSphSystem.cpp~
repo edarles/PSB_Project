@@ -182,7 +182,7 @@ void PCI_SPHSystem::update()
 			T->setTime(T->getTime()+1); 
 		}
    }*/
-   float dt1 = 0.01;
+   float dt1 = 0.005;
    
    pci_SPH_update(m_dPos[0],m_dPos[1],m_dVel[1],m_dVelInterAv,m_dVelInterAp,
 		   m_restore_dPos[0],m_restore_dPos[1],m_restore_velInterAv,m_restore_velInterAp,

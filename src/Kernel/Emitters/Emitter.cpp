@@ -1,10 +1,4 @@
 #include <Emitter.h>
-#include <typeinfo>
-#include <Particle.h>
-#include <CudaParticle.h>
-#include <SphParticle.h>
-#include <PciSphParticle.h>
-
 /************************************************************************************************/
 /************************************************************************************************/
 Emitter::Emitter()
@@ -106,6 +100,12 @@ void    Emitter::setData(SimulationData* data)
 		this->data = new SimulationData_PCI_SPHSystem(d->getParticleRadius(),d->getParticleMass(),d->getColor(),
 		d->getRestDensity(),d->getViscosity(),d->getSurfaceTension(),d->getGasStiffness(),d->getKernelParticles());
 	}
+	if(typeid(*data)==typeid(SimulationData_MSPHSystem)){
+		SimulationData_MSPHSystem* d = (SimulationData_MSPHSystem*) data;
+		this->data = new SimulationData_MSPHSystem(d->getParticleRadius(),d->getParticleMass(),d->getColor(),
+		d->getRestDensity(),d->getViscosity(),d->getSurfaceTension(),d->getGasStiffness(),d->getKernelParticles(),
+		d->getTemperature(),d->getSigma(),d->getBeta(),d->getG());
+	}
 }
 /************************************************************************************************/
 void	Emitter::setWorldPosition(Vector3 worldPosition)
@@ -170,6 +170,16 @@ void   Emitter::addParticle(Vector3 pos, vector<Particle*> *particles)
 					 dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
 					 dataSPH->getThreshold(), dataSPH->getSurfaceTension(), 
 					 dataSPH->getViscosity());
+		particles->push_back(p);
+	}
+	if(typeid(*data)==typeid(SimulationData_MSPHSystem)){
+		SimulationData_MSPHSystem* dataSPH = (SimulationData_MSPHSystem*) data;
+		MSPHParticle *p = new MSPHParticle(pos,velocityEmission,dataSPH->getParticleMass(),
+					 dataSPH->getParticleRadius(), dataSPH->getColor(), dataSPH->getSupportRadius(), 
+					 dataSPH->getKernelParticles(), 0,
+					 dataSPH->getRestDensity(), 0, dataSPH->getGasStiffness(), 
+					 dataSPH->getThreshold(), dataSPH->getSurfaceTension(), dataSPH->getViscosity(),
+					 dataSPH->getTemperature(),dataSPH->getSigma(),dataSPH->getBeta(),dataSPH->getG());
 		particles->push_back(p);
 	}
 }

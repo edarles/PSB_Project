@@ -3,11 +3,11 @@
 #ifndef _FORCE_EXT_TROCHOIDE_
 #define _FORCE_EXT_TROCHOIDE_
 
-#include <ForceExt.h>
+#include <ForceExt_Periodic.h>
 
 /*****************************************************************************************************/
 /*****************************************************************************************************/
-class ForceExt_Trochoide : public ForceExt {
+class ForceExt_Trochoide : public ForceExt_Periodic {
 
 	public:
 

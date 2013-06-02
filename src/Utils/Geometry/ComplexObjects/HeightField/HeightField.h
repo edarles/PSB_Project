@@ -41,12 +41,20 @@ class HeightField : public ObjectGeo
 		void 	display(Vector3 color);
 		void 	displayNormale(Vector3 color);
 /*****************************************************************************************************/
+		void    exportToOBJ(const char* name);
+/*****************************************************************************************************/
 	protected:
 		Vector3 center, Min, Max;
 		double  hMin, hMax;
 		double    dx, dz;
-		double* pos;
+		double  *pos, *N;
 		uint    nbPosX, nbPosY, nbPosZ;
+
+		// GPU Store pos, normales;
+		double  *m_pos, *m_N;
+
+		// show normales ?
+		bool dis_norm;
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 };

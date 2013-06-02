@@ -10,7 +10,7 @@ class ForceExt {
 		ForceExt(const ForceExt& F);
 		~ForceExt();
 
-		//virtual void evaluate(double* pos, double* mass, double* accumForceBuffer, uint nbBodies) = 0;
+		virtual void draw() = 0;
 };
 
 #endif

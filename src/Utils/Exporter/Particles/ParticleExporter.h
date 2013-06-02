@@ -5,11 +5,13 @@
 #include <CudaSystem.h>
 #include <SphSystem.h>
 #include <PciSphSystem.h>
+#include <MSphSystem.h>
 
 #include <Particle.h>
 #include <CudaParticle.h>
 #include <SphParticle.h>
 #include <PciSphParticle.h>
+#include <MSphParticle.h>
 
 namespace Utils {
 

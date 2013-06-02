@@ -110,6 +110,7 @@ void GLDisplay::display()
 	if(glWidget){
 		displayParticles();
 		displayCollisions();
+		displayAnimatedHeightField();
 		if(currentObj)
 			displayObjectCollision(currentObj);
 		if(drawEmitters)
@@ -121,7 +122,7 @@ void GLDisplay::display()
 void GLDisplay::displayParticles()
 {
 	System *system = glWidget->getSystem();
-	if(system){
+	if(system!=NULL){
 		system->displayParticles(modeParticles,colorParticles);
 		glWidget->displaySurface();
 	}
@@ -130,15 +131,22 @@ void GLDisplay::displayParticles()
 void GLDisplay::displayCollisions()
 {
 	System* system = glWidget->getSystem();
-	if(system)
+	if(system!=NULL)
 		system->displayCollisions(modeFace,modeRasterization,colorCollision,colorNormales,drawNormales_ObjCollision);
 }
 /**************************************************************************************************************/
 void GLDisplay::displayEmitters()
 {
 	System* system = glWidget->getSystem();
-	if(system)
+	if(system!=NULL)
 		system->displayEmitters(colorEmitters);
+}
+/**************************************************************************************************************/
+void GLDisplay::displayAnimatedHeightField()
+{
+	AnimatedHeightField* AHF = glWidget->getAnimatedHF();
+	if(AHF!=NULL)
+		AHF->display(Vector3(1,1,1));
 }
 /**************************************************************************************************************/
 /**************************************************************************************************************/

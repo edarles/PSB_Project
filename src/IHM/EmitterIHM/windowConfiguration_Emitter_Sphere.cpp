@@ -75,6 +75,9 @@ WindowConfiguration_Emitter_Sphere::WindowConfiguration_Emitter_Sphere(GLWidget 
 	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
 
+	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
+		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
 	QGridLayout *grid7 = new QGridLayout();
 
 	buttonOK = new QPushButton(tr("OK"),this);

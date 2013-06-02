@@ -22,6 +22,7 @@ class ParticleLoader_XML : public ParticleLoader
 	private:
 		vector<Particle*> loadSimpleSystem(TiXmlDocument doc);
 		vector<Particle*> loadCudaSystem(TiXmlDocument doc);
+		vector<Particle*> loadSPHSystem(TiXmlDocument doc);
 
 };
 /**********************************************************************************/

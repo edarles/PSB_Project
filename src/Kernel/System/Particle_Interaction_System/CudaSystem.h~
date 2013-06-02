@@ -1,11 +1,11 @@
 #ifndef __CUDA_SYSTEM_H__
 #define __CUDA_SYSTEM_H__
 
+
 #include <SimulationData_CudaSystem.h>
 #include <Particle.h>
 #include <System.h>
 #include <SphSystem.cuh>
-#include <ForceExt.cuh>
 #include <UniformGrid.cuh>
 
 using namespace std;

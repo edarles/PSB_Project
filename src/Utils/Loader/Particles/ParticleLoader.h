@@ -11,11 +11,13 @@
 #include <SimpleSystem.h>
 #include <CudaSystem.h>
 #include <PciSphSystem.h>
+#include <MSphSystem.h>
 
 #include <CudaParticle.h>
 #include <SphSystem.h>
 #include <SphParticle.h>
 #include <PciSphParticle.h>
+#include <MSphParticle.h>
 
 #include <typeinfo>
 
