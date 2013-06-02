@@ -1,0 +1,22 @@
+
+include_directories(src/Kernel/ForcesExt)
+include_directories(src/Kernel/ForcesExt/Constante)
+include_directories(src/Kernel/ForcesExt/Constante/Gravity)
+include_directories(src/Kernel/ForcesExt/Periodic)
+include_directories(src/Kernel/ForcesExt/Periodic/Trochoide)
+
+SET(FORCES_EXT_CUDA_FILES
+			src/Kernel/ForcesExt/Constante/ForceExt_Constante.cu
+			src/Kernel/ForcesExt/Constante/ForceExt_Constante_Kernel.cu
+			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide.cu
+			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide_Kernel.cu
+)
+
+SET(FORCES_APP_SOURCES
+			src/Kernel/ForcesExt/ForcesExt.cpp
+			src/Kernel/ForcesExt/ForceExt.cpp
+			src/Kernel/ForcesExt/Constante/ForceExt_Constante.cpp
+			src/Kernel/ForcesExt/Constante/Gravity/ForceExt_Gravity.cpp
+			src/Kernel/ForcesExt/Periodic/ForceExt_Periodic.cpp
+			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide.cpp
+)

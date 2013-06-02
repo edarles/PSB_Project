@@ -1,0 +1,43 @@
+
+include_directories(src/Kernel/System)
+include_directories(src/Kernel/System/SimpleSystem)
+include_directories(src/Kernel/System/Particle_Interaction_System)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/SPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/PCISPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/MSPH)
+
+SET(SYSTEM_CUDA_FILES 	
+			src/Kernel/System/SimpleSystem/System.cu
+			src/Kernel/System/SimpleSystem/ParticleKernel.cu
+			src/Kernel/System/Particle_Interaction_System/CudaSystem.cu
+			src/Kernel/System/Particle_Interaction_System/CudaParticle_Kernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphKernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem_Kernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem_Kernel.cu
+)
+
+SET(SYSTEM_APP_SOURCES
+			src/Kernel/System/Particle.cpp
+			src/Kernel/System/System.cpp
+			src/Kernel/System/SimulationDatas.cpp
+			src/Kernel/System/SimulationData.cpp
+			src/Kernel/System/shaders.cpp
+			src/Kernel/System/SimpleSystem/SimpleSystem.cpp
+			src/Kernel/System/SimpleSystem/SimulationData_SimpleSystem.cpp
+			src/Kernel/System/Particle_Interaction_System/CudaParticle.cpp
+			src/Kernel/System/Particle_Interaction_System/CudaSystem.cpp
+			src/Kernel/System/Particle_Interaction_System/SimulationData_CudaSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/SimulationData_SPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/SimulationData_PCI_SPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/MSPH/SimulationData_MSPHSystem.cpp
+)

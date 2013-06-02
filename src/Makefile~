@@ -1,0 +1,128 @@
+#!/bin/bash
+
+# ==============================================
+# A executer contre le bug à cause d'optirun...
+# Vive les doubles cartes...
+# ==============================================
+
+RM=rm -f
+
+CC              = g++
+EXE             = SPH
+OPTS            = -Wall -O5
+
+INCLUDE         = -I/usr/include \
+		  -I/usr/local/include \
+		  -I/usr/include/qt4 \
+		  -I/usr/include/qt4/QtCore \
+                  -I/usr/include/qt4/QtGui \
+		  -I/usr/include/qt4/QtOpenGL \
+		  -I/usr/include/qt4/QtXml \
+		  -I/usr/local/cuda-5.0/include \
+		  -I/usr/local/cuda-5.0/samples/0_Simple/simplePrintf \
+		  -I/usr/local/cuda-5.0/samples/common/inc/ \
+		  -I../dependencies/GLee-5.4.0-src \
+		  -I../src/ \
+		  -IIHM/ \
+		  -IIHM/DisplayIHM/ \
+		  -IIHM/SystemIHM/ \
+		  -IIHM/CollisionIHM/ \
+		  -IIHM/ForceExtIHM/ \
+		  -IIHM/EmitterIHM/ \
+		  -IIHM/SimulationDataIHM/ \
+		  -IKernel/System/ \
+		  -IKernel/System/SimpleSystem/ \
+		  -IKernel/System/Particle_Interaction_System/ \
+		  -IKernel/System/Fluid_System/SPHSystem/ \
+		  -IKernel/System/Fluid_System/SPHSystem/SPH/ \
+		  -IKernel/System/Fluid_System/SPHSystem/PCISPH \
+		  -IKernel/ForcesExt \
+		  -IKernel/ForcesExt/Constante \
+		  -IKernel/ForcesExt/Constante/Gravity \
+		  -IKernel/ForcesExt/Periodic \
+		  -IKernel/ForcesExt/Periodic/Trochoide \
+		  -IKernel/Collision \
+		  -IKernel/Collision/MeshCollision \
+		  -IKernel/Collision/SphereCollision \
+		  -IKernel/Collision/BoxCollision \
+		  -IKernel/Collision/PlaneCollision \
+		  -IKernel/Collision/CylinderCollision \
+		  -IKernel/Emitters \
+		  -IKernel/Emitters/Box \
+		  -IKernel/Emitters/Elipsoide \
+		  -IKernel/Emitters/Mesh \
+		  -IKernel/Emitters/Cylinder \
+		  -IKernel/Emitters/Sphere \
+		  -IKernel/Emitters/Girly \
+		  -IUtils Utils/Math \
+		  -IUtils/Math/Vector \
+		  -IUtils/Math/Interpolator \
+		  -IUtils/Geometry \
+		  -IUtils/Geometry/Primitives \
+		  -IUtils/Geometry/ComplexObjects \
+		  -IUtils/Exporter/Particles \
+		  -IUtils/Exporter/Particles/Txt \
+		  -IUtils/Exporter/Particles/XML \
+		  -IUtils/Exporter/Particles/Mitsuba \
+		  -IUtils/Loader \
+		  -IUtils/Loader/Mesh \
+		  -IUtils/Loader/Mesh/OBJ \
+		  -IUtils/Loader/Particles \
+		  -IUtils/Loader/Particles/Txt \
+		  -Isrc/Utils/Loader/Particles/XML \
+		  -IUtils/Loader/SimulationData 
+
+
+LIBDIR          = -L/usr/local/lib \
+		  -L/usr/lib/i386-linux-gnu \
+		  -L/usr/lib/nvidia-current \
+		  -L/usr/lib \
+		  -L/usr/local/cuda-5.0/lib 
+
+LIB 		= -lQtCore \
+		  -lQtGui \
+		  -lqglviewer-qt4 \
+		  -lGL \
+		  -lGLU \
+		  -lGLee \
+		  -lGLEW \
+		  -lGLEWmx \
+		  -lglut \
+		  -lcuda \
+		  -lcudart \
+		  -ltinyxml
+		  
+
+SRCS            = $(wildcard *.cpp) \
+		  $(wildcard */*.cpp) \
+		  $(wildcard */*/*.cpp) \
+		  $(wildcard */*/*/*.cpp) \
+		  $(wildcard */*/*/*/*.cpp) \
+		  $(wildcard */*/*/*/*/*.cpp)
+		 
+OBJS            = $(SRCS:.cpp=.o) 
+
+# ==============================================
+# target definitions, nothing to change below...
+# ==============================================
+
+all : $(EXE)
+
+OBJ = $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*.o) \
+      $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*/*.o) \
+      $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*/*/*.o) \
+      $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/bin/oldSPH.dir/src/*/*/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*/*/*/*/*.o) \
+      $(wildcard ../CMakeFiles/cuda_compile.dir/src/*/*/*/*/*/*/.o)
+
+SPH : $(OBJ) 
+	 $(CC) $(OBJ) -o SPH $(LIBDIR) $(LIB)
+
+

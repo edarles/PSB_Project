@@ -1,0 +1,70 @@
+
+include_directories(src/Utils)
+include_directories(src/Utils/Math)
+include_directories(src/Utils/Math/Vector)
+include_directories(src/Utils/Neighborhood/UniformGrid)
+include_directories(src/Utils/Geometry)
+include_directories(src/Utils/Geometry/Primitives)
+include_directories(src/Utils/Geometry/ComplexObjects)
+include_directories(src/Utils/Geometry/ComplexObjects/HeightField)
+include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Linear)
+include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Periodic)
+include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Gaussian)
+include_directories(src/Utils/Geometry/ComplexObjects/HeightField/Combined)
+include_directories(src/Utils/Exporter/Particles)
+include_directories(src/Utils/Exporter/Particles/Txt)
+include_directories(src/Utils/Exporter/Particles/XML)
+include_directories(src/Utils/Exporter/Particles/Mitsuba)
+include_directories(src/Utils/Loader)
+include_directories(src/Utils/Loader/Mesh)
+include_directories(src/Utils/Loader/Mesh/OBJ)
+include_directories(src/Utils/Loader/Particles)
+include_directories(src/Utils/Loader/Particles/Txt)
+include_directories(src/Utils/Loader/Particles/XML)
+include_directories(src/Utils/Loader/SimulationData)
+include_directories(src/Utils/MC)
+
+SET(UTILS_CUDA_FILES
+			src/Utils/Geometry/ComplexObjects/HeightField/HeightField.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/HeightField_Kernel.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Linear/LinearHeightField.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Linear/LinearHeightField_Kernel.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField_Kernel.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField.cu
+			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField_Kernel.cu
+
+			src/Utils/Neighborhood/UniformGrid/UniformGrid.cu
+			src/Utils/Neighborhood/UniformGrid/UniformGridKernel.cu
+
+			src/Utils/MC/MarchingCube.cu
+			src/Utils/MC/MarchingCube_Kernel.cu
+)
+
+SET(UTILS_APP_SOURCES 				
+			src/Utils/Loader/Mesh/MeshLoader.cpp
+			src/Utils/Loader/Mesh/OBJ/ObjLoader.cpp
+			src/Utils/Loader/Particles/ParticleLoader.cpp
+			src/Utils/Loader/Particles/Txt/ParticleLoader_Txt.cpp
+			src/Utils/Loader/Particles/XML/ParticleLoader_XML.cpp
+			src/Utils/Loader/SimulationData/SimulationDataLoader.cpp
+
+			src/Utils/Exporter/Particles/ParticleExporter.cpp
+			src/Utils/Exporter/Particles/Txt/ParticleExporter_Txt.cpp
+			src/Utils/Exporter/Particles/XML/ParticleExporter_XML.cpp
+			src/Utils/Exporter/Particles/Mitsuba/ParticleExporter_Mitsuba.cpp
+
+			src/Utils/Geometry/ObjectGeo.cpp
+			src/Utils/Geometry/Primitives/Face.cpp
+			src/Utils/Geometry/Primitives/Triangle.cpp
+			src/Utils/Geometry/Primitives/Quadrilateral.cpp
+			src/Utils/Geometry/ComplexObjects/Box.cpp
+			src/Utils/Geometry/ComplexObjects/Mesh.cpp
+			src/Utils/Geometry/ComplexObjects/Sphere.cpp
+			src/Utils/Geometry/ComplexObjects/Cylinder.cpp
+			src/Utils/Geometry/ComplexObjects/HeightField/HeightField.cpp
+			src/Utils/Geometry/ComplexObjects/HeightField/Linear/LinearHeightField.cpp
+			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField.cpp
+			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField.cpp
+			src/Utils/Geometry/ComplexObjects/HeightField/Combined/CombinedHeightField.cpp
+)

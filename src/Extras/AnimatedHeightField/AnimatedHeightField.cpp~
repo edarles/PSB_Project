@@ -1,0 +1,83 @@
+/* 
+ * File:   AnimatedHeightField.cpp
+ * Author: mathias
+ * 
+ * Created on 23 mai 2013, 11:42
+ */
+/****************************************************************************************/
+/****************************************************************************************/
+#include <AnimatedHeightField.h>
+#include <common.cuh> 
+#include <stdio.h>
+#include <sstream>
+#include <vector>
+/****************************************************************************************/
+/****************************************************************************************/
+AnimatedHeightField::AnimatedHeightField()
+{
+	t = 0;
+	step = 0.1;
+}
+/****************************************************************************************/
+AnimatedHeightField::AnimatedHeightField(double step)
+{
+	t = 0;
+	this->step = step;
+}
+/****************************************************************************************/
+AnimatedHeightField::AnimatedHeightField(const AnimatedHeightField& H)
+{
+        this->t = H.t;
+	this->step = H.step;
+}
+/****************************************************************************************/
+AnimatedHeightField::~AnimatedHeightField()
+{    
+}
+/****************************************************************************************/
+/****************************************************************************************/
+double AnimatedHeightField::getT() const
+{
+	return t;
+}
+/****************************************************************************************/
+double AnimatedHeightField::getStep() const
+{
+	return step;
+}
+/****************************************************************************************/
+/****************************************************************************************/
+void   AnimatedHeightField::setStep(double step)
+{
+	this->step = step;
+}
+/****************************************************************************************/
+/****************************************************************************************/
+/*void AnimatedHeightField::exportToObj(const char * file_name)
+{
+    FILE* f = fopen(file_name,"w");
+    fprintf(f,"# Blender v2.62 (sub 0) OBJ File: ''\n");
+    fprintf(f,"# www.blender.org\n");
+    
+    vector<int> indexs_cpu;
+    
+    int indice =1;
+    //on exporte les vertex
+    for(int i=0;i<this->nbPosX*nbPosZ;i+=3)
+    {
+        fprintf(f,"v %.5f %.5f %.5f\n",pos[i]*2,pos[i+1]*2,pos[i+2]);
+        indexs_cpu.push_back(indice);
+        indice++;
+    }
+    
+    for(unsigned long i=0;i<indexs_cpu.size()-3;i+=3)
+    {
+        uint i1 = indexs_cpu[i];
+        uint i2 = indexs_cpu[i+1];
+        uint i3 = indexs_cpu[i+2];
+        //assert(i1<vertexs_cpu.size() && i2<vertexs_cpu.size() && i3<vertexs_cpu.size());
+        fprintf(f,"f %d//%d %d//%d %d//%d\n",i1+1,i1+1,i2+1,i2+1,i3+1,i3+1);
+    }
+    fclose(f);
+}
+*/

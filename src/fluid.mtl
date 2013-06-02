@@ -1,0 +1,8 @@
+# Blender3D MTL File: <memory>
+# Material Count: 1
+newmtl fluid_mtl
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.5 0.5 0.5
+Ns 100
+Ni 0.000000
