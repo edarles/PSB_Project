@@ -1,0 +1,49 @@
+
+include_directories(src/Kernel/Collision)
+include_directories(src/Kernel/Collision/MeshCollision)
+include_directories(src/Kernel/Collision/SphereCollision)
+include_directories(src/Kernel/Collision/BoxCollision)
+include_directories(src/Kernel/Collision/PlaneCollision)
+include_directories(src/Kernel/Collision/CylinderCollision)
+include_directories(src/Kernel/Collision/HeightField)
+include_directories(src/Kernel/Collision/HeightField/Linear)
+include_directories(src/Kernel/Collision/HeightField/Periodic)
+include_directories(src/Kernel/Collision/HeightField/Gaussian)
+include_directories(src/Kernel/Collision/HeightField/Combined)
+
+SET(COLLISION_CUDA_FILES	
+			src/Kernel/Collision/MeshCollision/MeshCollision.cu
+			src/Kernel/Collision/MeshCollision/MeshCollision_Kernel.cu
+			src/Kernel/Collision/SphereCollision/SphereCollision.cu
+			src/Kernel/Collision/SphereCollision/SphereCollision_Kernel.cu
+			src/Kernel/Collision/BoxCollision/BoxCollision.cu
+			src/Kernel/Collision/BoxCollision/BoxCollision_Kernel.cu
+			src/Kernel/Collision/PlaneCollision/PlaneCollision.cu
+			src/Kernel/Collision/PlaneCollision/PlaneCollision_Kernel.cu
+			src/Kernel/Collision/CylinderCollision/CylinderCollision.cu
+			src/Kernel/Collision/CylinderCollision/CylinderCollision_Kernel.cu
+			src/Kernel/Collision/HeightField/Linear/LinearHeightFieldCollision.cu
+			src/Kernel/Collision/HeightField/Linear/LinearHeightFieldCollision_Kernel.cu
+			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision.cu
+			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision_Kernel.cu
+			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision.cu
+			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision_Kernel.cu
+			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cu
+			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision_Kernel.cu
+)
+
+SET(COLLISION_APP_SOURCES
+			src/Kernel/Collision/Collision.cpp
+			src/Kernel/Collision/ObjectCollision.cpp
+			src/Kernel/Collision/MeshCollision/MeshCollision.cpp	
+			src/Kernel/Collision/SphereCollision/SphereCollision.cpp
+			src/Kernel/Collision/BoxCollision/BoxCollision.cpp
+			src/Kernel/Collision/PlaneCollision/PlaneCollision.cpp
+			src/Kernel/Collision/CylinderCollision/CylinderCollision.cpp
+			src/Kernel/Collision/HeightField/HeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Linear/LinearHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cpp
+)
+			
