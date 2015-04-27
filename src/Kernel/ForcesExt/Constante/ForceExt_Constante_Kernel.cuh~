@@ -1,11 +1,11 @@
-#ifndef _FORCE_EXT_KERNEL_CONSTANTE_H_
-#define _FORCE_EXT_KERNEL_CONSTANTE_H_
+#ifndef _FORCE_EXT_CONSTANTE_KERNEL_H_
+#define _FORCE_EXT_CONSTANTE_KERNEL_H_
 
 extern "C"
 {
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
-__global__ void evaluate_force_constante_Kernel (double3* accumForceBuff, double* mass, float3 direction, float amplitude, uint nbBodies);
+__global__ void evaluate_force_constante_Kernel (double3* pos, double3* accumForceBuff, double* mass, float3 direction, float amplitude, uint nbBodies);
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 }

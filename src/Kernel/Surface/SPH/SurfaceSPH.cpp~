@@ -1,6 +1,7 @@
 #include <SurfaceSPH.h>
 #include <MarchingCube.cuh>
 #include <algorithm>
+#include <fstream>
 
 /***********************************************************************************************/
 /***********************************************************************************************/
@@ -9,6 +10,7 @@ SurfaceSPH::SurfaceSPH():Surface()
 	indexs_cpu.clear();
 	vertexs_cpu.clear();
 	normales_cpu.clear();
+	grid = NULL;
 }
 /***********************************************************************************************/
 SurfaceSPH::SurfaceSPH(Vector3 color, double transparency):Surface(color,transparency)
@@ -16,6 +18,7 @@ SurfaceSPH::SurfaceSPH(Vector3 color, double transparency):Surface(color,transpa
 	indexs_cpu.clear();
 	vertexs_cpu.clear();
 	normales_cpu.clear();
+	grid = NULL;
 }
 /***********************************************************************************************/
 SurfaceSPH::~SurfaceSPH()
@@ -23,15 +26,15 @@ SurfaceSPH::~SurfaceSPH()
 	indexs_cpu.clear();
 	vertexs_cpu.clear();
 	normales_cpu.clear();
+	delete[] grid;
 }
 /***********************************************************************************************/
 /***********************************************************************************************/
 bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 {
-	float sizeCell = 0.03;	
+	sizeCell = 0.02;	
 	double scale = 0.65;
 
-	assert(typeid(*S)==typeid(SPHSystem));
 	SPHSystem *s = (SPHSystem*) S;
 	/*******************************************************************************/
 	// Calculate Min and Max points grid, length, depth and width of grid
@@ -55,9 +58,9 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 	double d = fabs(Max.z()-Min.z());
 	printf("l:%f w:%f d:%f\n",l,w,d);
 
-	uint nbPosX = ceil(l/sizeCell);
-	uint nbPosY = ceil(w/sizeCell);
-	uint nbPosZ = ceil(d/sizeCell);
+	nbPosX = ceil(l/sizeCell);
+	nbPosY = ceil(w/sizeCell);
+	nbPosZ = ceil(d/sizeCell);
 
 	printf("nbPosX:%d nbPosY:%d nbPosZ:%d\n",nbPosX,nbPosY,nbPosZ);
 	/*******************************************************************************/	
@@ -67,11 +70,12 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 	/*******************************************************************************/
 	// CPU structures
 	/*******************************************************************************/
-	double *grid, *vertexs, *vertex2, *normales, *normales2;
+	double *vertexs, *vertex2, *normales, *normales2;
 	int *indexs, *nbIndex;
 	vertexs = new double[size*3*nbVertexMax_perCell];
 	normales = new double[size*3*nbVertexMax_perCell];
 	indexs = new int[size*nbIndexMax_perCell];
+	if(grid!=NULL) delete[] grid;
 	grid = new double[4*size];
 	nbIndex = new int[size];
 	vertex2 = new double[3*nbVertexMax];
@@ -115,7 +119,7 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 
 	/*******************************************************************************/
 	// Transferts each vertexs in cells into a tab structure
-	/********00***********************************************************************/
+	/*******************************************************************************/
 	indexs_cpu.clear();
 	vertexs_cpu.clear();
 	normales_cpu.clear();
@@ -143,11 +147,6 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 							nbV++;
 						}
 						else {
-							//printf("vertex trouve à la place:%d\n", found - vertexs_cpu.begin());
-							//printf("V0:%f %f %f V1:%f %f %f\n",P1.x(),P1.y(),P1.z(),
-							//vertexs_cpu[found - vertexs_cpu.begin()].x(),
-							//vertexs_cpu[found - vertexs_cpu.begin()].y(),
-							//vertexs_cpu[found - vertexs_cpu.begin()].z());
 							indexs_cpu.push_back(found - vertexs_cpu.begin());
 						}					
 					}
@@ -170,7 +169,6 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 	delete[] vertexs;
 	delete[] normales;
 	delete[] indexs;
-	delete[] grid;
 	delete[] nbIndex;
 	delete[] vertex2;
 	delete[] normales2;
@@ -189,7 +187,8 @@ bool SurfaceSPH::extract(System *S, double isoLevel, uint step)
 /***********************************************************************************************/
 void SurfaceSPH::draw()
 {
-	glColor3f(1,1,1);
+	drawGrid(); 
+	glColor4f(1,1,1,0.5f);
 	double d = 0.1;
 	if(indexs_cpu.size()>0){
 		glShadeModel(GL_SMOOTH);
@@ -204,6 +203,7 @@ void SurfaceSPH::draw()
 			glVertex3f(vertexs_cpu[indexs_cpu[i+2]].x(),vertexs_cpu[indexs_cpu[i+2]].y(),vertexs_cpu[indexs_cpu[i+2]].z());
 			glNormal3f(normales_cpu[indexs_cpu[i+2]].x(),normales_cpu[indexs_cpu[i+2]].y(),normales_cpu[indexs_cpu[i+2]].z());
 			glEnd();
+
 			glColor3f(1,0,0);
 			glBegin(GL_LINES);
 			glVertex3f(vertexs_cpu[indexs_cpu[i]].x(),vertexs_cpu[indexs_cpu[i]].y(),vertexs_cpu[indexs_cpu[i]].z());
@@ -230,45 +230,102 @@ void SurfaceSPH::draw()
 }
 /***********************************************************************************************/
 /***********************************************************************************************/
+void SurfaceSPH::drawGrid()
+{
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	float s = sizeCell;
+	for(unsigned int i=0;i<nbPosX;i++){
+		for(unsigned int j=0;j<nbPosY;j++){
+			for(unsigned int k=0;k<nbPosZ;k++){
+				uint indexCell = i + j*nbPosX + k*nbPosX*nbPosY;
+				if(grid[indexCell*4+3]>1){
+				double xC = grid[indexCell*4];
+				double yC = grid[indexCell*4+1];
+				double zC = grid[indexCell*4+2];
+
+				glBegin(GL_POLYGON);
+				glVertex3f(xC-s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC+s/2,zC+s/2);
+				glVertex3f(xC-s/2,yC+s/2,zC+s/2);
+				glEnd();
+				glBegin(GL_POLYGON);
+				glVertex3f(xC-s/2,yC-s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC+s/2);
+				glVertex3f(xC-s/2,yC-s/2,zC+s/2);
+				glEnd();
+				glBegin(GL_POLYGON);
+				glVertex3f(xC+s/2,yC+s/2,zC+s/2);
+				glVertex3f(xC+s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC+s/2);
+				glEnd();
+				glBegin(GL_POLYGON);
+				glVertex3f(xC-s/2,yC+s/2,zC+s/2);
+				glVertex3f(xC-s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC-s/2,yC-s/2,zC-s/2);
+				glVertex3f(xC-s/2,yC-s/2,zC+s/2);
+				glEnd();
+				glBegin(GL_POLYGON);
+				glVertex3f(xC-s/2,yC+s/2,zC+s/2);
+				glVertex3f(xC+s/2,yC+s/2,zC+s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC+s/2);
+				glVertex3f(xC-s/2,yC-s/2,zC+s/2);
+				glEnd();
+				glBegin(GL_POLYGON);
+				glVertex3f(xC-s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC+s/2,zC-s/2);
+				glVertex3f(xC+s/2,yC-s/2,zC-s/2);
+				glVertex3f(xC-s/2,yC-s/2,zC-s/2);
+				glEnd();
+				}
+			}
+		}
+	}
+}
+/***********************************************************************************************/
+/***********************************************************************************************/
 bool SurfaceSPH::exportOBJ(const char* filename)
 {
 	if(indexs_cpu.size()>0){
 		// create diffuse material
-		FILE* f1 = fopen("fluid.mtl","w");
-		fprintf(f1,"# Blender3D MTL File: <memory>\n");
-		fprintf(f1,"# Material Count: 1\n");
-		fprintf(f1,"newmtl fluid_mtl\n");
-		fprintf(f1,"Ka 0.000000 0.000000 0.000000\n");
-		fprintf(f1,"Kd 0.8 0.8 0.8\n");
-		fprintf(f1,"Ks 0.5 0.5 0.5\n");
-		fprintf(f1,"Ns 100\n");
-		fprintf(f1,"Ni 0.000000\n");
-		fclose(f1);
-
+		/*ofstream f1;
+		f1.open("fluid.mtl");
+		f1 << "# Blender3D MTL File: <memory>" << endl;
+		f1 << "# Material Count: 1" << endl;
+		f1 << "newmtl fluid_mtl" << endl;
+		f1 << "Ka 0.000000 0.000000 0.000000" << endl;
+		f1 << "Kd 0.8 0.8 0.8" << endl;
+		f1 << "Ks 0.5 0.5 0.5"<< endl;
+		f1 << "Ns 100" << endl;
+		f1 << "Ni 0.000000" << endl;
+		f1.close();
+*/
+		printf("export OBJ\n");
 		//store triangles in OBJ file
-		FILE* f = fopen(filename,"w");
-		fprintf(f,"# Blender v2.62 (sub 0) OBJ File: ''\n");
-		fprintf(f,"# www.blender.org\n");
-		fprintf(f,"mtllib fluid.mtl\n");
-		fprintf(f,"o isosurface\n");
+		ofstream f;
+		f.open(filename);
+		//f << "# Blender v2.62 (sub 0) OBJ File: ''" << endl;
+		//f << "# www.blender.org" << endl;
+		//f << "mtllib fluid.mtl" << endl;
+		//f << "o isosurface" << endl;
 
 		for(unsigned long i=0;i<vertexs_cpu.size();i++)
-			//fprintf(f,"v %f %f %f\n",vertexs_cpu[i].x(),vertexs_cpu[i].z(),vertexs_cpu[i].y());
-			fprintf(f,"v %.5f %.5f %.5f\n",vertexs_cpu[i].x()*2,vertexs_cpu[i].z()*2,vertexs_cpu[i].y()*2+1);
+			f << "v " <<  vertexs_cpu[i].x() << " " << vertexs_cpu[i].y() << " " <<vertexs_cpu[i].z() << endl;
 		for(unsigned long i=0;i<normales_cpu.size();i++)
-			fprintf(f,"vn %.5f %.5f %.5f\n",normales_cpu[i].x(),normales_cpu[i].z(),normales_cpu[i].y());
-		
-		fprintf(f,"usemtl fluid_mtl\n");
-		fprintf(f,"s off\n");
-		fprintf(f,"f\n");
+			f << "vn " << normales_cpu[i].x() << " " << normales_cpu[i].y() << " " << normales_cpu[i].z() << endl;
+		//f << "usemtl fluid_mtl" << endl;
+		//f << "s off" << endl;
+		//f << "f" << endl;
 		for(unsigned long i=0;i<indexs_cpu.size()-3;i+=3){
 			uint i1 = indexs_cpu[i];
 			uint i2 = indexs_cpu[i+1];
 			uint i3 = indexs_cpu[i+2];
 			assert(i1<vertexs_cpu.size() && i2<vertexs_cpu.size() && i3<vertexs_cpu.size());
-			fprintf(f,"f %d//%d %d//%d %d//%d\n",i1+1,i1+1,i2+1,i2+1,i3+1,i3+1);
+			f << "f " << i1+1 << "//" << i1+1 << " " << i2+1 << "//" << i2+1 << " " << i3+1 << "//" << i3+1 << endl;
 		}
-		fclose(f);
+		f.close();
 		return true;
 	}
 	return false;	

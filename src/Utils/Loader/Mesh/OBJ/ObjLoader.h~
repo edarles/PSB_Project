@@ -19,7 +19,7 @@ class ObjLoader: public MeshLoader
 
 		~ObjLoader();
 
-		Mesh load(const char *filename);
+		void loadObj(const char *filename);
 };
 
 }

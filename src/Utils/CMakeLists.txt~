@@ -15,6 +15,8 @@ include_directories(src/Utils/Exporter/Particles)
 include_directories(src/Utils/Exporter/Particles/Txt)
 include_directories(src/Utils/Exporter/Particles/XML)
 include_directories(src/Utils/Exporter/Particles/Mitsuba)
+include_directories(src/Utils/Exporter/Scene)
+include_directories(src/Utils/Exporter/Scene/Mitsuba)
 include_directories(src/Utils/Loader)
 include_directories(src/Utils/Loader/Mesh)
 include_directories(src/Utils/Loader/Mesh/OBJ)
@@ -33,10 +35,8 @@ SET(UTILS_CUDA_FILES
 			src/Utils/Geometry/ComplexObjects/HeightField/Gaussian/GaussianHeightField_Kernel.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField.cu
 			src/Utils/Geometry/ComplexObjects/HeightField/Periodic/PeriodicHeightField_Kernel.cu
-
 			src/Utils/Neighborhood/UniformGrid/UniformGrid.cu
 			src/Utils/Neighborhood/UniformGrid/UniformGridKernel.cu
-
 			src/Utils/MC/MarchingCube.cu
 			src/Utils/MC/MarchingCube_Kernel.cu
 )
@@ -48,12 +48,12 @@ SET(UTILS_APP_SOURCES
 			src/Utils/Loader/Particles/Txt/ParticleLoader_Txt.cpp
 			src/Utils/Loader/Particles/XML/ParticleLoader_XML.cpp
 			src/Utils/Loader/SimulationData/SimulationDataLoader.cpp
-
 			src/Utils/Exporter/Particles/ParticleExporter.cpp
 			src/Utils/Exporter/Particles/Txt/ParticleExporter_Txt.cpp
 			src/Utils/Exporter/Particles/XML/ParticleExporter_XML.cpp
 			src/Utils/Exporter/Particles/Mitsuba/ParticleExporter_Mitsuba.cpp
-
+			src/Utils/Exporter/Scene/Mitsuba/SceneExporter.cpp
+			src/Utils/Exporter/Scene/Mitsuba/SceneExporter_Mitsuba.cpp
 			src/Utils/Geometry/ObjectGeo.cpp
 			src/Utils/Geometry/Primitives/Face.cpp
 			src/Utils/Geometry/Primitives/Triangle.cpp

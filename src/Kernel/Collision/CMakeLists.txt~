@@ -33,4 +33,17 @@ SET(COLLISION_CUDA_FILES
 )
 
 SET(COLLISION_APP_SOURCES
+			src/Kernel/Collision/Collision.cpp
+			src/Kernel/Collision/ObjectCollision.cpp
+			src/Kernel/Collision/MeshCollision/MeshCollision.cpp	
+			src/Kernel/Collision/SphereCollision/SphereCollision.cpp
+			src/Kernel/Collision/BoxCollision/BoxCollision.cpp
+			src/Kernel/Collision/PlaneCollision/PlaneCollision.cpp
+			src/Kernel/Collision/CylinderCollision/CylinderCollision.cpp
+			src/Kernel/Collision/HeightField/HeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Linear/LinearHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cpp
+)
 			

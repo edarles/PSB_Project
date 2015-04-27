@@ -7,26 +7,29 @@ class EmitterElipsoide : public Emitter
 {
 	public:
 		EmitterElipsoide();
-		EmitterElipsoide(Vector3 center, float sizeX, float sizeZ, unsigned int minEmission, 
-				  unsigned int maxEmission, unsigned int durationTime, Vector3 velocityEmission);
+		EmitterElipsoide(Vector3 center, float radius, double dx, double dy, double dz, 
+				 unsigned int durationTime, Vector3 velocityEmission);
 
 		EmitterElipsoide(const EmitterElipsoide&);
 		~EmitterElipsoide();
 
 		Vector3 getCenter();
-		float   getSizeX();
-		float   getSizeZ();
+		float   getRadius();
+		Vector3 getDirection();
 
 		void    setCenter(Vector3 center);
-		void    setSizeX(float sizeX);
-		void    setSizeZ(float sizeZ);
+		void    setRadius(float radius);
+		void    setDirection(Vector3 direction);
 
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
+		vector<Particle*> emitParticles2D_z();
+
 		void		  display(Vector3 color);
 
 	private:
-		Vector3 center;
-		float   sizeX, sizeZ;
+		Vector3 center, direction;
+		float radius;
 	
 };
 #endif

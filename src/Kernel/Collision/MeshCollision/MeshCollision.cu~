@@ -9,12 +9,18 @@ void collisionMesh_CUDA(double* oldPos, double* newPos, double* oldVel, double* 
 			float radiusParticle, float dt, uint nbFaces, float* fA, float* fB, float* fC, float* fN, 
 			float elast, int nbBodiesP)
 {
-    int numThreadsX, numBlocksX;
-    computeGridSize(nbBodiesP, 256, numBlocksX, numThreadsX);
+    int numThreadsX, numBlocksX, numThreadsY, numBlocksY;
 
-    collisionTriangle<<<numBlocksX,numThreadsX >>>(nbBodiesP, nbFaces, (double3*)newPos, (double3*)newVel,
-    					     (double3*)oldPos, (double3*)oldVel, 
-					     fA, fB, fC, fN, elast, radiusParticle, dt);
+    computeGridSize(nbBodiesP, numBlocksX, numThreadsX);
+    computeGridSize(nbFaces, numBlocksY, numThreadsY);
+
+    dim3 dimBlock(numBlocksX,numBlocksY);
+    dim3 dimThreads(numThreadsX,numThreadsY);
+
+    collisionTriangle<<<dimThreads,dimBlock>>>(nbBodiesP, nbFaces, (double3*)newPos, (double3*)newVel,
+    					       (double3*)oldPos, (double3*)oldVel, 
+					       fA, fB, fC, fN, elast, radiusParticle, dt);
+    cudaDeviceSynchronize();
  }
 /***********************************************************************************************************/
 /***********************************************************************************************************/

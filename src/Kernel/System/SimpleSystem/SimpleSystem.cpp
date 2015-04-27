@@ -1,4 +1,4 @@
-#include <GLee.h>
+
 #include <SimpleSystem.h>
 #include <System.cuh>
 
@@ -37,7 +37,6 @@ void SimpleSystem::init(vector<Particle*> result)
 /*****************************************************************************/
 void SimpleSystem::init()
 {
-    unsigned int maxParticles = 65536;
     unsigned int memSize = sizeof(double)*3*maxParticles;
     
     allocateArray((void**)&m_dVel[0], memSize);

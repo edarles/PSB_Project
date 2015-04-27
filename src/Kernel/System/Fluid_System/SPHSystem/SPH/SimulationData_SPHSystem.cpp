@@ -27,7 +27,8 @@ SimulationData_SPHSystem::SimulationData_SPHSystem(float particleRadius, float m
 	this->gasStiffness = gasStiffness;
 	this->kernelParticles = kernelParticles;
 	this->supportRadius = powf((3*mass*kernelParticles)/(4*M_PI*restDensity),0.333);
-        this->particleRadius = powf(3*this->particleMass/(4*M_PI*this->restDensity),0.333);//powf((3*mass*kernelParticles)/(4*M_PI*restDensity),0.333);//this->supportRadius/2;
+        printf("supportRadius:%f\n",this->supportRadius);
+        this->particleRadius = this->supportRadius/2;
 }
 /**********************************************************************************/
 SimulationData_SPHSystem::SimulationData_SPHSystem(const SimulationData_SPHSystem& S)

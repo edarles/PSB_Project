@@ -9,6 +9,8 @@ ForcesExt::ForcesExt()
 /*****************************************************************************************************/
 ForcesExt::~ForcesExt()
 {
+	for(uint i=0;i<forces.size();i++)
+		delete(forces[i]);
 	forces.clear();
 }
 /*****************************************************************************************************/
@@ -17,6 +19,11 @@ ForceExt* ForcesExt::getForce(unsigned int i)
 {
 	assert(i<forces.size());
 	return forces[i];
+}
+/*****************************************************************************************************/
+vector<ForceExt*> ForcesExt::getForces()
+{
+	return forces;
 }
 /*****************************************************************************************************/
 unsigned int ForcesExt::getNbForces()
@@ -48,6 +55,7 @@ void ForcesExt::_initialize(uint nbBodies)
 void ForcesExt::init(uint nbBodies)
 {
 	double* F = new double[3*nbBodies];
+	#pragma omp parallel for
 	for(uint i=0;i<nbBodies;i++){
 		F[i*3] = 0;
 		F[i*3+1] = 0;

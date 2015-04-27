@@ -16,21 +16,21 @@ WindowConfiguration_Emitter_Box::WindowConfiguration_Emitter_Box(GLWidget *widge
 	widthLabel = new QLabel("width",page1);
  	width = new QDoubleSpinBox(page1);
 	width->setMinimum(0.1);
-	width->setMaximum(1000);
+	width->setMaximum(10);
 	width->setValue(0.5);
 	connect(width, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double)));
  
 	lengthLabel = new QLabel("length",page1);
  	length = new QDoubleSpinBox(page1);
 	length->setMinimum(0.1);
-	length->setMaximum(1000);
+	length->setMaximum(10);
 	length->setValue(0.5);
 	connect(length, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double)));
  
 	depthLabel = new QLabel("depth",page1);
  	depth = new QDoubleSpinBox(page1);
 	depth->setMinimum(0.1);
-	depth->setMaximum(1000);
+	depth->setMaximum(10);
 	depth->setValue(0.5);
 	connect(depth, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
 
@@ -96,8 +96,23 @@ WindowConfiguration_Emitter_Box::WindowConfiguration_Emitter_Box(GLWidget *widge
 	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
 
+	if(typeid(*(widget->getSystem()))==typeid(WCSPHSystem))
+		configData = new WindowConfiguration_Data_WCSPHSystem(page2);
+
 	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
 		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SWSPHSystem))
+		configData = new WindowConfiguration_Data_SWSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SPH2DSystem))
+		configData = new WindowConfiguration_Data_SPH2DSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(HybridSPHSystem))
+		configData = new WindowConfiguration_Data_HybridSPHSystem(page2);
+
+        if(typeid(*(widget->getSystem()))==typeid(HSPHSystem))
+		configData = new WindowConfiguration_Data_HSPHSystem(page2);
 
 	QGridLayout *grid7 = new QGridLayout();
 	buttonOK = new QPushButton(tr("OK"),this);
@@ -114,7 +129,7 @@ WindowConfiguration_Emitter_Box::WindowConfiguration_Emitter_Box(GLWidget *widge
 	setLayout(layout);
 	setWindowTitle("Configuration");
 
-	B = new EmitterBox(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),length->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	B = new EmitterBox(Vector3(OX->value(),OY->value(),OZ->value()),width->value(),length->value(),depth->value(),Vector3(VX->value(),VY->value(),VZ->value()));
 	B->setData(configData->getData());
 
 	this->glWidget = widget;
@@ -151,7 +166,7 @@ EmitterBox* WindowConfiguration_Emitter_Box::getEmitter()
 void WindowConfiguration_Emitter_Box::displayBox(double d)
 {
 	if(B==NULL) delete(B);
-	B = new EmitterBox(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),length->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	B = new EmitterBox(Vector3(OX->value(),OY->value(),OZ->value()),width->value(),length->value(),depth->value(),Vector3(VX->value(),VY->value(),VZ->value()));
 	B->setData(configData->getData());
 	glWidget->getDisplay()->displayEmitter(B);
 }

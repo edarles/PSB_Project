@@ -4,12 +4,25 @@ include_directories(src/Kernel/ForcesExt/Constante)
 include_directories(src/Kernel/ForcesExt/Constante/Gravity)
 include_directories(src/Kernel/ForcesExt/Periodic)
 include_directories(src/Kernel/ForcesExt/Periodic/Trochoide)
+include_directories(src/Kernel/ForcesExt/Periodic/Harmonic)
+include_directories(src/Kernel/ForcesExt/Soliton)
+include_directories(src/Kernel/ForcesExt/TrainPeriodic)
+include_directories(src/Kernel/ForcesExt/TrainPeriodic/Trochoide)
+include_directories(src/Kernel/ForcesExt/TrainPeriodic/Harmonic)
 
 SET(FORCES_EXT_CUDA_FILES
 			src/Kernel/ForcesExt/Constante/ForceExt_Constante.cu
 			src/Kernel/ForcesExt/Constante/ForceExt_Constante_Kernel.cu
 			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide.cu
 			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide_Kernel.cu
+			src/Kernel/ForcesExt/Periodic/Harmonic/ForceExt_Harmonic.cu
+			src/Kernel/ForcesExt/Periodic/Harmonic/ForceExt_Harmonic_Kernel.cu
+			src/Kernel/ForcesExt/TrainPeriodic/Trochoide/ForceExt_TrainTrochoide.cu
+			src/Kernel/ForcesExt/TrainPeriodic/Trochoide/ForceExt_TrainTrochoide_Kernel.cu
+			src/Kernel/ForcesExt/Soliton/ForceExt_Soliton.cu
+			src/Kernel/ForcesExt/Soliton/ForceExt_Soliton_Kernel.cu
+			src/Kernel/ForcesExt/Soliton/ForceExt_TrainSoliton.cu
+			src/Kernel/ForcesExt/Soliton/ForceExt_TrainSoliton_Kernel.cu
 )
 
 SET(FORCES_EXT_APP_SOURCES
@@ -19,4 +32,10 @@ SET(FORCES_EXT_APP_SOURCES
 			src/Kernel/ForcesExt/Constante/Gravity/ForceExt_Gravity.cpp
 			src/Kernel/ForcesExt/Periodic/ForceExt_Periodic.cpp
 			src/Kernel/ForcesExt/Periodic/Trochoide/ForceExt_Trochoide.cpp
+			src/Kernel/ForcesExt/Periodic/Harmonic/ForceExt_Harmonic.cpp
+			src/Kernel/ForcesExt/Soliton/ForceExt_Soliton.cpp
+			src/Kernel/ForcesExt/TrainPeriodic/ForceExt_TrainPeriodic.cpp
+			src/Kernel/ForcesExt/TrainPeriodic/Trochoide/ForceExt_TrainTrochoide.cpp
+			src/Kernel/ForcesExt/Soliton/ForceExt_Soliton.cpp
+			src/Kernel/ForcesExt/Soliton/ForceExt_TrainSoliton.cpp
 )

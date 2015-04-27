@@ -10,22 +10,26 @@ __device__ float fatomicMin(float *addr, float value);
 __device__ float fatomicMax(float *addr, float value);
 
 __global__ void compute_Density_PCI(uint nbBodies, double3* pos, double* mass, double* radius, 
+			            double* density, double* restDensity, double* densityError, double* pressure, partVoisine voisines);
+
+__global__ void compute_Density_PCI_predict(uint nbBodies, double3* pos, double* mass, double* radius, 
 			            double* density, double* restDensity, double* densityError, partVoisine voisines);
 
-__global__ void compute_Pressure_PCI(uint nbBodies, double3* pos, double* mass, double* radius, double* k, double threshold, 
-				     double* density, double* restDensity, double* densityError, 
+__global__ void compute_Pressure_PCI(uint nbBodies, double3* pos, double* mass, double* radius, double threshold, 
+				     double* density, double* restDensity, double* densityError, double* k,
 			             double* pressure, partVoisine voisines, float dt);
 
-__global__ void compute_Pressure_Force_PCI(uint nbBodies, double3* pos, double* mass, double* density, 
-				           double* densityError, double* pressure, double* radius, double3* forcesPressure, 
+__global__ void compute_Pressure_Force_PCI(uint nbBodies, double3* pos, double* mass, 
+					   double* density, double* restDensity, double* densityError, 
+					   double* pressure, double* radius, double3* forcesPressure,
 				           double threshold, partVoisine voisines);
 
 
 __global__ void compute_Viscosity_SurfaceTension_Force_PCI(uint nbBodies, double3* pos, double3* vel, double* mass, double* density,  
 			       			      double* pressure, double* radius, double* viscosity, double* l, 
 						      double* surfaceTension, double3* normales,
-			       			      double3* forcePressure, double3* forceViscosity, double3* forceSurface, 
-						      double3* forcesAccum, partVoisine voisines);
+			       			      double3* forceViscosity, double3* forceSurface, double3* forcePressure, 
+						      partVoisine voisines);
 
 __global__ void restore_Pos_Vel_PCI(double3* restore_velInterAv, double3* restore_velInterAp, double3* restore_oldPos, 
 			            double3* restore_newPos, double3* velInterAv, double3* velInterAp, double3* oldPos, 

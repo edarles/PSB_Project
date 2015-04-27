@@ -1,6 +1,7 @@
 #ifndef GAUSSIAN_HEIGHT_FIELD_COLLISION_KERNEL
 #define GAUSSIAN_HEIGHT_FIELD_COLLISION_KERNEL
 
+#include <common.cuh>
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 extern "C"

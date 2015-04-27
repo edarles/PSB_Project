@@ -37,6 +37,34 @@ __device__ inline void atomicFloatMax(float *address, float value)
 	}
 }
 
+__device__ inline void atomicDoubleMin (double *address, double value)
+{
+   unsigned long long oldval, newval, readback; 
+ 
+   oldval = __double_as_longlong(*address);
+   newval = __double_as_longlong(__longlong_as_double(oldval) + value);
+   while ((readback=atomicCAS((unsigned long long *)address, oldval, newval)) != oldval)
+     {
+      oldval = readback;
+      if(__longlong_as_double(oldval)>value)
+	newval = __double_as_longlong(value);
+     }
+}
+
+__device__ inline void atomicDoubleMax (double *address, double value)
+{
+   unsigned long long oldval, newval, readback; 
+ 
+   oldval = __double_as_longlong(*address);
+   newval = __double_as_longlong(__longlong_as_double(oldval) + value);
+   while ((readback=atomicCAS((unsigned long long *)address, oldval, newval)) != oldval)
+     {
+      oldval = readback;
+      if(__longlong_as_double(oldval)<value)
+	newval = __double_as_longlong(value);
+     }
+}
+
 __device__ inline void atomicDoubleAdd(double *address, double value)  //See CUDA official forum
  {
     unsigned long long oldval, newval, readback;

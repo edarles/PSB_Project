@@ -14,7 +14,7 @@ class AnimatedPeriodic_HeightField : public Periodic_HeightField, public Animate
 		AnimatedPeriodic_HeightField();
 		AnimatedPeriodic_HeightField(float step);
 		AnimatedPeriodic_HeightField(const AnimatedPeriodic_HeightField&);
-		~AnimatedPeriodic_HeightField();
+		virtual ~AnimatedPeriodic_HeightField();
 /***************************************************************************************************************/
 		void create(Vector3 origin, float length, float width, double dx, double dz,
 			    uint nbFunc, double AMin, double AMax, double kMin, double kMax, double thetaMin, double thetaMax,

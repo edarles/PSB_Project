@@ -1,6 +1,7 @@
 #ifndef COMBINED_HEIGHT_FIELD_COLLISION_KERNEL
 #define COMBINED_HEIGHT_FIELD_COLLISION_KERNEL
 
+#include <common.cuh>
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 extern "C"

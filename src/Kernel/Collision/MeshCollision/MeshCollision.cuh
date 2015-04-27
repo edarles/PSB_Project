@@ -1,3 +1,5 @@
+#include <common.cuh>
+
 extern "C"
 {
  void collisionMesh_CUDA(double* oldPos, double* newPos, double* oldVel, double* newVel, 

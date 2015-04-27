@@ -15,41 +15,46 @@ WindowConfiguration_Emitter_Elipsoide::WindowConfiguration_Emitter_Elipsoide(GLW
 	OX = new QDoubleSpinBox(page1);
 	OY = new QDoubleSpinBox(page1);
 	OZ = new QDoubleSpinBox(page1);
-	OX->setValue(0.0); OY->setValue(0.0); OZ->setValue(0.0);
+	OX->setMinimum(-100); OX->setMaximum(100);
+	OY->setMinimum(-100); OY->setMaximum(100);
+	OZ->setMinimum(-100); OZ->setMaximum(100);
+	OX->setValue(0.75); OY->setValue(0.2); OZ->setValue(0.0);
 	connect(OX, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 	connect(OY, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 	connect(OZ, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 
-	sizeXLabel = new QLabel("RadiusX",page1);
- 	sizeX = new QDoubleSpinBox(page1);
-	sizeX->setValue(1.0);
-	connect(sizeX, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
-	sizeZLabel = new QLabel("RadiusZ",page1);
- 	sizeZ = new QDoubleSpinBox(page1);
-	sizeZ->setValue(1.0);
-	connect(sizeZ, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
+	radiusLabel = new QLabel("Radius",page1);
+ 	radius = new QDoubleSpinBox(page1);
+	radius->setValue(0.10);
+	connect(radius, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 	
-	maxEmissionLabel = new QLabel("Maximum emission",page1);
- 	maxEmission = new QSpinBox(page1);
-	maxEmission->setMinimum(10);
-	maxEmission->setMaximum(10000);
-	maxEmission->setValue(100);
-	connect(maxEmission, SIGNAL(valueChanged(int)), this, SLOT(displayElipsoide(int))); 
+	directionLabel = new QLabel("Direction",page1);
+	DX = new QDoubleSpinBox(page1);
+	DY = new QDoubleSpinBox(page1);
+	DZ = new QDoubleSpinBox(page1);
+	DX->setMinimum(-1.0); DX->setMaximum(1.0);
+	DY->setMinimum(-1.0); DY->setMaximum(1.0);
+	DZ->setMinimum(-1.0); DZ->setMaximum(1.0);
+	DX->setValue(-1.0); DY->setValue(0.0); DZ->setValue(0.0);
+	connect(DX, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
+	connect(DY, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
+	connect(DZ, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
+
 	durationTimeLabel = new QLabel("Duration Time",page1);
  	durationTime = new QSpinBox(page1);
 	durationTime->setMinimum(1);
 	durationTime->setMaximum(1000);
-	durationTime->setValue(10.0);
+	durationTime->setValue(300.0);
 	connect(durationTime, SIGNAL(valueChanged(int)), this, SLOT(displayElipsoide(int))); 
 
 	velocityLabel = new QLabel("Velocity particles",page1);
 	VX = new QDoubleSpinBox(page1);
 	VY = new QDoubleSpinBox(page1);
 	VZ = new QDoubleSpinBox(page1);
-	VX->setMinimum(-10); VX->setMaximum(10);
-	VY->setMinimum(-10); VY->setMaximum(10);
-	VZ->setMinimum(-10); VZ->setMaximum(10);
-	VX->setValue(0.0); VY->setValue(0.0); VZ->setValue(0.0);
+	VX->setMinimum(-100); VX->setMaximum(100);
+	VY->setMinimum(-100); VY->setMaximum(100);
+	VZ->setMinimum(-100); VZ->setMaximum(100);
+	VX->setValue(-2.5); VY->setValue(-1.0); VZ->setValue(0.0);
 	connect(VX, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 	connect(VY, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
 	connect(VZ, SIGNAL(valueChanged(double)), this, SLOT(displayElipsoide(double))); 
@@ -62,20 +67,17 @@ WindowConfiguration_Emitter_Elipsoide::WindowConfiguration_Emitter_Elipsoide(GLW
 	grid1->addWidget(OZ,0,3);
 	layout1->addLayout(grid1);
 
+	QGridLayout *grid8 = new QGridLayout();
+	grid8->addWidget(directionLabel,0,0);
+	grid8->addWidget(DX,0,1); 
+	grid8->addWidget(DY,0,2);
+	grid8->addWidget(DZ,0,3);
+	layout1->addLayout(grid8);
+
 	QGridLayout *grid2 = new QGridLayout();
-	grid2->addWidget(sizeXLabel,0,0);
-	grid2->addWidget(sizeX,0,1);
+	grid2->addWidget(radiusLabel,0,0);
+	grid2->addWidget(radius,0,1);
 	layout1->addLayout(grid2);
-
-	QGridLayout *grid3 = new QGridLayout();
-	grid3->addWidget(sizeZLabel,0,0);
-	grid3->addWidget(sizeZ,0,1);
-	layout1->addLayout(grid3);
-
-	QGridLayout *grid4 = new QGridLayout();
-	grid4->addWidget(maxEmissionLabel,0,0);
-	grid4->addWidget(maxEmission,0,1);
-	layout1->addLayout(grid4);
 
 	QGridLayout *grid5 = new QGridLayout();
 	grid5->addWidget(durationTimeLabel,0,0);
@@ -94,17 +96,26 @@ WindowConfiguration_Emitter_Elipsoide::WindowConfiguration_Emitter_Elipsoide(GLW
 	if(typeid(*(widget->getSystem()))==typeid(SimpleSystem))
 		configData = new WindowConfiguration_Data_SimpleSystem(page2);
 
-	if(typeid(*(widget->getSystem()))==typeid(SPHSystem))
-		configData = new WindowConfiguration_Data_SPHSystem(page2);
-
 	if(typeid(*(widget->getSystem()))==typeid(CudaSystem))
 		configData = new WindowConfiguration_Data_CudaSystem(page2);
 
-	if(typeid(*(widget->getSystem()))==typeid(CudaSystem))
+	if(typeid(*(widget->getSystem()))==typeid(SPHSystem))
+		configData = new WindowConfiguration_Data_SPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(WCSPHSystem))
+		configData = new WindowConfiguration_Data_WCSPHSystem(page2);
 
 	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
 		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SWSPHSystem))
+		configData = new WindowConfiguration_Data_SWSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SPH2DSystem))
+		configData = new WindowConfiguration_Data_SPH2DSystem(page2);
 
 	QGridLayout *grid7 = new QGridLayout();
 	buttonOK = new QPushButton(tr("OK"),this);
@@ -120,8 +131,8 @@ WindowConfiguration_Emitter_Elipsoide::WindowConfiguration_Emitter_Elipsoide(GLW
 
 	setLayout(layout);
 	setWindowTitle("Configuration");
-	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),sizeX->value(),sizeZ->value(),
-				 0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),radius->value(), DX->value(), DY->value(), DZ->value(),
+					 durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
 	B->setData(configData->getData());
 	this->glWidget = widget;
 	this->glWidget->getDisplay()->displayEmitter(B);
@@ -137,6 +148,7 @@ void WindowConfiguration_Emitter_Elipsoide::accept()
 	System *system = glWidget->getSystem();
 	B->setData(configData->getData());
 	system->addEmitter(B);
+	printf("addEmitter\n");
 	system->emitParticles();
 	close();
 }
@@ -156,9 +168,13 @@ EmitterElipsoide* WindowConfiguration_Emitter_Elipsoide::getEmitter()
 /*********************************************************************************************/
 void WindowConfiguration_Emitter_Elipsoide::displayElipsoide(double d)
 {
+	if(DX->value()==1 || DX->value()==-1) { DY->setValue(0); DZ->setValue(0);}
+	if(DY->value()==1 || DY->value()==-1) { DX->setValue(0); DZ->setValue(0);}
+	if(DZ->value()==1 || DZ->value()==-1) { DX->setValue(0); DY->setValue(0);}
+
 	if(B==NULL) delete(B);
-	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),sizeX->value(),sizeZ->value(),
-				 0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),radius->value(),DX->value(), DY->value(), DZ->value(),
+					 durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
 	B->setData(configData->getData());
 	glWidget->getDisplay()->displayEmitter(B);
 }
@@ -166,7 +182,8 @@ void WindowConfiguration_Emitter_Elipsoide::displayElipsoide(double d)
 void WindowConfiguration_Emitter_Elipsoide::displayElipsoide(int d)
 {
 	if(B==NULL) delete(B);
-	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),sizeX->value(),sizeZ->value(),0, maxEmission->value(), durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
+	B = new EmitterElipsoide(Vector3(OX->value(),OY->value(),OZ->value()),radius->value(),DX->value(), DY->value(), DZ->value(),
+					 durationTime->value(),Vector3(VX->value(),VY->value(),VZ->value()));
 	B->setData(configData->getData());
 	glWidget->getDisplay()->displayEmitter(B);
 }

@@ -36,7 +36,7 @@ SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRa
 	this->surfaceTension = surfaceTension;
 	this->viscosity = viscosity;
 	this->velInterAv = Vector3(0,0,0);
-	this->velInterAp = Vector3(0,0,0);//this->velInterAv;
+	this->velInterAp = vel;//Vector3(0,0,0);//vel;
 }
 /**************************************************************************************/	
 SPHParticle::SPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3 velInterAp, double mass, float particleRadius, Vector3 color,

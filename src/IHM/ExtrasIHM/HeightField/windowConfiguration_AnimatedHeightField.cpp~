@@ -168,9 +168,9 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
 
          tLabel = new QLabel("Time step",page2);
          t = new QDoubleSpinBox(page2);
-         t->setDecimals(2);
-         t->setValue(0.1);
-         t->setMinimum(0.01);
+         t->setDecimals(4);
+         t->setValue(0.01);
+         t->setMinimum(0.001);
          t->setMaximum(1);
          connect(t, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 
@@ -268,7 +268,7 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
                   thetaMax->value(),phiMin->value(), phiMax->value(),omegaMin->value(),omegaMax->value(),t->value());
 
         this->glWidget = widget;
-        widget->setAnimatedHF(H);
+        glWidget->setAnimatedHF(H);
 }
 /****************************************************************************************************/
 WindowConfiguration_AnimatedHeightField::~WindowConfiguration_AnimatedHeightField()

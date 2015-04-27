@@ -145,12 +145,16 @@ void ParticleExporter_XML::_export_SPHParticles(TiXmlDocument doc, TiXmlElement 
 	elmtGravity->SetDoubleAttribute("Amp", F->getAmplitude());
 	elmtPart->LinkEndChild(elmtGravity);
 
+	copyArrayFromDevice(S->m_hDensity, S->m_density, 0, sizeof(double)*particles.size());
+	
 	for(unsigned int i=0;i<particles.size();i++){
 			SPHParticle* p = (SPHParticle*) particles[i];
 			Vector3 pos = Vector3(S->m_hPos[1][i*3],S->m_hPos[1][i*3+1],S->m_hPos[1][i*3+2]);
 			Vector3 vel = Vector3(S->m_hVel[1][i*3],S->m_hVel[1][i*3+1],S->m_hVel[1][i*3+2]);
 			Vector3 velInterAv = Vector3(S->m_hVelInterAv[i*3],S->m_hVelInterAv[i*3+1],S->m_hVelInterAv[i*3+2]);
 			Vector3 velInterAp = Vector3(S->m_hVelInterAp[i*3],S->m_hVelInterAp[i*3+1],S->m_hVelInterAp[i*3+2]);
+			double dens = S->m_hDensity[i];
+
 			TiXmlElement * elmtParticle = new TiXmlElement( "Particle");
 			elmtParticle->SetAttribute("index", i);
 			elmtParticle->SetDoubleAttribute("mass",p->getMass());
@@ -158,6 +162,7 @@ void ParticleExporter_XML::_export_SPHParticles(TiXmlDocument doc, TiXmlElement 
 			elmtParticle->SetDoubleAttribute("kernelParticles",p->getKernelParticles());
 			elmtParticle->SetDoubleAttribute("interactionRadius",p->getInteractionRadius());
 			elmtParticle->SetDoubleAttribute("restDensity",p->getRestDensity());
+			elmtParticle->SetDoubleAttribute("density",dens);
 			elmtParticle->SetDoubleAttribute("gasStiffness",p->getGasStiffness());
 			elmtParticle->SetDoubleAttribute("threshold",p->getThreshold());
 			elmtParticle->SetDoubleAttribute("surfaceTension",p->getSurfaceTension());
@@ -183,6 +188,7 @@ void ParticleExporter_XML::_export_SPHParticles(TiXmlDocument doc, TiXmlElement 
 			elmtColor->SetDoubleAttribute("X", particles[i]->getColor().x());
 			elmtColor->SetDoubleAttribute("Y", particles[i]->getColor().y());
 			elmtColor->SetDoubleAttribute("Z", particles[i]->getColor().z());
+
 			elmtParticle->LinkEndChild(elmtPos);
 			elmtParticle->LinkEndChild(elmtVel);
 			elmtParticle->LinkEndChild(elmtVelInterAv);
@@ -210,6 +216,7 @@ void ParticleExporter_XML::_export_MSPHParticles(TiXmlDocument doc, TiXmlElement
 	copyArrayFromDevice(S->m_hMass,S->m_dMass,0,sizeof(double)*particles.size());
     	copyArrayFromDevice(S->m_hTemp,S->m_dTemp,0,sizeof(double)*particles.size());
 	copyArrayFromDevice(S->m_hRestDensity,S->m_restDensity,0,sizeof(double)*particles.size());
+	copyArrayFromDevice(S->m_hDensity, S->m_density, 0, sizeof(double)*particles.size());
 
 	for(unsigned int i=0;i<particles.size();i++){
 			MSPHParticle* p = (MSPHParticle*) particles[i];
@@ -217,9 +224,11 @@ void ParticleExporter_XML::_export_MSPHParticles(TiXmlDocument doc, TiXmlElement
 			Vector3 vel = Vector3(S->m_hVel[1][i*3],S->m_hVel[1][i*3+1],S->m_hVel[1][i*3+2]);
 			Vector3 velInterAv = Vector3(S->m_hVelInterAv[i*3],S->m_hVelInterAv[i*3+1],S->m_hVelInterAv[i*3+2]);
 			Vector3 velInterAp = Vector3(S->m_hVelInterAp[i*3],S->m_hVelInterAp[i*3+1],S->m_hVelInterAp[i*3+2]);
+
 			double restD = S->m_hRestDensity[i];
-			double temp = S->m_hTemp[i];
+			double temp = S->m_h_T[i];
 			double mass = S->m_hMass[i];
+			double dens = S->m_hDensity[i];
 
 			TiXmlElement * elmtParticle = new TiXmlElement( "Particle");
 			elmtParticle->SetAttribute("index", i);
@@ -228,6 +237,7 @@ void ParticleExporter_XML::_export_MSPHParticles(TiXmlDocument doc, TiXmlElement
 			elmtParticle->SetDoubleAttribute("kernelParticles",p->getKernelParticles());
 			elmtParticle->SetDoubleAttribute("interactionRadius",p->getInteractionRadius());
 			elmtParticle->SetDoubleAttribute("restDensity",restD);
+			elmtParticle->SetDoubleAttribute("density",dens);
 			elmtParticle->SetDoubleAttribute("gasStiffness",p->getGasStiffness());
 			elmtParticle->SetDoubleAttribute("threshold",p->getThreshold());
 			elmtParticle->SetDoubleAttribute("surfaceTension",p->getSurfaceTension());
@@ -254,11 +264,15 @@ void ParticleExporter_XML::_export_MSPHParticles(TiXmlDocument doc, TiXmlElement
 			elmtColor->SetDoubleAttribute("X", particles[i]->getColor().x());
 			elmtColor->SetDoubleAttribute("Y", particles[i]->getColor().y());
 			elmtColor->SetDoubleAttribute("Z", particles[i]->getColor().z());
+
+			
+
 			elmtParticle->LinkEndChild(elmtPos);
 			elmtParticle->LinkEndChild(elmtVel);
 			elmtParticle->LinkEndChild(elmtVelInterAv);
 			elmtParticle->LinkEndChild(elmtVelInterAp);
 			elmtParticle->LinkEndChild(elmtColor);
+			
 			elmtPart->LinkEndChild(elmtParticle);
 	}
 }

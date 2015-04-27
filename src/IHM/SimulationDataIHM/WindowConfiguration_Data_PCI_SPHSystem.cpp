@@ -5,16 +5,18 @@ WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(Q
 {
 	particleRadiusLabel = new QLabel("Particle Radius",widget);
  	particleRadius = new QDoubleSpinBox(widget);
-	particleRadius->setMinimum(0.01);
+	particleRadius->setMinimum(0.0);
 	particleRadius->setMaximum(1.0);
-	particleRadius->setValue(0.02);
+	particleRadius->setDecimals(5);
+	particleRadius->setValue(0.004);
 	connect(particleRadius, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	particleMassLabel = new QLabel("Particle Mass",widget);
  	particleMass = new QDoubleSpinBox(widget);
-	particleMass->setMinimum(0.01);
+	particleMass->setMinimum(0.00001);
 	particleMass->setMaximum(100.0);
-	particleMass->setValue(0.02);
+	particleMass->setDecimals(5);
+	particleMass->setValue(0.004);
 	connect(particleMass, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	restDensityLabel = new QLabel("Rest Density",widget);
@@ -99,10 +101,10 @@ WindowConfiguration_Data_PCI_SPHSystem::WindowConfiguration_Data_PCI_SPHSystem(Q
 
 	widget->setLayout(layout1);
     
-        color = QColor(255,0,255);
+        color = QColor(0,100,230);
 	
-	data = new SimulationData_PCI_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
-		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
+	data = new SimulationData_PCI_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255.0,color.green()/255.0,
+		   color.blue()/255.0),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
 		   kernelParticles->value());
 }
 /*********************************************************************************************/

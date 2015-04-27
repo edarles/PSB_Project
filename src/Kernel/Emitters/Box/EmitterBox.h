@@ -14,6 +14,8 @@ class EmitterBox : public Emitter, public Box
 		~EmitterBox();
 
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
+		vector<Particle*> emitParticles2D_z();
 		void		  display(Vector3 color);
 
 };

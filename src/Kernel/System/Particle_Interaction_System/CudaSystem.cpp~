@@ -3,6 +3,7 @@
 #include <CudaSystem.h>
 #include <System.cuh>
 #include <CudaSystem.cuh>
+#include <cuda.h>
 /*****************************************************************************/
 /*****************************************************************************/
 CudaSystem::CudaSystem():System()

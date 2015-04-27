@@ -15,22 +15,25 @@ WindowConfiguration_Box::WindowConfiguration_Box(GLWidget *widget)
 	widthLabel = new QLabel("width",page1);
  	width = new QDoubleSpinBox(page1);
 	width->setMinimum(0.01);
-	width->setValue(1);
+	width->setValue(0.5);
 	connect(width, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
 	lengthLabel = new QLabel("length",page1);
  	length = new QDoubleSpinBox(page1);
 	length->setMinimum(0.01);
-	length->setValue(1);
+	length->setValue(0.5);
 	connect(length, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
 	depthLabel = new QLabel("depth",page1);
  	depth = new QDoubleSpinBox(page1);
-	depth->setValue(1);
+	depth->setValue(0.5);
 	connect(depth, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
 
 	originLabel = new QLabel("Origin",page1);
 	OX = new QDoubleSpinBox(page1);
 	OY = new QDoubleSpinBox(page1);
 	OZ = new QDoubleSpinBox(page1);
+	OX->setMinimum(-10); OX->setValue(10.0);
+	OY->setMinimum(-10); OY->setValue(10.0);
+	OZ->setMinimum(-10); OZ->setValue(10.0);
 	OX->setValue(0.0); OY->setValue(0.0); OZ->setValue(0.0);
 	connect(OX, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
 	connect(OY, SIGNAL(valueChanged(double)), this, SLOT(displayBox(double))); 
@@ -90,7 +93,7 @@ WindowConfiguration_Box::WindowConfiguration_Box(GLWidget *widget)
 	setLayout(layout);
 	setWindowTitle("Configuration");
 	B = new BoxCollision();
-	B->create(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),length->value(),elast->value(),container->isChecked());
+	B->create(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),depth->value(),elast->value(),container->isChecked());
 	this->glWidget = widget;
 	this->glWidget->getDisplay()->displayObjectCollision(B);
 }
@@ -124,7 +127,7 @@ void WindowConfiguration_Box::displayBox(double d)
 {
 	if(B==NULL) delete(B);
 	B = new BoxCollision();
-	B->create(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),length->value(),elast->value(),container->isChecked());
+	B->create(Vector3(OX->value(),OY->value(),OZ->value()),length->value(),width->value(),depth->value(),elast->value(),container->isChecked());
 	glWidget->getDisplay()->displayObjectCollision(B);
 }
 /****************************************************************************************************/

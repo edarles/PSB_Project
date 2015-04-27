@@ -30,15 +30,52 @@ vector<Particle*> EmitterBox::emitParticles()
 {
 	if(data!=NULL){
 		vector<Particle*> particles;
-		for(float z=(center.z()-sizeZ/2); z<=(center.z()+sizeZ/2); z+=data->getParticleRadius()*2) {
-        		for(float y=(center.y()-sizeY/2); y<=(center.y()+sizeY/2); y+=data->getParticleRadius()*2) {
-				for(float x=(center.x()-sizeX/2); x<=(center.x()+sizeX/2); x+=data->getParticleRadius()*2) {
+		for(float z=(center.z()-sizeZ/2); z<=(center.z()+sizeZ/2); z+=data->getParticleRadius()*1.5) {
+        		for(float y=(center.y()-sizeY/2); y<=(center.y()+sizeY/2); y+=data->getParticleRadius()*1.5) {
+				for(float x=(center.x()-sizeX/2); x<=(center.x()+sizeX/2); x+=data->getParticleRadius()*1.5) {
 					float dx = x + worldPosition.x();
 					float dy = y + worldPosition.y();
 					float dz = z + worldPosition.z();
 					Vector3 pos(dx,dy,dz);
 					addParticle(pos,&particles);
 				}
+            		}
+        	}
+		currentTime++;
+		return particles;
+    	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
+vector<Particle*> EmitterBox::emitParticles2D()
+{
+	if(data!=NULL){
+		vector<Particle*> particles;
+		for(float x=(center.x()-sizeX/2); x<=(center.x()+sizeX/2); x+=data->getParticleRadius()*1.5) {
+			for(float y=(center.y()-sizeY/2); y<=(center.y()+sizeY/2); y+=data->getParticleRadius()*1.5) {
+				float dx = x + worldPosition.x();
+				float dy = y + worldPosition.y();
+				float dz = worldPosition.z();
+				Vector3 pos(dx,dy,dz);
+				addParticle(pos,&particles);
+            		}
+        	}
+		currentTime++;
+		return particles;
+    	}
+}
+/************************************************************************************************/
+vector<Particle*> EmitterBox::emitParticles2D_z()
+{
+	if(data!=NULL){
+		vector<Particle*> particles;
+		for(float x=(center.x()-sizeX/2); x<=(center.x()+sizeX/2); x+=data->getParticleRadius()/2) {
+			for(float z=(center.z()-sizeZ/2); z<=(center.z()+sizeZ/2); z+=data->getParticleRadius()/2) {
+				float dx = x + worldPosition.x();
+				float dy = worldPosition.y();
+				float dz = z + worldPosition.z();
+				Vector3 pos(dx,dy,dz);
+				addParticle(pos,&particles);
             		}
         	}
 		currentTime++;

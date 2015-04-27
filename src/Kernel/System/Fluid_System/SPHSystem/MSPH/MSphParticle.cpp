@@ -8,7 +8,7 @@ MSPHParticle::MSPHParticle():SPHParticle()
 MSPHParticle::MSPHParticle(Vector3 pos, Vector3 vel, double mass, float particleRadius, Vector3 color,
 			   float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
 			   float gasStiffness, float threshold, float surfaceTension, float viscosity,
-			   float temperature, Vector3 sigma, Vector3 beta, Vector3 g)
+			   float temperature, Vector3 sigma, Vector3 beta, Vector3 g, Phase *p)
 
 	     :SPHParticle(pos,vel,mass,particleRadius,color,interactionRadius,kernelParticles,density,restDensity,
 			      pressure,gasStiffness,threshold,surfaceTension,viscosity)
@@ -17,12 +17,13 @@ MSPHParticle::MSPHParticle(Vector3 pos, Vector3 vel, double mass, float particle
 	this->sigma = sigma;
 	this->beta = beta;
 	this->g = g;
+	this->phase = p;
 }
 /********************************************************************************************************************/
 MSPHParticle::MSPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3 velInterAp, double mass, float particleRadius, Vector3 color,
 			   float interactionRadius, float kernelParticles, float density, float restDensity, float pressure,
 			   float gasStiffness, float threshold, float surfaceTension, float viscosity,
-			   float temperature, Vector3 sigma, Vector3 beta, Vector3 g)
+			   float temperature, Vector3 sigma, Vector3 beta, Vector3 g, Phase *p)
 
 	      :SPHParticle(pos,vel,velInterAv,velInterAp, mass,particleRadius,color,interactionRadius,kernelParticles,density,restDensity,
 			      pressure,gasStiffness,threshold,surfaceTension,viscosity)
@@ -31,6 +32,7 @@ MSPHParticle::MSPHParticle(Vector3 pos, Vector3 vel, Vector3 velInterAv, Vector3
 	this->sigma = sigma;
 	this->beta = beta;
 	this->g = g;
+	this->phase = p;
 }
 /********************************************************************************************************************/
 MSPHParticle::MSPHParticle(const MSPHParticle& P):SPHParticle(P)
@@ -39,12 +41,18 @@ MSPHParticle::MSPHParticle(const MSPHParticle& P):SPHParticle(P)
 	this->sigma = P.sigma;
 	this->beta = P.beta;
 	this->g = P.g;
+	this->phase = P.phase;
 }
 /********************************************************************************************************************/
 MSPHParticle::~MSPHParticle()
 {
 }
 /********************************************************************************************************************/
+/********************************************************************************************************************/
+Phase* MSPHParticle::getPhase()
+{
+	return phase;
+}
 /********************************************************************************************************************/
 float MSPHParticle::getTemperature()
 {
@@ -66,6 +74,11 @@ Vector3 MSPHParticle::getG()
 	return g;
 }
 /********************************************************************************************************************/
+/********************************************************************************************************************/
+void MSPHParticle::setPhase(Phase* p)
+{
+	this->phase = p;
+}
 /********************************************************************************************************************/
 void MSPHParticle::setTemperature(float temperature)
 {

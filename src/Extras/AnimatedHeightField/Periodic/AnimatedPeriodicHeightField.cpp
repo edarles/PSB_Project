@@ -1,22 +1,25 @@
 #include <AnimatedPeriodicHeightField.h>
 #include <AnimatedPeriodicHeightField.cuh>
 #include <GL/gl.h>
-
+#include <stdio.h>
 /***********************************************************************************/
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField()
 			     :Periodic_HeightField(),AnimatedHeightField()
 {
+	t = 0;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField(float step)
 			     :Periodic_HeightField(),AnimatedHeightField(step)
 {
+	t = 0;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField(const AnimatedPeriodic_HeightField& H)
 			     :Periodic_HeightField(H),AnimatedHeightField(H)
 {
+	this->t = H.t;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::~AnimatedPeriodic_HeightField()

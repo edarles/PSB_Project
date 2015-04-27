@@ -14,10 +14,19 @@ class Periodic_HeightField : public HeightField
 	public:
 		Periodic_HeightField();
 		Periodic_HeightField(uint nbFunc, double AMin, double AMax, double kMin, double kMax, double thetaMin, double thetaMax,
-				     double phiMin, double phiMax, double wMin, double wMax, Vector3 Min, Vector3 Max, double d_x, double d_z);
+				     double phiMin, double phiMax, double wMin, double wMax, 
+				     Vector3 Min, Vector3 Max, double d_x, double d_z);
 		Periodic_HeightField(const Periodic_HeightField& H);
 /*****************************************************************************************************/
 		~Periodic_HeightField();
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+		double* getA();
+		double* getK();
+		double* getTheta();
+		double* getPhi();
+		double* getW();
+		uint    getNbFunc();
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 		void    create(uint nbFunc, double AMin, double AMax, double kMin, double kMax, double thetaMin, double thetaMax,
@@ -25,7 +34,6 @@ class Periodic_HeightField : public HeightField
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 		void calculateHeight(double* m_pos, uint nbPos);
-		void calculateHeight_Normales_Gradient(double* m_pos, double* m_n, uint nbPos);
 		void calculateHeight_Normales(double* m_pos, double* nx0, double* nx1, double* nz0, double* nz1, uint nbPos);
 /*****************************************************************************************************/
 /*****************************************************************************************************/

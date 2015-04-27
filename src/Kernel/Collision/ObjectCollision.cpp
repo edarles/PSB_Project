@@ -58,4 +58,9 @@ void  ObjectCollision::setIsContainer(bool is_container)
 	this->is_container = is_container;
 }
 /*************************************************************************************/
+void ObjectCollision::collide2D(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+				float dt, int nbBodiesP)
+{
+}
+/*************************************************************************************/
 /*************************************************************************************/

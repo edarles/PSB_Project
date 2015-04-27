@@ -8,6 +8,8 @@ Collision::Collision()
 /************************************************************************************************/
 Collision::~Collision()
 {
+	for(uint i=0;i<objects.size();i++)
+		delete(objects[i]);
 	objects.clear();
 }
 /************************************************************************************************/
@@ -44,8 +46,17 @@ void Collision::setObject(ObjectCollision *O)
 void Collision::collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 		         float dt, int nbBodiesP)
 {
+	  for(uint i=0;i<objects.size();i++)
+		objects[i]->collide(oldPos,newPos,oldVel,newVel,radiusParticle,dt,nbBodiesP);
+	
+}
+/************************************************************************************************/
+/************************************************************************************************/
+void Collision::collide2D(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+		         float dt, int nbBodiesP)
+{
 	for(uint i=0;i<objects.size();i++)
-		objects->collide(oldPos,newPos,oldVel,newVel,radiusParticle,dt,nbBodiesP);
+		objects[i]->collide2D(oldPos,newPos,oldVel,newVel,radiusParticle,dt,nbBodiesP);
 }
 /************************************************************************************************/
 /************************************************************************************************/

@@ -163,7 +163,7 @@ void SimpleSystem::update()
 void SimpleSystem::evaluateForcesExt()
 {
    FExt->init(particles.size());
-   FExt->evaluate(m_dPos[1],FExt->m_F, m_dMass, particles.size());
+   FExt->evaluate(m_dPos[0],FExt->m_F, m_dMass, particles.size());
 }
 /*****************************************************************************/
 void SimpleSystem::integrate()

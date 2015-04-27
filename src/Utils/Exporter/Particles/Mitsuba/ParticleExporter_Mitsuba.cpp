@@ -12,10 +12,15 @@ ParticleExporter_Mitsuba::~ParticleExporter_Mitsuba()
 }
 void ParticleExporter_Mitsuba::_export(const char* filename, System *S)
 {
-	if(typeid(*S) == typeid(SPHSystem)){
-		SPHSystem *SPH = (SPHSystem*) S;
+}
+
+void ParticleExporter_Mitsuba::_exportData(const char* filenameDensity, const char* filenameAlbedo,
+					   const char* filenameSigmaS, const char* filenameSigmaT, System *S)
+{
+	if(typeid(*S) == typeid(MSPHSystem)){
+		MSPHSystem *SPH = (MSPHSystem*) S;
 		if(SPH->getGridCreated()){
-			SPH->_exportData_Mitsuba(filename);
+			SPH->_exportData_Mitsuba(filenameDensity,filenameAlbedo,filenameSigmaS,filenameSigmaT);
 		}
 	}
 }

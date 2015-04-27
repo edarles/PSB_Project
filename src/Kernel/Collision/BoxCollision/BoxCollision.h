@@ -24,6 +24,9 @@ class BoxCollision : public ObjectCollision, public Box {
 		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 		             float dt, int nbBodiesP);
 
+		void collide2D(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+		             float dt, int nbBodiesP);
+
 		void display(GLenum, GLenum, Vector3 color);
 		void displayNormales(Vector3 color);
 

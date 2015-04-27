@@ -73,10 +73,10 @@ __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, in
 			for(int i=I-nbC; i<=I+nbC; i++){
 				for(int j=J-nbC; j<=J+nbC; j++){
 					for(int k=K-nbC; k<=K+nbC; k++){
-						 int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY;
 						 if(i>=0 && j>=0 && k>=0 && i < nbCellsX && j < nbCellsY && k < nbCellsZ){
-							if(nbParticles[indexC]>0){
-							for(uint n=0;n<nbParticles[indexC];n++){
+						 int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY;
+						// if(nbParticles[indexC]>0){
+						 for(uint n=0;n<nbParticles[indexC];n++){
 								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
 								double d = length(positions[indexP]-positions[indexP2]);
 								if(d<=radius[indexP]){
@@ -86,7 +86,7 @@ __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, in
 								
 							}
 							}
-						}
+						//}
 					}
 				}
 			}

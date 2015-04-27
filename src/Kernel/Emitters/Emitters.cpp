@@ -8,6 +8,7 @@ Emitters::Emitters()
 /**********************************************************************************/
 Emitters::~Emitters()
 {
+	#pragma omp parallel for
 	for(unsigned int i=0;i<emitters.size();i++)
 		delete(emitters[i]);
 	emitters.clear();
@@ -45,12 +46,45 @@ void	Emitters::addEmitter(Emitter* E)
 }
 /**********************************************************************************/
 /**********************************************************************************/
+void    Emitters::reinit()
+{
+	for(unsigned int i=0;i<emitters.size();i++)
+		emitters[i]->setCurrentTime(0);
+}
+/**********************************************************************************/
+/**********************************************************************************/
 vector<Particle*> Emitters::emitParticles()
 {
 	vector<Particle*> result;
 	for(unsigned int i=0;i<emitters.size();i++){
 		if(emitters[i]->getDurationTime()>emitters[i]->getCurrentTime()){
 			vector<Particle*> resultI = emitters[i]->emitParticles();
+			result.insert(result.end(), resultI.begin(), resultI.end());
+		}
+	}
+	return result;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+vector<Particle*> Emitters::emitParticles2D()
+{
+	vector<Particle*> result;
+	for(unsigned int i=0;i<emitters.size();i++){
+		if(emitters[i]->getDurationTime()>emitters[i]->getCurrentTime()){
+			vector<Particle*> resultI = emitters[i]->emitParticles2D();
+			result.insert(result.end(), resultI.begin(), resultI.end());
+		}
+	}
+	return result;
+}
+/**********************************************************************************/
+/**********************************************************************************/
+vector<Particle*> Emitters::emitParticles2D_z()
+{
+	vector<Particle*> result;
+	for(unsigned int i=0;i<emitters.size();i++){
+		if(emitters[i]->getDurationTime()>emitters[i]->getCurrentTime()){
+			vector<Particle*> resultI = emitters[i]->emitParticles2D_z();
 			result.insert(result.end(), resultI.begin(), resultI.end());
 		}
 	}

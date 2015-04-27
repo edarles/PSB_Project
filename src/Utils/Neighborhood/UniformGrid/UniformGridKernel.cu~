@@ -73,10 +73,10 @@ __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, in
 			for(int i=I-nbC; i<=I+nbC; i++){
 				for(int j=J-nbC; j<=J+nbC; j++){
 					for(int k=K-nbC; k<=K+nbC; k++){
-						 int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY;
 						 if(i>=0 && j>=0 && k>=0 && i < nbCellsX && j < nbCellsY && k < nbCellsZ){
-							if(nbParticles[indexC]>0){
-							for(uint n=0;n<nbParticles[indexC];n++){
+						 int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY
+						// if(nbParticles[indexC]>0){
+						 for(uint n=0;n<nbParticles[indexC];n++){
 								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
 								double d = length(positions[indexP]-positions[indexP2]);
 								if(d<=radius[indexP]){
@@ -86,7 +86,7 @@ __global__ void searchNeighbooring_Kernel(double3* positions, double* radius, in
 								
 							}
 							}
-						}
+						//}
 					}
 				}
 			}
@@ -139,77 +139,6 @@ __global__ void evaluateIso_Kernel(double4* pos_MC, uint nbCellsX_MC, uint nbCel
 /****************************************************************************************************************************/
 /****************************************************************************************************************************/
 __global__ void computeNormales_Vertexs_Kernel(double3* posV, double3* normales, float scale, uint nbV,
-			                       float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
-					       int* nbParticles, int* indexParticles,
-				               double3* pos, double* radius, double* mass, double* densities, uint nbBodies)
-{
-	uint index = __umul24(blockIdx.x,blockDim.x) + threadIdx.x;
-
-	if(index<nbV)
-	{
-		int I = floor((posV[index].x-Min.x)/sizeCell);
-		int J = floor((posV[index].y-Min.y)/sizeCell);
-		int K = floor((posV[index].z-Min.z)/sizeCell);
-
-		normales[index] = make_double3(0,0,0);
-		double3 pos1 = posV[index];
-
-		double4 p[6];
-		double d = 0.04;
-		p[0] = make_double4(pos1.x+d,pos1.y,pos1.z,0);
-		p[1] = make_double4(pos1.x-d,pos1.y,pos1.z,0);
-		p[2] = make_double4(pos1.x,pos1.y+d,pos1.z,0);
-		p[3] = make_double4(pos1.x,pos1.y-d,pos1.z,0);
-		p[4] = make_double4(pos1.x,pos1.y,pos1.z+d,0);
-		p[5] = make_double4(pos1.x,pos1.y,pos1.z-d,0);
-
-		int nbC = floor(1/scale);
-		for(int i=I-nbC;i<=I+nbC;i++){
-			for(int j=J-nbC;j<=J+nbC;j++){
-				for(int k=K-nbC;k<=K+nbC;k++){
-					if(i>=0 && j>=0 && k>=0 && i < nbCellsX && j < nbCellsY && k < nbCellsZ){
-						int indexC = i + j*nbCellsX + k*nbCellsX*nbCellsY;
-						if(nbParticles[indexC]>0){
-							for(uint n=0;n<nbParticles[indexC];n++){
-								uint indexP2 = indexParticles[indexC*MAXPARTICLES+n];
-								if(indexP2<nbBodies){
-								double3 pos2 = pos[indexP2];
-								double r = radius[indexP2]/scale;
-								for(int nbP = 0; nbP<6; nbP++){
-									double3 P1P2 = make_double3(p[nbP].x-pos2.x,p[nbP].y-pos2.y,p[nbP].z-pos2.z);
-									double d = length(P1P2);
-									if(d<=r){
-										//double h = powf(r,6);
-										p[nbP].w += (1/powf(r,6))*powf(r*r-d*d,3);
-									}	
-								}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		double dpx= (p[0].w-p[1].w)/(2*d);
-		double dpy= (p[2].w-p[3].w)/(2*d);
-		double dpz= (p[4].w-p[5].w)/(2*d);
-		double N = sqrt(dpx*dpx + dpy*dpy + dpz*dpz);
-		if(N<=0){
-			normales[index].x = 0;
-			normales[index].y = 1;
-			normales[index].z = 0;
-			//printf("Normale à 0\n");
-		}
-		else {
-		normales[index].x = -dpx/N;
-		normales[index].y = -dpy/N;
-		normales[index].z = -dpz/N;
-		}
-	}		
-}
-/****************************************************************************************************************************/
-/****************************************************************************************************************************/
-__global__ void computeNormales_Vertexs_Kernel2(double3* posV, double3* normales, float scale, uint nbV,
 			                        float3 Min, float sizeCell, int nbCellsX, int nbCellsY, int nbCellsZ, 
 					        int* nbParticles, int* indexParticles,
 				                double3* pos, double* radius, double* mass, double* density, uint nbBodies)

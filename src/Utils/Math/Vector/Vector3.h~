@@ -9,6 +9,9 @@
 
 using namespace std;
 
+#pragma once
+typedef numeric_limits<double>::infinity() INFINITY;
+
 class Vector3  {
 public:
     

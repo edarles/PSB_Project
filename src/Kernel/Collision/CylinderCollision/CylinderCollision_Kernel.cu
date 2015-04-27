@@ -19,6 +19,7 @@ __global__ void collisionCylinder(int nbBodies, double3* newPos, double3* newVel
 		double3 C =  make_double3(center.x + posAp.x*direction.x, center.y + posAp.y*direction.y,center.z + posAp.z*direction.x);
 
 		double dist = sqrt(powf(center.x-C.x,2)+powf(center.y-C.y,2)+powf(center.z-C.z,2));
+
 		if(dist>=(l/2)){
 			double dist1 = sqrt(powf(P1.x-C.x,2)+powf(P1.y-C.y,2)+powf(P1.z-C.z,2));
 			double dist2 = sqrt(powf(P2.x-C.x,2)+powf(P2.y-C.y,2)+powf(P2.z-C.z,2));

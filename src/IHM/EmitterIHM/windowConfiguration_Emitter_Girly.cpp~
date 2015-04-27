@@ -38,14 +38,23 @@ WindowConfiguration_Emitter_Girly::WindowConfiguration_Emitter_Girly(GLWidget *w
 	if(typeid(*(widget->getSystem()))==typeid(SimpleSystem))
 		configData = new WindowConfiguration_Data_SimpleSystem(page2);
 
-	if(typeid(*(widget->getSystem()))==typeid(SPHSystem))
-		configData = new WindowConfiguration_Data_SPHSystem(page2);
-
 	if(typeid(*(widget->getSystem()))==typeid(CudaSystem))
 		configData = new WindowConfiguration_Data_CudaSystem(page2);
 
+	if(typeid(*(widget->getSystem()))==typeid(SPHSystem))
+		configData = new WindowConfiguration_Data_SPHSystem(page2);
+
 	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(WCSPHSystem))
+		configData = new WindowConfiguration_Data_WCSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
+		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SWSPHSystem))
+		configData = new WindowConfiguration_Data_SWSPHSystem(page2);
 
 	QGridLayout *grid7 = new QGridLayout();
 

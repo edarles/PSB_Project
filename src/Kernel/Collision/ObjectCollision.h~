@@ -34,7 +34,14 @@ class ObjectCollision {
 /***********************************************************************************************/		
 		virtual      void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 					  float dt, int nbBodiesP) = 0;
-
+/***********************************************************************************************/
+/***********************************************************************************************/		
+		virtual      void collide2D(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+					  float dt, int nbBodiesP) = 0;
+/***********************************************************************************************/
+/***********************************************************************************************/
+		//virtual      void move(Vector3 F, float dt) = 0;
+		//virtual      void moveTo(Vector3 displacement) = 0;
 /***********************************************************************************************/
 /***********************************************************************************************/
 		virtual void display(GLenum, GLenum, Vector3 color) = 0;

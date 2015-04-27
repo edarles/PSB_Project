@@ -10,6 +10,7 @@ include_directories(src/Kernel/Collision/HeightField/Linear)
 include_directories(src/Kernel/Collision/HeightField/Periodic)
 include_directories(src/Kernel/Collision/HeightField/Gaussian)
 include_directories(src/Kernel/Collision/HeightField/Combined)
+include_directories(src/Kernel/Collision/HeightField/AnimatedPeriodic)
 
 SET(COLLISION_CUDA_FILES	
 			src/Kernel/Collision/MeshCollision/MeshCollision.cu
@@ -30,6 +31,8 @@ SET(COLLISION_CUDA_FILES
 			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision_Kernel.cu
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cu
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision_Kernel.cu
+			src/Kernel/Collision/HeightField/AnimatedPeriodic/AnimatedPeriodicHeightFieldCollision.cu
+			src/Kernel/Collision/HeightField/AnimatedPeriodic/AnimatedPeriodicHeightFieldCollision_Kernel.cu
 )
 
 SET(COLLISION_APP_SOURCES
@@ -45,5 +48,6 @@ SET(COLLISION_APP_SOURCES
 			src/Kernel/Collision/HeightField/Periodic/PeriodicHeightFieldCollision.cpp
 			src/Kernel/Collision/HeightField/Gaussian/GaussianHeightFieldCollision.cpp
 			src/Kernel/Collision/HeightField/Combined/CombinedHeightFieldCollision.cpp
+			src/Kernel/Collision/HeightField/AnimatedPeriodic/AnimatedPeriodicHeightFieldCollision.cpp
 )
 			

@@ -24,7 +24,7 @@ Mesh ObjLoader::load( const char *filename)
 		cerr << "ERROR: ObjLoader::loadObj(" << filename << ") file is not good" << endl;
 		exit(-1);
 	}
-
+	
 	char buffer[255];
 
         string str;
@@ -74,7 +74,8 @@ Mesh ObjLoader::load( const char *filename)
 				    Vector3 v0,v1,v2;
 				    int ind0, ind1, ind2;
 				    int indT0, indT1, indT2;
-				    in >> ind0 >> indT0 >> ind1 >> indT1 >> ind2 >> indT2;
+				    char c;
+				    in >> ind0 >> c >> indT0 >> ind1 >> c >> indT1 >> ind2 >> c >> indT2;
 				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
 				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
 				    t.calculateNormale();
@@ -84,7 +85,8 @@ Mesh ObjLoader::load( const char *filename)
 				    Vector3 v0,v1,v2;
 				    int ind0, ind1, ind2;
 				    int indN0, indN1, indN2;
-				    in >> ind0 >> indN0 >> ind1  >> indN1 >> ind2  >> indN2;
+				    char c;
+				    in >> ind0 >> c >> c >> indN0 >> ind1  >> c >> c >> indN1 >> ind2  >> c >> c >> indN2;
 				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
 				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);
 				    t.calculateNormale();
@@ -93,6 +95,8 @@ Mesh ObjLoader::load( const char *filename)
                                 if(vn.size()==0 && vt.size()==0){
                                     Vector3 v0,v1,v2;
 				    int ind0, ind1, ind2;
+				    char c;
+				  //  in >> ind0 >> c >> c >> ind1  >> c >> c >> ind2 >> c >> c;
 				    in >> ind0 >> ind1  >> ind2;
 				    v0 = vs[ind0-1]; v1 = vs[ind1-1]; v2 = vs[ind2-1];
 				    t.setVertex(v0); t.setVertex(v1); t.setVertex(v2);

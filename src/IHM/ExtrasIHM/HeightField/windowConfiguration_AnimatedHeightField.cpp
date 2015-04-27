@@ -20,7 +20,7 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
          OX->setMinimum(-1000); OX->setMaximum(1000);
          OY->setMinimum(-1000); OY->setMaximum(1000);
          OZ->setMinimum(-1000); OZ->setMaximum(1000);
-         OX->setValue(0.0); OY->setValue(0.0); OZ->setValue(0.0);
+         OX->setValue(1.5); OY->setValue(0.0); OZ->setValue(0.0);
          connect(OX, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
          connect(OY, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
          connect(OZ, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
@@ -28,13 +28,13 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
          widthLabel = new QLabel("width",page1);
          width = new QDoubleSpinBox(page1);
          width->setMinimum(0.01);
-         width->setValue(1.0);
+         width->setValue(1.5);
          connect(width, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 
          lengthLabel = new QLabel("length",page1);
          length = new QDoubleSpinBox(page1);
          length->setMinimum(0.01);
-         length->setValue(1.0);
+         length->setValue(1.5);
          connect(length, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 
          dxLabel = new QLabel("dx",page1);
@@ -168,9 +168,9 @@ WindowConfiguration_AnimatedHeightField::WindowConfiguration_AnimatedHeightField
 
          tLabel = new QLabel("Time step",page2);
          t = new QDoubleSpinBox(page2);
-         t->setDecimals(2);
-         t->setValue(0.1);
-         t->setMinimum(0.01);
+         t->setDecimals(4);
+         t->setValue(0.01);
+         t->setMinimum(0.001);
          t->setMaximum(1);
          connect(t, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 

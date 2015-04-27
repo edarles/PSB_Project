@@ -12,6 +12,8 @@ class HeightFieldCollision : public ObjectCollision
 		HeightFieldCollision(float elast);
 		HeightFieldCollision(const HeightFieldCollision&);
 		~HeightFieldCollision();
+
+
 };
 /*****************************************************************************************************/
 /*****************************************************************************************************/

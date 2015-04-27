@@ -28,7 +28,6 @@ __global__ void createGrid_MarchingCube_Kernel(double4* grid, double3 center, do
 		grid[indexCell].z = pos.z;
 		grid[indexCell].w = 0;
 		m_nbIndex[indexCell] = 0;
-		//printf("pos:%f %f %f\n",grid[indexCell].x,grid[indexCell].y,grid[indexCell].z);
 	}
 }
 /**************************************************************************************************************/

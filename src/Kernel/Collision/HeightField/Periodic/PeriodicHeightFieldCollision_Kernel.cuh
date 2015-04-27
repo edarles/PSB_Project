@@ -1,6 +1,7 @@
 #ifndef PERIODIC_HEIGHT_FIELD_COLLISION_KERNEL
 #define PERIODIC_HEIGHT_FIELD_COLLISION_KERNEL
 
+#include <common.cuh>
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 extern "C"

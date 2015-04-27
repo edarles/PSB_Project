@@ -15,6 +15,8 @@ include_directories(src/Utils/Exporter/Particles)
 include_directories(src/Utils/Exporter/Particles/Txt)
 include_directories(src/Utils/Exporter/Particles/XML)
 include_directories(src/Utils/Exporter/Particles/Mitsuba)
+include_directories(src/Utils/Exporter/Scene)
+include_directories(src/Utils/Exporter/Scene/Mitsuba)
 include_directories(src/Utils/Loader)
 include_directories(src/Utils/Loader/Mesh)
 include_directories(src/Utils/Loader/Mesh/OBJ)
@@ -50,6 +52,8 @@ SET(UTILS_APP_SOURCES
 			src/Utils/Exporter/Particles/Txt/ParticleExporter_Txt.cpp
 			src/Utils/Exporter/Particles/XML/ParticleExporter_XML.cpp
 			src/Utils/Exporter/Particles/Mitsuba/ParticleExporter_Mitsuba.cpp
+			src/Utils/Exporter/Scene/SceneExporter.cpp
+			src/Utils/Exporter/Scene/Mitsuba/SceneExporter_Mitsuba.cpp
 			src/Utils/Geometry/ObjectGeo.cpp
 			src/Utils/Geometry/Primitives/Face.cpp
 			src/Utils/Geometry/Primitives/Triangle.cpp

@@ -16,10 +16,9 @@
 #include <QGLViewer/vec.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
+#include <SurfaceSPH.h>
 
 using namespace qglviewer;
-//using namespace qglviewer;
-//using namespace std;
 
 class GLWidget;
 
@@ -45,19 +44,22 @@ class GLWidget;
 	GLenum getModeRasterization();
 	bool   getDrawNormales_ObjCollision();
 	bool   getDrawEmitters();
+	bool   getDrawSurface();
 
 	void setModeFace(GLenum);
 	void setModeRasterization(GLenum);
 	void setDrawNormales_ObjCollision(bool);
 	void setDrawEmitters(bool);
+	void setDrawSurface(bool);
 
 	// PUBLIC METHOD TO DRAW
 	void display();
 
 	void displayObjectCollision(ObjectCollision *O);
 	void setObjectIsCreate();
-
 	void displayEmitter(Emitter* E);
+        void displayParticlesByField(uint field);
+	void displaySurface();
 
 	Vector3 colorCollision;
 	Vector3 colorParticles;
@@ -74,6 +76,8 @@ class GLWidget;
 	GLenum modeRasterization;
 	bool   drawNormales_ObjCollision;
 	bool   drawEmitters;
+	bool   drawSurface;
+	SurfaceSPH *surfaceSPH;
 
 	// PRIVATE METHODS TO DRAW
 	void displayParticles();

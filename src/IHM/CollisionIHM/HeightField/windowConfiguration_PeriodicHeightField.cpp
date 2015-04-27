@@ -156,6 +156,22 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	phiMax->setMaximum(100);
 	connect(phiMax, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 
+	wMinLabel = new QLabel("wMin",page2);
+	wMin = new QDoubleSpinBox(page2);
+	wMin->setDecimals(2);
+	wMin->setValue(-10);
+	wMin->setMinimum(-100);
+	wMin->setMaximum(100);
+	connect(wMin, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
+
+	wMaxLabel = new QLabel("wMax",page2);
+	wMax = new QDoubleSpinBox(page2);
+	wMax->setDecimals(2);
+	wMax->setValue(10);
+	wMax->setMinimum(-100);
+	wMax->setMaximum(100);
+	connect(wMax, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
+
 	buttonLoad  = new QPushButton(tr("Load spectrum"),this);
 	connect(buttonLoad, SIGNAL(clicked()), this , SLOT(loadSpectrum()));
 
@@ -209,6 +225,16 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	grid16->addWidget(phiMax,0,1);
 	layout2->addLayout(grid16);
 
+	QGridLayout *grid20 = new QGridLayout();
+	grid20->addWidget(wMinLabel,0,0);
+	grid20->addWidget(wMin,0,1);
+	layout2->addLayout(grid20);
+
+	QGridLayout *grid21 = new QGridLayout();
+	grid21->addWidget(wMaxLabel,0,0);
+	grid21->addWidget(wMax,0,1);
+	layout2->addLayout(grid21);
+
 	layout2->addWidget(buttonLoad);
 	layout2->addWidget(buttonSave);
 
@@ -246,7 +272,8 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	setWindowTitle("Configuration");
 
 	H = new Periodic_HeightFieldCollision();
-	H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),elast->value());
+	H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),
+	wMin->value(),wMax->value(),elast->value());
 
 	this->glWidget = widget;
 	this->glWidget->getDisplay()->displayObjectCollision(H);
@@ -328,6 +355,22 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	phiMax->setMaximum(100);
 	connect(phiMax, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
 
+	wMinLabel = new QLabel("wMin",page2);
+	wMin = new QDoubleSpinBox(page2);
+	wMin->setDecimals(2);
+	wMin->setValue(-10);
+	wMin->setMinimum(-100);
+	wMin->setMaximum(100);
+	connect(wMin, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
+
+	wMaxLabel = new QLabel("wMax",page2);
+	wMax = new QDoubleSpinBox(page2);
+	wMax->setDecimals(2);
+	wMax->setValue(10);
+	wMax->setMinimum(-100);
+	wMax->setMaximum(100);
+	connect(wMax, SIGNAL(valueChanged(double)), this, SLOT(displayHeightField(double))); 
+
 	buttonLoad  = new QPushButton(tr("Load spectrum"),this);
 	connect(buttonLoad, SIGNAL(clicked()), this , SLOT(loadSpectrum()));
 
@@ -381,6 +424,16 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	grid16->addWidget(phiMax,0,1);
 	layout2->addLayout(grid16);
 
+	QGridLayout *grid20 = new QGridLayout();
+	grid20->addWidget(wMinLabel,0,0);
+	grid20->addWidget(wMin,0,1);
+	layout2->addLayout(grid20);
+
+	QGridLayout *grid21 = new QGridLayout();
+	grid21->addWidget(wMaxLabel,0,0);
+	grid21->addWidget(wMax,0,1);
+	layout2->addLayout(grid21);
+
 	layout2->addWidget(buttonLoad);
 	layout2->addWidget(buttonSave);
 
@@ -402,7 +455,7 @@ WindowConfiguration_PeriodicHeightField::WindowConfiguration_PeriodicHeightField
 	setWindowTitle("Configuration");
 
 	H = new Periodic_HeightFieldCollision();
-	H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),parent->elast->value());
+	H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),parent->elast->value());
 	this->glWidget = widget;
 	this->glWidget->getDisplay()->displayObjectCollision(H);
     }
@@ -431,7 +484,7 @@ void WindowConfiguration_PeriodicHeightField::add()
 {
 	if(parent!=NULL){
 		H = new Periodic_HeightFieldCollision();
-		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),parent->elast->value());
+		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),parent->elast->value());
 		parent->Hfields.push_back(H);
 		parent->glWidget->getDisplay()->displayObjectCollision(H);
 		close();
@@ -450,11 +503,11 @@ void WindowConfiguration_PeriodicHeightField::displayHeightField(double d)
 	if(H==NULL) delete(H);
 	H = new Periodic_HeightFieldCollision();
         if(parent==NULL){
-		H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),elast->value());
+		H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),elast->value());
 		glWidget->getDisplay()->displayObjectCollision(H);
 	}
 	else {
-		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),parent->elast->value());
+		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),parent->elast->value());
 		parent->glWidget->getDisplay()->displayObjectCollision(H);
 	}
 }
@@ -465,11 +518,11 @@ void WindowConfiguration_PeriodicHeightField::displayHeightField(int d)
 	if(H==NULL) delete(H);
 	H = new Periodic_HeightFieldCollision();
 	if(parent==NULL){
-		H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),elast->value());
+		H->create(Vector3(OX->value(),OY->value(),OZ->value()),(float)length->value(),(float)width->value(),dx->value(),dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),elast->value());
 		glWidget->getDisplay()->displayObjectCollision(H);
 	}
 	else {
-		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),parent->elast->value());
+		H->create(Vector3(parent->OX->value(),parent->OY->value(),parent->OZ->value()),(float)parent->length->value(),(float)parent->width->value(),parent->dx->value(),parent->dz->value(),nbFunc->value(),AMin->value(),AMax->value(),kMin->value(),kMax->value(),thetaMin->value(),thetaMax->value(),phiMin->value(),phiMax->value(),wMin->value(),wMax->value(),parent->elast->value());
 		parent->glWidget->getDisplay()->displayObjectCollision(H);
 	}
 }

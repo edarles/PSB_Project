@@ -1,6 +1,9 @@
 #ifndef _SYSTEM_H__
 #define _SYSTEM_H__
 
+#include <cuda.h>
+#include <common.cuh>
+
 #include <vector>
 #include <SimulationDatas.h>
 #include <Particle.h>
@@ -11,6 +14,8 @@
 #include <PlaneCollision.h>
 #include <ForcesExt.h>
 #include <Emitters.h>
+
+#define maxParticles  300000
 
 class System
 {
@@ -29,7 +34,9 @@ public:
     virtual void update() = 0;
     virtual void emitParticles() = 0;
     virtual void collide() = 0;
+
     virtual void displayParticles(ParticleDisplay mode, Vector3 color);
+    virtual void displayParticlesByField(uint field);
     virtual void displayCollisions(GLenum, GLenum, Vector3 colorObject, Vector3 colorNormales, bool);
     virtual void displayEmitters(Vector3);
 
@@ -38,14 +45,14 @@ public:
 
     ObjectCollision* getObjectCollision(unsigned int);
     vector<ObjectCollision*> getObjectsCollision();
-    void             addObjectCollision(ObjectCollision*);
-    void             removeLastObjectCollision();
+    virtual void             addObjectCollision(ObjectCollision*);
+    virtual void             removeLastObjectCollision();
 
     Emitters*	     getEmitters();
-    void	     addEmitter(Emitter* E);
+    virtual void     addEmitter(Emitter* E);
 
     ForcesExt*	     getForcesExt();
-    void 	     addForce(ForceExt*);
+    virtual void     addForce(ForceExt*);
 
     int  getNumParticles() const { return particles.size(); }
     void setIterations(int i) { m_solverIterations = i; }
@@ -81,6 +88,9 @@ public:
 	ForcesExt       *FExt;
 
 	double		dt;
+	int 		t;
+	float 		currentTime;
+	int 		frameNumber;
 	uint            m_solverIterations;
 
 	GLuint _compileProgram(const char *vsource, const char *fsource);

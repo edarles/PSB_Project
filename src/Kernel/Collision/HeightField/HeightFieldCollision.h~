@@ -13,8 +13,8 @@ class HeightFieldCollision : public ObjectCollision
 		HeightFieldCollision(const HeightFieldCollision&);
 		~HeightFieldCollision();
 
-		virtual      void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
-					  float dt, int nbBodiesP) = 0;
+		void display(GLenum mode, GLenum raster, Vector3 color);
+		void displayNormales(Vector3 color);
 };
 /*****************************************************************************************************/
 /*****************************************************************************************************/

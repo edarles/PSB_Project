@@ -4,8 +4,13 @@ include_directories(src/Kernel/System/SimpleSystem)
 include_directories(src/Kernel/System/Particle_Interaction_System)
 include_directories(src/Kernel/System/Fluid_System/SPHSystem)
 include_directories(src/Kernel/System/Fluid_System/SPHSystem/SPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/SPH2D)
 include_directories(src/Kernel/System/Fluid_System/SPHSystem/PCISPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/WCSPH)
 include_directories(src/Kernel/System/Fluid_System/SPHSystem/MSPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/SWSPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/HSPH)
+include_directories(src/Kernel/System/Fluid_System/SPHSystem/HybridSPH)
 
 SET(SYSTEM_CUDA_FILES 	
 			src/Kernel/System/SimpleSystem/System.cu
@@ -13,11 +18,22 @@ SET(SYSTEM_CUDA_FILES
 			src/Kernel/System/Particle_Interaction_System/CudaSystem.cu
 			src/Kernel/System/Particle_Interaction_System/CudaParticle_Kernel.cu
 			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SPH/Textures.cu
 			src/Kernel/System/Fluid_System/SPHSystem/SPH/SphKernel.cu
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem.cu
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem_Kernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/WCSPH/WCSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/WCSPH/WCSphKernel.cu
 			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem.cu
 			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem_Kernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SWSPH/SWSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SWSPH/SWSphKernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SPH2D/Sph2DSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/SPH2D/Sph2DKernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/HybridSPH/HybridSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/HybridSPH/HybridSphKernel.cu
+			src/Kernel/System/Fluid_System/SPHSystem/HSPH/HSphSystem.cu
+			src/Kernel/System/Fluid_System/SPHSystem/HSPH/HSphSystem_Kernel.cu
 )
 
 SET(SYSTEM_APP_SOURCES
@@ -37,7 +53,22 @@ SET(SYSTEM_APP_SOURCES
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphParticle.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/PciSphSystem.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/PCISPH/SimulationData_PCI_SPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/WCSPH/WCSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/WCSPH/WCSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/WCSPH/SimulationData_WCSPHSystem.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphParticle.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/MSPH/MSphSystem.cpp
 			src/Kernel/System/Fluid_System/SPHSystem/MSPH/SimulationData_MSPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SWSPH/SWSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SWSPH/SWSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SWSPH/SimulationData_SWSPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH2D/Sph2DParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH2D/Sph2DSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/SPH2D/SimulationData_SPHSystem2D.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HybridSPH/SimulationData_HybridSPHSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HybridSPH/HybridSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HybridSPH/HybridSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HSPH/HSphParticle.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HSPH/HSphSystem.cpp
+			src/Kernel/System/Fluid_System/SPHSystem/HSPH/SimulationData_HSPHSystem.cpp
 )

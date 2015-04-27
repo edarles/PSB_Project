@@ -1,8 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windowConfiguration_GaussianHeightField.h'
 **
-** Created: Mon Jun 3 01:19:11 2013
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.6)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -11,7 +10,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'windowConfiguration_GaussianHeightField.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#error "This file was generated using the moc from 4.8.6. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -31,17 +30,17 @@ static const uint qt_meta_data_WindowConfiguration_GaussianHeightField[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      41,   40,   40,   40, 0x0a,
-      50,   40,   40,   40, 0x0a,
-      56,   40,   40,   40, 0x0a,
-      65,   40,   40,   40, 0x0a,
+      40,   49,   49,   49, 0x0a,
+      50,   49,   49,   49, 0x0a,
+      56,   49,   49,   49, 0x0a,
+      65,   49,   49,   49, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_WindowConfiguration_GaussianHeightField[] = {
     "WindowConfiguration_GaussianHeightField\0"
-    "\0accept()\0add()\0cancel()\0"
+    "accept()\0\0add()\0cancel()\0"
     "displayHeightField(double)\0"
 };
 

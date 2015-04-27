@@ -16,10 +16,10 @@ ParticleLoader_XML::~ParticleLoader_XML()
 /**************************************************************************************/
 vector<Particle*> ParticleLoader_XML::load(System *S, const char *filename)
 {
-  vector<Particle*> particles;
   TiXmlDocument doc(filename);
-  if (!doc.LoadFile()) return particles;
-  else {
+    
+  if (doc.LoadFile())
+  {
 	if(typeid(*S) == typeid(SimpleSystem))
 		return loadSimpleSystem(doc);
 
@@ -123,15 +123,16 @@ vector<Particle*> ParticleLoader_XML::loadCudaSystem(TiXmlDocument doc)
 /**************************************************************************************/
 vector<Particle*> ParticleLoader_XML::loadSPHSystem(TiXmlDocument doc)
 {
-  	vector<Particle*> particles;
+    vector<Particle*> particles;
+    return particles;
   	TiXmlHandle hDoc(&doc);
 	TiXmlElement* elem;
 	TiXmlElement* hRoot = doc.FirstChildElement( "Particles" );
         elem=hDoc.FirstChildElement().Element();
-	if(string(elem->Attribute("name"))=="SPH System"){
+	/*if(string(elem->Attribute("name"))=="SPH System"){
 		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
 		printf("load SPHSystem\n");
-		for( partElement; partElement; partElement=partElement->NextSiblingElement())
+		/*for( partElement; partElement; partElement=partElement->NextSiblingElement())
 		{
 			double mass, radius, interactionRadius, kernelParticles, restDensity, 
 			       gasStiffness, threshold, surfaceTension, viscosity;
@@ -176,7 +177,7 @@ vector<Particle*> ParticleLoader_XML::loadSPHSystem(TiXmlDocument doc)
 				     threshold,surfaceTension,viscosity);
 			particles.push_back(p);
 		}
-	}
+	}*/
    	return particles;
 }
 /**************************************************************************************/
@@ -235,7 +236,7 @@ vector<Particle*> ParticleLoader_XML::loadMSPHSystem(TiXmlDocument doc)
 			MSPHParticle *p = new MSPHParticle(Vector3(x,y,z),Vector3(vx,vy,vz),Vector3(vav_x,vav_y,vav_z), 
 				     Vector3(vap_x,vap_y,vap_z),mass,radius,Vector3(cx,cy,cz),
 			   	     interactionRadius, kernelParticles, 0, restDensity, 0, gasStiffness,
-				     threshold,surfaceTension,viscosity,temperature,Vector3(0,0,0),Vector3(0,0,0),Vector3(0,0,0));
+				     threshold,surfaceTension,viscosity,temperature,Vector3(0,0,0),Vector3(0,0,0),Vector3(0,0,0),NULL);
 			particles.push_back(p);
 		}
 	}

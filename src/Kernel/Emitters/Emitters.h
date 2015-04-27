@@ -18,6 +18,8 @@ class Emitters {
 		Emitters();
 		~Emitters();
 
+		void    	 reinit();
+
 		vector<Emitter*> getEmitters();
 		Emitter*	 getEmitter(unsigned int);
 	
@@ -26,6 +28,9 @@ class Emitters {
 		void	         addEmitter(Emitter* E);
 
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
+		vector<Particle*> emitParticles2D_z();
+
 		void		  display(Vector3);
 
 	private:

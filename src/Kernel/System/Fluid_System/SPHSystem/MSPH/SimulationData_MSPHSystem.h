@@ -2,6 +2,7 @@
 #define SIMULATION_DATA_MSPH_SYSTEM
 
 #include <SimulationData_SPHSystem.h>
+#include <Phase.h>
 /**********************************************************************************/
 /**********************************************************************************/
 class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
@@ -23,12 +24,14 @@ class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
 /**********************************************************************************/
 /**********************************************************************************/
 		float getTemperature();
+		Phase* getPhase();
 		Vector3 getSigma();
 		Vector3 getBeta();
 		Vector3 getG();
 /**********************************************************************************/
 /**********************************************************************************/
 		void  setTemperature(float temperature);
+		void  setPhase(Phase* p);
 		void  setSigma(Vector3 sigma);
 		void  setBeta(Vector3 beta);
 		void  setG(Vector3 g);
@@ -41,6 +44,7 @@ class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
 /**********************************************************************************/
 /**********************************************************************************/
 		float temperature;
+		Phase* phase;
 		Vector3 sigma, beta, g;
 /**********************************************************************************/
 /**********************************************************************************/

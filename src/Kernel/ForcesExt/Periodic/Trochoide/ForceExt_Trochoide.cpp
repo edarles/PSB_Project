@@ -2,6 +2,7 @@
 /*****************************************************************************************************/
 #include <ForceExt_Trochoide.h>
 #include <ForceExt_Trochoide.cuh>
+#include <cuda.h>
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 ForceExt_Trochoide::ForceExt_Trochoide():ForceExt_Periodic()
@@ -24,7 +25,7 @@ ForceExt_Trochoide::~ForceExt_Trochoide()
 void ForceExt_Trochoide::evaluate(double* pos, double* acummForce, double* mass, uint nbBodies)
 {
 	evaluate_forceExt_Trochoide_CUDA(pos,acummForce,mass,A, k, theta, w, phi, time,nbBodies);
-	cudaDeviceSynchronize();
+	//cudaDeviceSynchronize();
 	time += step;
 }
 /*****************************************************************************************************/

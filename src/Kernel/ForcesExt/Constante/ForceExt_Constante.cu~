@@ -5,7 +5,7 @@ extern "C"
 {
 /**************************************************************************************************************************************/
 /**************************************************************************************************************************************/
-void evaluate_force_constante_CUDA (double* accumForceBuff, double* mass, Vector3 direction, float amplitude, uint nbBodies)
+void evaluate_force_constante_CUDA(double* accumForceBuff, double* mass, Vector3 direction, float amplitude, uint nbBodies)
 {
     int numBlocksX, numThreadsX;
     computeGridSize(nbBodies, numBlocksX, numThreadsX);

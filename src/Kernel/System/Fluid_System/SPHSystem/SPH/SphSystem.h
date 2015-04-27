@@ -25,9 +25,7 @@ public:
     virtual void update();
 
     inline UniformGrid* getGrid(){ return grid; }
-    inline bool        getGridCreated(){ return gridCreated; }
-
-    void  _exportData_Mitsuba(const char* filename);
+    inline bool         getGridCreated(){ return gridCreated; }
 
 public: // methods
 
@@ -35,16 +33,25 @@ public: // methods
     virtual void _initialize(int begin, int numParticles);
     virtual void _finalize();
     
-    void evaluateDensitiesForces();
-    void evaluateForcesExt();
-    void integrate();
-    void collide();
-    void interpolateVelocities();
+    virtual void evaluateDensitiesForces();
+    virtual void evaluateForcesExt();
+    virtual void integrate();
+    virtual void collide();
+    virtual void interpolateVelocities();
+    virtual double calculateTimeStep();
+
+    virtual void displayParticlesByField(uint field);
+    Vector3 	 convertHsvToRgb(Vector3 Hsv);
+
+    Vector3      getMinS();
+    Vector3      getMaxS();
+    void         setMinS(Vector3);
+    void         setMaxS(Vector3);
 
     /*****************************************************************************************/
-    void evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCellsZ, double scale);
+    virtual void evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCellsZ, double scale);
     /*****************************************************************************************/
-    void computeNormales_Vertex(double* pos, double* normales, float scale, uint nbV);
+    virtual void computeNormales_Vertex(double* pos, double* normales, float scale, uint nbV);
     /*****************************************************************************************/
 
     double* m_interactionRadius;
@@ -82,9 +89,13 @@ public: // methods
     double* m_hNormales;
 
     UniformGrid *grid;
+    Vector3 MinS, MaxS;
     bool gridCreated;
 
     float m_dt;
+    double massRef, maxH;
+
+    float errorDensityAvg;
 };
 
 #endif //

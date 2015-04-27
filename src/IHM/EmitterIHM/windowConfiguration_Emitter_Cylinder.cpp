@@ -52,9 +52,9 @@ WindowConfiguration_Emitter_Cylinder::WindowConfiguration_Emitter_Cylinder(GLWid
 	VX = new QDoubleSpinBox(page1);
 	VY = new QDoubleSpinBox(page1);
 	VZ = new QDoubleSpinBox(page1);
-	VX->setMinimum(-10); VX->setMaximum(10);
-	VY->setMinimum(-10); VY->setMaximum(10);
-	VZ->setMinimum(-10); VZ->setMaximum(10);
+	VX->setMinimum(-100); VX->setMaximum(100);
+	VY->setMinimum(-100); VY->setMaximum(100);
+	VZ->setMinimum(-100); VZ->setMaximum(100);
 	VX->setValue(0.0); VY->setValue(0.0); VZ->setValue(0.0);
 	connect(VX, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
 	connect(VY, SIGNAL(valueChanged(double)), this, SLOT(displayCylinder(double))); 
@@ -106,8 +106,17 @@ WindowConfiguration_Emitter_Cylinder::WindowConfiguration_Emitter_Cylinder(GLWid
 	if(typeid(*(widget->getSystem()))==typeid(PCI_SPHSystem))
 		configData = new WindowConfiguration_Data_PCI_SPHSystem(page2);
 
+	if(typeid(*(widget->getSystem()))==typeid(WCSPHSystem))
+		configData = new WindowConfiguration_Data_WCSPHSystem(page2);
+
 	if(typeid(*(widget->getSystem()))==typeid(MSPHSystem))
 		configData = new WindowConfiguration_Data_MSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SWSPHSystem))
+		configData = new WindowConfiguration_Data_SWSPHSystem(page2);
+
+	if(typeid(*(widget->getSystem()))==typeid(SPH2DSystem))
+		configData = new WindowConfiguration_Data_SPH2DSystem(page2);
 
 	QGridLayout *grid7 = new QGridLayout();
 

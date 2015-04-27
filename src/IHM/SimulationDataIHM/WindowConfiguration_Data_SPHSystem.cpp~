@@ -6,16 +6,20 @@ WindowConfiguration_Data_SPHSystem::WindowConfiguration_Data_SPHSystem(QWidget* 
 {
 	particleRadiusLabel = new QLabel("Particle Radius",widget);
  	particleRadius = new QDoubleSpinBox(widget);
-	particleRadius->setMinimum(0.01);
+	particleRadius->setMinimum(0);
 	particleRadius->setMaximum(1.0);
-	particleRadius->setValue(0.02);
+	particleRadius->setDecimals(5);
+	//particleRadius->setValue(0.02);
+	particleRadius->setValue(0.004);
 	connect(particleRadius, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	particleMassLabel = new QLabel("Particle Mass",widget);
  	particleMass = new QDoubleSpinBox(widget);
-	particleMass->setMinimum(0.01);
+	particleMass->setMinimum(0);
 	particleMass->setMaximum(100.0);
-	particleMass->setValue(0.02);
+	particleMass->setDecimals(5);
+	//particleMass->setValue(0.02);
+        particleMass->setValue(0.004);
 	connect(particleMass, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	restDensityLabel = new QLabel("Rest Density",widget);
@@ -30,10 +34,12 @@ WindowConfiguration_Data_SPHSystem::WindowConfiguration_Data_SPHSystem(QWidget* 
 	viscosity->setMinimum(0.0);
 	viscosity->setMaximum(100);
 	viscosity->setValue(3.5);
+        //viscosity->setValue(10);
 	connect(viscosity, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	surfaceTensionLabel = new QLabel("Surface tension",widget);
 	surfaceTension = new QDoubleSpinBox(widget);
+	surfaceTension->setDecimals(4);
 	surfaceTension->setMinimum(0.0);
 	surfaceTension->setMaximum(100);
 	surfaceTension->setValue(0.0728);
@@ -44,6 +50,7 @@ WindowConfiguration_Data_SPHSystem::WindowConfiguration_Data_SPHSystem(QWidget* 
 	gasStiffness->setMinimum(0.0);
 	gasStiffness->setMaximum(100);
 	gasStiffness->setValue(3);
+        //gasStiffness->setValue(0.75);
 	connect(gasStiffness, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	kernelParticlesLabel = new QLabel("Kernel Particles",widget);
@@ -99,10 +106,10 @@ WindowConfiguration_Data_SPHSystem::WindowConfiguration_Data_SPHSystem(QWidget* 
 
 	widget->setLayout(layout1);
     
-        color = QColor(255,0,255);
+        color = QColor(0,150,230);
 	
-	data = new SimulationData_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
-		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
+	data = new SimulationData_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255.0,color.green()/255.0,
+		   color.blue()/255.0),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
 		   kernelParticles->value());
 }
 /*********************************************************************************************/
@@ -114,8 +121,8 @@ WindowConfiguration_Data_SPHSystem::~WindowConfiguration_Data_SPHSystem()
 void WindowConfiguration_Data_SPHSystem::changeData(double newValue)
 {
 	if(data!=NULL)	delete(data);
-	data = new SimulationData_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
-		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
+	data = new SimulationData_SPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255.0,color.green()/255.0,
+		   color.blue()/255.0),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
 		   kernelParticles->value());
 }
 /*********************************************************************************************/
@@ -124,7 +131,7 @@ void WindowConfiguration_Data_SPHSystem::changeData(QColor newValue)
 {
 	if(data!=NULL)	delete(data);
 	data = new SimulationData_SPHSystem(particleRadius->value(),particleMass->value(),
-	       Vector3((double)(newValue.red()/255),(double)(newValue.green()/255),(double)(newValue.blue()/255)),
+	       Vector3((double)(newValue.red()/255.0),(double)(newValue.green()/255.0),(double)(newValue.blue()/255.0)),
 	       restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),kernelParticles->value());
 }
 /*********************************************************************************************/

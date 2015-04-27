@@ -1,84 +1,612 @@
-Determining if the Q_WS_WIN exist failed with the following output:
-Change Dir: /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
-make[1]: entrant dans le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-/usr/bin/cmake -E cmake_progress_report /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4    -o CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o -c /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main()’:
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:25: erreur: ‘Q_WS_WIN’ was not declared in this scope
-make[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o] Erreur 1
-make[1]: quittant le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-make: *** [cmTryCompileExec/fast] Erreur 2
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3439620613/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3439620613.dir/build.make CMakeFiles/cmTryCompileExec3439620613.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3439620613.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3439620613.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3439620613.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3439620613.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3439620613.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3439620613/fast » a échouée
+gmake: *** [cmTryCompileExec3439620613/fast] Erreur 2
 
-File /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */
 #include <QtCore/qglobal.h>
 
-void cmakeRequireSymbol(int dummy,...){(void)dummy;}
-int main()
+int main(int argc, char** argv)
 {
-#ifndef Q_WS_WIN
-  cmakeRequireSymbol(0,&Q_WS_WIN);
-#endif
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
   return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec131688641/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec131688641.dir/build.make CMakeFiles/cmTryCompileExec131688641.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec131688641.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec131688641.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec131688641.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec131688641.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec131688641.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec131688641/fast » a échouée
+gmake: *** [cmTryCompileExec131688641/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
 }
 
 Determining if the Q_WS_QWS exist failed with the following output:
-Change Dir: /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
-make[1]: entrant dans le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-/usr/bin/cmake -E cmake_progress_report /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4    -o CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o -c /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main()’:
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:25: erreur: ‘Q_WS_QWS’ was not declared in this scope
-make[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o] Erreur 1
-make[1]: quittant le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-make: *** [cmTryCompileExec/fast] Erreur 2
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec1339052938/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec1339052938.dir/build.make CMakeFiles/cmTryCompileExec1339052938.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1339052938.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec1339052938.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec1339052938.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec1339052938.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec1339052938.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec1339052938/fast » a échouée
+gmake: *** [cmTryCompileExec1339052938/fast] Erreur 2
 
-File /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */
 #include <QtCore/qglobal.h>
 
-void cmakeRequireSymbol(int dummy,...){(void)dummy;}
-int main()
+int main(int argc, char** argv)
 {
+  (void)argv;
 #ifndef Q_WS_QWS
-  cmakeRequireSymbol(0,&Q_WS_QWS);
-#endif
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
   return 0;
+#endif
 }
 
-Determining if the Q_WS_MAC exist failed with the following output:
-Change Dir: /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
-make[1]: entrant dans le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-/usr/bin/cmake -E cmake_progress_report /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4    -o CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o -c /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main()’:
-/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:25: erreur: ‘Q_WS_MAC’ was not declared in this scope
-make[1]: *** [CMakeFiles/cmTryCompileExec.dir/CheckSymbolExists.cxx.o] Erreur 1
-make[1]: quittant le répertoire « /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp »
-make: *** [cmTryCompileExec/fast] Erreur 2
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec2072576355/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec2072576355.dir/build.make CMakeFiles/cmTryCompileExec2072576355.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2072576355.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec2072576355.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec2072576355.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec2072576355.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec2072576355.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec2072576355/fast » a échouée
+gmake: *** [cmTryCompileExec2072576355/fast] Erreur 2
 
-File /home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */
 #include <QtCore/qglobal.h>
 
-void cmakeRequireSymbol(int dummy,...){(void)dummy;}
-int main()
+int main(int argc, char** argv)
 {
-#ifndef Q_WS_MAC
-  cmakeRequireSymbol(0,&Q_WS_MAC);
-#endif
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
   return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3110703271/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3110703271.dir/build.make CMakeFiles/cmTryCompileExec3110703271.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3110703271.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3110703271.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3110703271.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3110703271.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3110703271.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3110703271/fast » a échouée
+gmake: *** [cmTryCompileExec3110703271/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec1453551959/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec1453551959.dir/build.make CMakeFiles/cmTryCompileExec1453551959.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1453551959.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec1453551959.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec1453551959.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec1453551959.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec1453551959.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec1453551959/fast » a échouée
+gmake: *** [cmTryCompileExec1453551959/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3661904237/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3661904237.dir/build.make CMakeFiles/cmTryCompileExec3661904237.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3661904237.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3661904237.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3661904237.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3661904237.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3661904237.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3661904237/fast » a échouée
+gmake: *** [cmTryCompileExec3661904237/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3954921563/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3954921563.dir/build.make CMakeFiles/cmTryCompileExec3954921563.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3954921563.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3954921563.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3954921563.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3954921563.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3954921563.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3954921563/fast » a échouée
+gmake: *** [cmTryCompileExec3954921563/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec47911350/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec47911350.dir/build.make CMakeFiles/cmTryCompileExec47911350.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec47911350.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec47911350.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec47911350.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec47911350.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec47911350.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec47911350/fast » a échouée
+gmake: *** [cmTryCompileExec47911350/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec433398588/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec433398588.dir/build.make CMakeFiles/cmTryCompileExec433398588.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec433398588.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec433398588.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec433398588.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec433398588.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec433398588.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec433398588/fast » a échouée
+gmake: *** [cmTryCompileExec433398588/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec2053178307/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec2053178307.dir/build.make CMakeFiles/cmTryCompileExec2053178307.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2053178307.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec2053178307.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec2053178307.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec2053178307.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec2053178307.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec2053178307/fast » a échouée
+gmake: *** [cmTryCompileExec2053178307/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec1981247763/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec1981247763.dir/build.make CMakeFiles/cmTryCompileExec1981247763.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1981247763.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec1981247763.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec1981247763.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec1981247763.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec1981247763.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec1981247763/fast » a échouée
+gmake: *** [cmTryCompileExec1981247763/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3716597219/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3716597219.dir/build.make CMakeFiles/cmTryCompileExec3716597219.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3716597219.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3716597219.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3716597219.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3716597219.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3716597219.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3716597219/fast » a échouée
+gmake: *** [cmTryCompileExec3716597219/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec2573327094/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec2573327094.dir/build.make CMakeFiles/cmTryCompileExec2573327094.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2573327094.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec2573327094.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec2573327094.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec2573327094.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec2573327094.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec2573327094/fast » a échouée
+gmake: *** [cmTryCompileExec2573327094/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec1381192550/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec1381192550.dir/build.make CMakeFiles/cmTryCompileExec1381192550.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1381192550.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec1381192550.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec1381192550.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec1381192550.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec1381192550.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec1381192550/fast » a échouée
+gmake: *** [cmTryCompileExec1381192550/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_X11 exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3506439564/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3506439564.dir/build.make CMakeFiles/cmTryCompileExec3506439564.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3506439564.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3506439564.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_X11' was not declared in this scope
+   return ((int*)(&Q_WS_X11))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3506439564.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3506439564.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3506439564.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3506439564/fast » a échouée
+gmake: *** [cmTryCompileExec3506439564/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3833176722/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3833176722.dir/build.make CMakeFiles/cmTryCompileExec3833176722.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3833176722.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec3833176722.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_WIN' was not declared in this scope
+   return ((int*)(&Q_WS_WIN))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec3833176722.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec3833176722.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec3833176722.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec3833176722/fast » a échouée
+gmake: *** [cmTryCompileExec3833176722/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec315473175/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec315473175.dir/build.make CMakeFiles/cmTryCompileExec315473175.dir/build
+gmake[1] : on entre dans le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+/opt/local/bin/cmake -E cmake_progress_report /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec315473175.dir/CheckSymbolExists.cxx.o
+/opt/local/bin/g++-mp-4.9    -I/opt/local/include    -o CMakeFiles/cmTryCompileExec315473175.dir/CheckSymbolExists.cxx.o -c /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function 'int main(int, char**)':
+/Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: 'Q_WS_QWS' was not declared in this scope
+   return ((int*)(&Q_WS_QWS))[argc];
+                   ^
+CMakeFiles/cmTryCompileExec315473175.dir/build.make:57 : la recette pour la cible « CMakeFiles/cmTryCompileExec315473175.dir/CheckSymbolExists.cxx.o » a échouée
+gmake[1]: *** [CMakeFiles/cmTryCompileExec315473175.dir/CheckSymbolExists.cxx.o] Erreur 1
+gmake[1] : on quitte le répertoire « /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp »
+Makefile:118 : la recette pour la cible « cmTryCompileExec315473175/fast » a échouée
+gmake: *** [cmTryCompileExec315473175/fast] Erreur 2
+
+File /Users/edarles/Desktop/PSB_Project/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
 }
 

@@ -7,6 +7,7 @@
 #include <vector>
 #include <assert.h>
 #include <ObjectCollision.h>
+#include <common.cuh>
 
 using namespace std;
 
@@ -24,6 +25,9 @@ class Collision {
 		void removeLastObject();
 
 		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
+		             float dt, int nbBodiesP);
+
+		void collide2D(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 		             float dt, int nbBodiesP);
 
 		void display(GLenum modeRaster, GLenum modeFace, Vector3 colorObject, Vector3 colorNormales, bool normales);

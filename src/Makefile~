@@ -7,9 +7,9 @@
 
 RM=rm -f
 
-CC              = g++
+CC              = g++ -openmp
 EXE             = SPH
-OPTS            = -Wall -O5
+OPTS            = -Wall -O5 -openmp
 
 INCLUDE         = -I/usr/include \
 		  -I/usr/local/include \
@@ -18,9 +18,9 @@ INCLUDE         = -I/usr/include \
                   -I/usr/include/qt4/QtGui \
 		  -I/usr/include/qt4/QtOpenGL \
 		  -I/usr/include/qt4/QtXml \
-		  -I/usr/local/cuda-5.0/include \
-		  -I/usr/local/cuda-5.0/samples/0_Simple/simplePrintf \
-		  -I/usr/local/cuda-5.0/samples/common/inc/ \
+		  -I/usr/local/cuda-5.5/include \
+		  -I/usr/local/cuda-5.5/samples/0_Simple/simplePrintf \
+		  -I/usr/local/cuda-5.5/samples/common/inc/ \
 		  -I../dependencies/GLee-5.4.0-src \
 		  -I../src/ \
 		  -IIHM/ \
@@ -74,10 +74,11 @@ INCLUDE         = -I/usr/include \
 
 
 LIBDIR          = -L/usr/local/lib \
+		  -L/home/emma/Bureau/Travaux_en_cours/PSB_Project/dependencies/GLee-5.4.0-src \
 		  -L/usr/lib/i386-linux-gnu \
 		  -L/usr/lib/nvidia-current \
 		  -L/usr/lib \
-		  -L/usr/local/cuda-5.0/lib 
+		  -L/usr/local/cuda-5.5/lib64 
 
 LIB 		= -lQtCore \
 		  -lQtGui \
@@ -90,6 +91,7 @@ LIB 		= -lQtCore \
 		  -lglut \
 		  -lcuda \
 		  -lcudart \
+		  -lcublas_device \
 		  -ltinyxml
 		  
 

@@ -29,7 +29,7 @@ class ForcesExt {
 /****************************************************************************************/
 		void _initialize(uint nbBodies);
 		void _finalize();
-		void init(uint nbBodies);
+		void  init(uint nbBodies);
 /****************************************************************************************/
 		void evaluate(double* pos, double* acummForce, double* mass, uint nbBodies);
  /****************************************************************************************/

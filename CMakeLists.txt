@@ -1,52 +1,40 @@
 cmake_minimum_required(VERSION 2.8)
 project(PSB_Project)
 
+set(CMAKE_C_COMPILER "/usr/bin/g++")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-set(CMAKE_CC_COMPILER "/usr/bin/gcc")
+set(CMAKE_CC_COMPILER "/usr/bin/g++")
 
-SET(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-5.0)
-SET(CUDA_SDK_ROOT_DIR /usr/local/cuda-5.0)
-SET(CUDA_INCLUDE_DIRS /usr/local/cuda-5.0/include)
-SET(CUDA_CUDART_LIBRARY /usr/local/cuda-5.0/lib/libcudart.so)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++") 
+SET(CMAKE_CC_FLAGS "${CMAKE_CC_FLAGS} -stdlib=libstdc++") 
 
-find_library(QTCORE_LIBRARY NAMES "QtCore" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
-find_library(QTGUI_LIBRARY NAMES "QtGui" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
-find_library(QGLVIEWER_QT4_LIBRARY NAMES "qglviewer-qt4" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
-find_library(QT_OPENGL_LIBRARY NAMES "QtOpenGL" PATHS "/usr/lib/i386-linux-gnu" REQUIRED)
-find_library(GLU_LIBRARY NAMES "GLU" PATHS "/usr/lib" REQUIRED)
-find_library(GLEE_LIBRARY NAMES "GLee" PATHS "/usr/local/lib" REQUIRED)
-find_library(GLEW_LIBRARY NAMES "GLEW" PATHS "/usr/lib" REQUIRED)
-find_library(GLEWMX_LIBRARY NAMES "GLEWmx" PATHS "/usr/lib/" REQUIRED)
-find_library(GLUT_LIBRARY NAMES "glut" PATHS "/usr/lib" REQUIRED)
-find_library(CUDA_LIBRARY NAMES "cuda" PATHS "/usr/local/cuda-5.0/lib")
-find_library(CUDART_LIBRARY NAMES "cudart" PATHS "/usr/local/cuda-5.0/lib" REQUIRED)
-find_library(TINYXML_LIBRARY NAMES "tinyxml" PATHS "/usr/lib" REQUIRED)
-
-link_directories(/usr/local/lib)
-link_directories(/usr/lib)
-link_directories(/usr/local/cuda-5.0/lib)
-
-include_directories(/usr/include)
-include_directories(/usr/local/include)
-include_directories(/usr/include/qt4)
-include_directories(/usr/include/qt4/QtCore)
-include_directories(/usr/include/qt4/QtGui)
-include_directories(/usr/include/qt4/QtOpenGL)
-include_directories(/usr/include/qt4/QtXml)
-include_directories(/usr/local/cuda-5.0/include)
-include_directories(/usr/local/cuda-5.0/samples/common/inc/)
-include_directories(dependencies/GLee-5.4.0-src)
-
-INCLUDE(/usr/share/cmake-2.8/Modules/FindCUDA.cmake)
-SET(CUDA_NVCC_FLAGS "-G -g -arch=sm_21")
-
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") 
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++") 
+	SET(CMAKE_CC_FLAGS "${CMAKE_CC_FLAGS} -stdlib=libstdc++") 
+endif()
+ 
+FIND_PACKAGE(CUDA REQUIRED)
+SET(CUDA_NVCC_FLAGS "-arch=sm_30")
 set(CUDA_VERBOSE_BUILD OFF )
 SET(CMAKE_VERBOSE_MAKEFILE OFF) 
-FIND_PACKAGE (Qt4 REQUIRED)
+
+FIND_PACKAGE (Qt4 COMPONENTS QtCore QtXml QtOpenGL QtGui REQUIRED)
 ADD_DEFINITIONS (${QT_DEFINITIONS})
-SET(QT_USE_QTXML TRUE )
-SET(QT_USE_QTOPENGL TRUE )
-SET(QT_WRAP_CPP TRUE )
+
+FIND_PACKAGE(OpenGL REQUIRED)
+FIND_PACKAGE(GLUT REQUIRED)
+FIND_PACKAGE(GLEW REQUIRED)
+#FIND_PACKAGE(GLEWMX REQUIRED)
+#FIND_PACKAGE(GLEE REQUIRED)
+FIND_PACKAGE(QGLViewer REQUIRED) 
+find_package(TinyXML REQUIRED)
+
+include_directories( ${CUDA_INCLUDE_DIRS})
+include_directories( "/Developer/NVIDIA/CUDA-6.5/samples/common/inc")
+include_directories( ${QT4_INCLUDE_DIRS} ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTXML_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
+include_directories( ${QGLVIEWER_INCLUDE_DIR})
+include_directories( ${GLEW_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
+include_directories( ${TINYXML_INCLUDE_DIR})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/Kernel/System/CMakeLists.txt)
@@ -58,20 +46,6 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/src/Utils/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/IHM/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/Extras/CMakeLists.txt)
 
-set(PSB_LIBRARIES 
-		${QTCORE_LIBRARY} 
-		${QTGUI_LIBRARY}  
-		${QT_OPENGL_LIBRARY} 
-		${QGLVIEWER_QT4_LIBRARY} 
-		${GLU_LIBRARY} 
-		${GLEE_LIBRARY} 
-		${GLEW_LIBRARY} 
-		${GLEWMX_LIBRARY} 
-		${GLUT_LIBRARY} 
-		${CUDA_LIBRARY}
-		${CUDART_LIBRARY} 
-		${TINYXML_LIBRARY}
-)
 
 CUDA_COMPILE(CUDA_FILES_O ${COMMON_CUDA_FILES} 
 			  ${SYSTEM_CUDA_FILES} 
@@ -80,19 +54,21 @@ CUDA_COMPILE(CUDA_FILES_O ${COMMON_CUDA_FILES}
 			  ${UTILS_CUDA_FILES} 
 			  ${EXTRAS_CUDA_FILES}
 )
-CUDA_ADD_EXECUTABLE(bin/oldSPH ${SYSTEM_APP_SOURCES} 
-			       ${FORCES_EXT_APP_SOURCES}
-			       ${COLLISION_APP_SOURCES}
-			       ${EMITTERS_APP_SOURCES}
-			       ${SURFACE_APP_SOURCES}
-			       ${UTILS_APP_SOURCES} 
-			       ${IHM_APP_SOURCES}
-			       ${IHM_MOC_FILES}
-			       ${EXTRAS_APP_SOURCES} 
-			       ${CUDA_FILES_O}
-)
 
-TARGET_LINK_LIBRARIES(bin/oldSPH ${PSB_LIBRARIES} ${CUDA_LIBRARIES})
+CUDA_ADD_EXECUTABLE(PSB ${SYSTEM_APP_SOURCES} 
+			    ${FORCES_EXT_APP_SOURCES}
+			    ${COLLISION_APP_SOURCES}
+			    ${EMITTERS_APP_SOURCES}
+			    ${SURFACE_APP_SOURCES}
+			    ${UTILS_APP_SOURCES} 
+			    ${IHM_APP_SOURCES}
+			    ${IHM_MOC_FILES}
+			    ${EXTRAS_APP_SOURCES} 
+			    ${CUDA_FILES_O}
+
+)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lstdc++")
+TARGET_LINK_LIBRARIES(PSB ${CUDA_LIBRARIES} ${QT4_LIBRARIES} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTOPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${QGLVIEWER_LIBRARY} ${TINYXML_LIBRARIES} -lstdc++)
 
 message ( "CUDA_VERSION_STRING: " ${CUDA_VERSION_STRING} )
 message ( "CUDA_TOOLKIT_ROOT_DIR: " ${CUDA_TOOLKIT_ROOT_DIR} )

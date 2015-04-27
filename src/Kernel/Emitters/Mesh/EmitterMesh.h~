@@ -6,24 +6,19 @@
 
 using namespace Utils;
 
-template <class T>
 class EmitterMesh : public Emitter, public Mesh
 {
 	public :
 		EmitterMesh();
 		EmitterMesh(const Mesh&, unsigned int minEmission, unsigned int maxEmission, unsigned int durationTime, 
 			    Vector3 velocityEmission);
-		EmitterMesh(const EmitterMesh<T>&);
+		EmitterMesh(const EmitterMesh&);
 		~EmitterMesh();
 
-		T*	getData();
-		void	setData(T*);
-
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
 		void display(Vector3 color);
 
-	private:
-		T* data;
 };
 
 #endif

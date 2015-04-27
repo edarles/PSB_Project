@@ -81,6 +81,62 @@ vector<Particle*> EmitterSphere::emitParticles()
 }
 /************************************************************************************************/
 /************************************************************************************************/
+vector<Particle*> EmitterSphere::emitParticles2D()
+{
+	if(data!=NULL){
+	vector<Particle*> particles;
+	if(currentTime<durationTime){
+		double y = center.y();
+		double r = 0;
+		while(r<=sqrt(radius*radius - y*y)){
+			double theta = 0;
+			double thetaAp = 1;
+			double dTheta = acos(r/sqrt(r*r+2*data->getParticleRadius()*data->getParticleRadius()));
+			while (theta<=2*M_PI && thetaAp>0){	
+				double x = center.x() + r*cos(theta);
+				double z = center.z() + r*sin(theta);
+				Vector3 pos = Vector3(x,y,z);
+				theta += dTheta;
+				thetaAp = theta;
+				addParticle(pos,&particles);
+			}
+			r += data->getParticleRadius();
+		}
+		currentTime++;
+	}
+	return particles;
+	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
+vector<Particle*> EmitterSphere::emitParticles2D_z()
+{
+	if(data!=NULL){
+	vector<Particle*> particles;
+	if(currentTime<durationTime){
+		double z = center.z();
+		double r = 0;
+		while(r<=sqrt(radius*radius - z*z)){
+			double theta = 0;
+			double thetaAp = 1;
+			double dTheta = acos(r/sqrt(r*r+2*data->getParticleRadius()*data->getParticleRadius()));
+			while (theta<=2*M_PI && thetaAp>0){	
+				double x = center.x() + r*cos(theta);
+				double y = center.y() + r*sin(theta);
+				Vector3 pos = Vector3(x,y,z);
+				theta += dTheta;
+				thetaAp = theta;
+				addParticle(pos,&particles);
+			}
+			r += data->getParticleRadius();
+		}
+		currentTime++;
+	}
+	return particles;
+	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
 void EmitterSphere::display(Vector3 color)
 {
 	Sphere::display(color);

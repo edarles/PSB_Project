@@ -8,10 +8,12 @@ GLDisplay::GLDisplay(GLWidget *widget)
 	modeParticles = System::POINTS;
 	modeFace = GL_FRONT_AND_BACK;
 	modeRasterization = GL_LINE;
+	drawSurface = false;
 	drawNormales_ObjCollision = false;
 	drawEmitters = false;
+	surfaceSPH = NULL;
 	currentObj = NULL;
-	colorCollision = Vector3(1,1,1);
+	colorCollision = Vector3(0,1,0);
 	colorParticles = Vector3(1,1,1);
 	colorNormales  = Vector3(1,0,0);
 	colorEmitters  = Vector3(0,0,1);
@@ -25,7 +27,9 @@ GLDisplay::GLDisplay(GLWidget *widget, System::ParticleDisplay modeParticles, GL
 	this->modeRasterization = modeRasterization;
 	this->drawNormales_ObjCollision = drawNormales_ObjCollision;
 	this->drawEmitters = false;
-	colorCollision = Vector3(1,1,1);
+	this->drawSurface = false;
+	this->surfaceSPH = NULL;
+	colorCollision = Vector3(0,1,0);
 	colorParticles = Vector3(1,1,1);
 	colorNormales  = Vector3(1,0,0);
 	colorEmitters  = Vector3(0,0,1);
@@ -98,6 +102,16 @@ void GLDisplay::setDrawEmitters(bool isDraw)
 	drawEmitters = isDraw;
 }
 /**************************************************************************************************************/
+bool GLDisplay::getDrawSurface()
+{
+	return drawSurface;
+}
+/**************************************************************************************************************/
+void GLDisplay::setDrawSurface(bool draw)
+{
+	drawSurface = draw;
+}
+/**************************************************************************************************************/
 void GLDisplay::setObjectIsCreate()
 {
 	currentObj = NULL;
@@ -106,7 +120,6 @@ void GLDisplay::setObjectIsCreate()
 /**************************************************************************************************************/
 void GLDisplay::display()
 {
-	glClearColor(0,0,0,1.0 );
 	if(glWidget){
 		displayParticles();
 		displayCollisions();
@@ -124,7 +137,18 @@ void GLDisplay::displayParticles()
 	System *system = glWidget->getSystem();
 	if(system!=NULL){
 		system->displayParticles(modeParticles,colorParticles);
-		glWidget->displaySurface();
+		if(system->getSurface()!=NULL)
+			system->getSurface()->draw();
+		//if(drawSurface)
+		//	displaySurface();
+	}
+}
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+void GLDisplay::displayParticlesByField(uint field){
+	System *system = glWidget->getSystem();
+	if(system!=NULL){
+			system->displayParticlesByField(field);
 	}
 }
 /**************************************************************************************************************/
@@ -146,7 +170,7 @@ void GLDisplay::displayAnimatedHeightField()
 {
 	AnimatedHeightField* AHF = glWidget->getAnimatedHF();
 	if(AHF!=NULL){
-		printf("display AHF\n");
+		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 		AHF->display(Vector3(1,1,1));
 	}
 }
@@ -165,6 +189,29 @@ void GLDisplay::displayEmitter(Emitter* E)
 {
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 	E->display(colorEmitters);
+}
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+void GLDisplay::displaySurface()
+{
+	System *system = glWidget->getSystem();
+        if(system){
+		if(typeid(*system)==typeid(SPHSystem) 
+		|| typeid(*system)==typeid(PCI_SPHSystem)
+		|| typeid(*system)==typeid(MSPHSystem)){
+			surfaceSPH = glWidget->getSurface();
+			if(surfaceSPH==NULL){
+				surfaceSPH = new SurfaceSPH();
+				surfaceSPH->extract(system,0.5,20);
+			}
+			surfaceSPH->draw();
+		}
+		if(typeid(*system)==typeid(SWSPHSystem)){
+			SWSPHSystem *S = (SWSPHSystem*) system;
+			S->setDisplaySurface(true);
+			S->drawSurface();
+		}
+	}
 }
 /**************************************************************************************************************/
 /**************************************************************************************************************/

@@ -19,6 +19,7 @@ class ForcesExt {
 		virtual ~ForcesExt();
 /****************************************************************************************/
 		ForceExt*    getForce(unsigned int);
+		vector<ForceExt*> getForces();
 		unsigned int getNbForces();
 /****************************************************************************************/
 		void setForce(ForceExt*, unsigned int);

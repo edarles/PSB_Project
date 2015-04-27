@@ -1,21 +1,31 @@
 
+#define CUDA
+
 #include <cstdlib>
 #include <cstdio>
 #include <string.h>
-#include <cuda_runtime_api.h>
-#include <cuda.h>
-#include <device_launch_parameters.h>
-#include <cuda_gl_interop.h>
-#include <cuda_runtime_api.h>
-#include <helper_functions.h>
-#include <helper_cuda.h>
-#include <helper_cuda_gl.h>
+#include <common.cuh>
+
+#if defined (CUDA)
+	#include <cuda_runtime_api.h>
+	#include <cuda.h>
+	#include <device_launch_parameters.h>
+	#include <cuda_gl_interop.h>
+	#include <cuda_runtime_api.h>
+	#include <helper_functions.h>
+	#include <helper_cuda.h>
+	#include <helper_cuda_gl.h>
+	#include <cuda_runtime.h>
+#endif
 
 extern "C"
 {
+
+  #if defined (CUDA)
   int getCudaEnabledDeviceCount()
-{
+  {
     int count;
+    cudaDeviceSynchronize();
     cudaError_t error = cudaGetDeviceCount( &count );
     if (error == cudaErrorNoDevice)
     {
@@ -26,7 +36,7 @@ extern "C"
     {
         count = -1;
     }
-    else //should never happen
+   // else //should never happen
     {
         checkCudaErrors(error);
     }
@@ -36,7 +46,6 @@ extern "C"
   bool cudaInit(int argc, char **argv)
   {
        int count = getCudaEnabledDeviceCount();
-       printf("count:%d\n",count);
 
        int devID = findCudaGLDevice(argc, (const char **)argv);
        
@@ -85,24 +94,27 @@ extern "C"
         cudaMemcpy((char *) device + offset, host, size, cudaMemcpyDeviceToDevice);
     }
 
-    void copyArrayFromDevice(void *host, const void *device,
-                             struct cudaGraphicsResource **cuda_vbo_resource, int size)
+    void copyArrayDeviceToDevice2(void *device, const void *host, int offset, int size)
     {
-        cudaMemcpy(host, device, size, cudaMemcpyDeviceToHost);
-
+        cudaMemcpy(device, (char *) host + offset, size, cudaMemcpyDeviceToDevice);
     }
 
-    //Round a / b to nearest higher integer value
-    uint iDivUp(uint a, uint b)
+    void copyArrayFromDevice(void *device, const void *host, int offset, int size)
+    {
+        cudaMemcpy((char *) device + offset, host, size, cudaMemcpyDeviceToHost);
+    }
+    int iDivUp(int a, int b)
     {
         return (a % b != 0) ? (a / b + 1) : (a / b);
     }
 
     // compute grid and thread block size for a given number of elements
-    void computeGridSize(uint n, uint &numBlocks, uint &numThreads)
+    void computeGridSize(int n, int &numBlocks, int &numThreads)
     {
-	uint blockSize = 256;
+	int blockSize = 512;
         numThreads = min(blockSize, n);
         numBlocks = iDivUp(n, numThreads);
+	//printf("nbBlocks:%d nbThreads:%d\n",numBlocks,numThreads);
     }
+    #endif
 }

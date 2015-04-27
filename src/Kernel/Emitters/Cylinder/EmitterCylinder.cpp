@@ -67,6 +67,74 @@ vector<Particle*> EmitterCylinder::emitParticles()
 }
 /************************************************************************************************/
 /************************************************************************************************/
+vector<Particle*> EmitterCylinder::emitParticles2D()
+{
+	if(data!=NULL){
+	vector<Particle*> particles;
+	if(currentTime<durationTime){
+		Vector3 P1 = Vector3(center.x() + direction.x()*(length/2),
+				     center.y() + direction.y()*(length/2),
+				     center.z() + direction.z()*(length/2));
+		Vector3 P2 = Vector3(center.x() - direction.x()*(length/2),
+				     center.y() - direction.y()*(length/2),
+				     center.z() - direction.z()*(length/2));
+		double y = P2.y();
+		double r = 0;
+		while(r<=baseRadius){
+			double theta = 0;
+			double thetaAp = 1;
+			double dTheta = acos(r/sqrt(r*r+data->getParticleRadius()*data->getParticleRadius()));
+			while (theta<=2*M_PI && thetaAp>0){	
+				double x = center.x() + r*cos(theta);
+				double z = center.z() + r*sin(theta);
+				Vector3 pos = Vector3(x,y,z);
+				theta += dTheta;
+				thetaAp = theta;
+				addParticle(pos,&particles);
+			}
+			r += data->getParticleRadius();
+		}
+		currentTime++;
+	}
+	return particles;
+	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
+vector<Particle*> EmitterCylinder::emitParticles2D_z()
+{
+	if(data!=NULL){
+	vector<Particle*> particles;
+	if(currentTime<durationTime){
+		Vector3 P1 = Vector3(center.x() + direction.x()*(length/2),
+				     center.y() + direction.y()*(length/2),
+				     center.z() + direction.z()*(length/2));
+		Vector3 P2 = Vector3(center.x() - direction.x()*(length/2),
+				     center.y() - direction.y()*(length/2),
+				     center.z() - direction.z()*(length/2));
+		double z = P2.z();
+		double r = 0;
+		while(r<=baseRadius){
+			double theta = 0;
+			double thetaAp = 1;
+			double dTheta = acos(r/sqrt(r*r+data->getParticleRadius()*data->getParticleRadius()));
+			while (theta<=2*M_PI && thetaAp>0){	
+				double x = center.x() + r*cos(theta);
+				double y = center.y() + r*sin(theta);
+				Vector3 pos = Vector3(x,y,z);
+				theta += dTheta;
+				thetaAp = theta;
+				addParticle(pos,&particles);
+			}
+			r += data->getParticleRadius();
+		}
+		currentTime++;
+	}
+	return particles;
+	}
+}
+/************************************************************************************************/
+/************************************************************************************************/
 void EmitterCylinder::display(Vector3 color)
 {
 	Cylinder::display(color);

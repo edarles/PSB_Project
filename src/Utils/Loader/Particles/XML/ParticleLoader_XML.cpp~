@@ -190,7 +190,7 @@ vector<Particle*> ParticleLoader_XML::loadMSPHSystem(TiXmlDocument doc)
         elem=hDoc.FirstChildElement().Element();
 	if(string(elem->Attribute("name"))=="MSPH System"){
 		TiXmlElement* partElement = hRoot->FirstChildElement("Particle" );
-		printf("load SPHSystem\n");
+		printf("load MSPHSystem\n");
 		for( partElement; partElement; partElement=partElement->NextSiblingElement())
 		{
 			double mass, radius, interactionRadius, kernelParticles, restDensity, 
@@ -235,7 +235,7 @@ vector<Particle*> ParticleLoader_XML::loadMSPHSystem(TiXmlDocument doc)
 			MSPHParticle *p = new MSPHParticle(Vector3(x,y,z),Vector3(vx,vy,vz),Vector3(vav_x,vav_y,vav_z), 
 				     Vector3(vap_x,vap_y,vap_z),mass,radius,Vector3(cx,cy,cz),
 			   	     interactionRadius, kernelParticles, 0, restDensity, 0, gasStiffness,
-				     threshold,surfaceTension,viscosity,temperature,Vector3(0,0,0),Vector3(0,0,0),Vector3(0,0,0));
+				     threshold,surfaceTension,viscosity,temperature,Vector3(0,0,0),Vector3(0,0,0),Vector3(0,0,0),null);
 			particles.push_back(p);
 		}
 	}

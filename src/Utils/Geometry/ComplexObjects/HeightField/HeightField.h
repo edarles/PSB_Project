@@ -2,6 +2,7 @@
 #define _HEIGHT_FIELD__
 
 #include <ObjectGeo.h>
+#include <common.cuh>
 using namespace std;
 
 namespace Utils {
@@ -41,20 +42,19 @@ class HeightField : public ObjectGeo
 		void 	display(Vector3 color);
 		void 	displayNormale(Vector3 color);
 /*****************************************************************************************************/
-		void    exportToOBJ(const char* name);
-/*****************************************************************************************************/
+		void    exportToOBJ(const char* filename);
+		void    exportToOBJ_noN(const char* filename);
+
 	protected:
 		Vector3 center, Min, Max;
+		uint    nbPosX, nbPosY, nbPosZ;
 		double  hMin, hMax;
 		double    dx, dz;
-		double  *pos, *N;
-		uint    nbPosX, nbPosY, nbPosZ;
-
-		// GPU Store pos, normales;
-		double  *m_pos, *m_N;
-
-		// show normales ?
 		bool dis_norm;
+		// Positions and normals CPU storage
+		double *pos, *N;
+		// Positions and normals GPU storage
+		double *m_pos, *m_N;
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 };

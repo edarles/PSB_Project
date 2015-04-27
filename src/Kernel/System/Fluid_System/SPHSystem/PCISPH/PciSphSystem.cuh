@@ -9,12 +9,18 @@ extern "C"
 
 {
 
-void pci_SPH_update(double* oldPos, double* pos, double* vel, double* velInterAv, double* velInterAp, 
-		    double* restore_oldPos, double* restore_pos, double* restore_velInterAv, double* restore_velInterAp,
-		    double* mass, double* radius, double* density, double* restDensity, double* densityError, double* pressure,
-		    double* k, double* viscosity, double* l, double* surfaceTension, double threshold, partVoisine voisines,
-		    double* normales, double* forceViscosity, double* forceSurface, double* forcePressure, double* forceAccum,
-		    float dt, uint nbBodies);
+void evaluate_densities_forcesVisc_PCI(double* pos, double* vel, double* mass, double* radius, double* densities, 
+			       double* pressure, double* normales, double* restDensities, double* densityError, double* viscosities, 
+			       double* threshold, double* surfaceTension, 
+		               int numBodies, double* fViscosity, double* fSurface, double* fPressure, partVoisine voisines);
+
+void integrate_PCI_SPHSystem(double* velAv, double *velAp, double* posAv, double* posAp, double* fV, double* fS, double* fP, double* fExt, double* densities, double dt, int nbBodies);
+
+
+void pci_SPH_pressureForce(double* oldPos, double* pos, double* vel, double* velInterAv, double* velInterAp, 
+		    double* mass, double* radius, double* density, double* restDensity, double* densityError, double* k, double* pressure,
+		    double threshold, partVoisine voisines, double* forcesPressure, float dt, uint nbBodies);
+
 
 }
 

@@ -55,28 +55,29 @@ if(NOT generated_file)
 endif()
 
 # Set these up as variables to make reading the generated file easier
-set(CMAKE_COMMAND "/usr/bin/cmake") # path
-set(source_file "/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/PlaneCollision/PlaneCollision.cu") # path
-set(NVCC_generated_dependency_file "/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/cuda_compile_generated_PlaneCollision.cu.o.NVCC-depend") # path
-set(cmake_dependency_file "/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/cuda_compile_generated_PlaneCollision.cu.o.depend") # path
-set(CUDA_make2cmake "/usr/share/cmake-2.8/Modules/FindCUDA/make2cmake.cmake") # path
-set(CUDA_parse_cubin "/usr/share/cmake-2.8/Modules/FindCUDA/parse_cubin.cmake") # path
+set(CMAKE_COMMAND "/opt/local/bin/cmake") # path
+set(source_file "/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/PlaneCollision/PlaneCollision.cu") # path
+set(NVCC_generated_dependency_file "/Users/edarles/Desktop/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/cuda_compile_generated_PlaneCollision.cu.o.NVCC-depend") # path
+set(cmake_dependency_file "/Users/edarles/Desktop/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/cuda_compile_generated_PlaneCollision.cu.o.depend") # path
+set(CUDA_make2cmake "/opt/local/share/cmake-3.0/Modules/FindCUDA/make2cmake.cmake") # path
+set(CUDA_parse_cubin "/opt/local/share/cmake-3.0/Modules/FindCUDA/parse_cubin.cmake") # path
 set(build_cubin OFF) # bool
+set(CUDA_HOST_COMPILER "/usr/bin/g++") # bool
 # We won't actually use these variables for now, but we need to set this, in
 # order to force this file to be run again if it changes.
-set(generated_file_path "/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/.") # path
-set(generated_file_internal "/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/./cuda_compile_generated_PlaneCollision.cu.o") # path
-set(generated_cubin_file_internal "/home/emma/Bureau/Travaux_en_cours/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/./cuda_compile_generated_PlaneCollision.cu.o.cubin.txt") # path
+set(generated_file_path "/Users/edarles/Desktop/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/.") # path
+set(generated_file_internal "/Users/edarles/Desktop/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/./cuda_compile_generated_PlaneCollision.cu.o") # path
+set(generated_cubin_file_internal "/Users/edarles/Desktop/PSB_Project/CMakeFiles/cuda_compile.dir/src/Kernel/Collision/PlaneCollision/./cuda_compile_generated_PlaneCollision.cu.o.cubin.txt") # path
 
-set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda-5.0/bin/nvcc") # path
-set(CUDA_NVCC_FLAGS -G -g -arch=sm_21 ;; ) # list
+set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda/bin/nvcc") # path
+set(CUDA_NVCC_FLAGS -arch=sm_30 ;; ) # list
 # Build specific configuration flags
-set(CUDA_NVCC_FLAGS_DEBUG  ;; )
-set(CUDA_NVCC_FLAGS_MINSIZEREL  ;; )
-set(CUDA_NVCC_FLAGS_RELEASE  ;; )
-set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ;; )
-set(nvcc_flags -m32) # list
-set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda-5.0/include;-I/usr/include;-I/usr/local/include;-I/usr/include/qt4;-I/usr/include/qt4/QtCore;-I/usr/include/qt4/QtGui;-I/usr/include/qt4/QtOpenGL;-I/usr/include/qt4/QtXml;-I/usr/local/cuda-5.0/include;-I/usr/local/cuda-5.0/samples/common/inc;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/dependencies/GLee-5.4.0-src;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/SimpleSystem;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/Particle_Interaction_System;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/SPH;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/PCISPH;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/MSPH;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/ForcesExt;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/ForcesExt/Constante;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/ForcesExt/Constante/Gravity;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/ForcesExt/Periodic;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/ForcesExt/Periodic/Trochoide;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/MeshCollision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/SphereCollision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/BoxCollision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/PlaneCollision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/CylinderCollision;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/HeightField;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/HeightField/Linear;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/HeightField/Periodic;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/HeightField/Gaussian;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Collision/HeightField/Combined;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Box;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Elipsoide;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Mesh;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Cylinder;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Sphere;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Emitters/Girly;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Surface;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Kernel/Surface/SPH;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Math;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Math/Vector;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Neighborhood/UniformGrid;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/Primitives;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Linear;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Periodic;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Gaussian;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Combined;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Exporter/Particles;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Exporter/Particles/Txt;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Exporter/Particles/XML;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Exporter/Particles/Mitsuba;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/Mesh;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/Mesh/OBJ;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/Particles;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/Particles/Txt;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/Particles/XML;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/Loader/SimulationData;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Utils/MC;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/DisplayIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/SystemIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/CollisionIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/CollisionIHM/HeightField;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/ForceExtIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/EmitterIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/SimulationDataIHM;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/IHM/ExtrasIHM/HeightField;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Extras/AnimatedHeightField;-I/home/emma/Bureau/Travaux_en_cours/PSB_Project/src/Extras/AnimatedHeightField/Periodic") # list (needs to be in quotes to handle spaces properly).
+set(CUDA_NVCC_FLAGS_DEBUG  ; )
+set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
+set(CUDA_NVCC_FLAGS_RELEASE  ; )
+set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
+set(nvcc_flags -m64) # list
+set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda/include;-I/usr/local/cuda/include;-I/Developer/NVIDIA/CUDA-6.5/samples/common/inc;-I/opt/local/include/QtCore;-I/opt/local/include/QtGui;-I/opt/local/include/QtXml;-I/opt/local/include/QtOpenGL;-I/Users/edarles/Library/Frameworks/QGLViewer.framework;-I/opt/local/include;-I/Users/edarles/Desktop/PSB_Project/src;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/SimpleSystem;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Particle_Interaction_System;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/SPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/SPH2D;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/PCISPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/WCSPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/MSPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/SWSPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/HSPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/System/Fluid_System/SPHSystem/HybridSPH;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Constante;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Constante/Gravity;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Periodic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Periodic/Trochoide;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Periodic/Harmonic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/Soliton;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/TrainPeriodic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/TrainPeriodic/Trochoide;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/ForcesExt/TrainPeriodic/Harmonic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/MeshCollision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/SphereCollision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/BoxCollision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/PlaneCollision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/CylinderCollision;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField/Linear;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField/Periodic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField/Gaussian;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField/Combined;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Collision/HeightField/AnimatedPeriodic;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Box;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Elipsoide;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Mesh;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Cylinder;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Sphere;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Emitters/Girly;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Surface;-I/Users/edarles/Desktop/PSB_Project/src/Kernel/Surface/SPH;-I/Users/edarles/Desktop/PSB_Project/src/Utils;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Math;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Math/Vector;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Neighborhood/UniformGrid;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/Primitives;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Linear;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Periodic;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Gaussian;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Geometry/ComplexObjects/HeightField/Combined;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Particles;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Particles/Txt;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Particles/XML;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Particles/Mitsuba;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Scene;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Exporter/Scene/Mitsuba;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/Mesh;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/Mesh/OBJ;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/Particles;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/Particles/Txt;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/Particles/XML;-I/Users/edarles/Desktop/PSB_Project/src/Utils/Loader/SimulationData;-I/Users/edarles/Desktop/PSB_Project/src/Utils/MC;-I/Users/edarles/Desktop/PSB_Project/src/IHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/DisplayIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/SystemIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/CollisionIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/CollisionIHM/HeightField;-I/Users/edarles/Desktop/PSB_Project/src/IHM/ForceExtIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/EmitterIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/SimulationDataIHM;-I/Users/edarles/Desktop/PSB_Project/src/IHM/ExtrasIHM/HeightField;-I/Users/edarles/Desktop/PSB_Project/src/Extras/AnimatedHeightField;-I/Users/edarles/Desktop/PSB_Project/src/Extras/AnimatedHeightField/Periodic") # list (needs to be in quotes to handle spaces properly).
 set(format_flag "-c") # string
 
 if(build_cubin AND NOT generated_cubin_file)
@@ -85,11 +86,11 @@ endif()
 
 # This is the list of host compilation flags.  It C or CXX should already have
 # been chosen by FindCUDA.cmake.
-set(CMAKE_HOST_FLAGS  )
+set(CMAKE_HOST_FLAGS  -stdlib=libstdc++ )
 set(CMAKE_HOST_FLAGS_DEBUG -g)
 set(CMAKE_HOST_FLAGS_MINSIZEREL -Os -DNDEBUG)
 set(CMAKE_HOST_FLAGS_RELEASE -O3 -DNDEBUG)
-set(CMAKE_HOST_FLAGS_RELWITHDEBINFO -O2 -g)
+set(CMAKE_HOST_FLAGS_RELWITHDEBINFO -O2 -g -DNDEBUG)
 
 # Take the compiler flags and package them up to be sent to the compiler via -Xcompiler
 set(nvcc_host_compiler_flags "")
@@ -110,8 +111,15 @@ endif()
 # Add the build specific configuration flags
 list(APPEND CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS_${build_configuration}})
 
-if(DEFINED CCBIN)
-  set(CCBIN -ccbin "${CCBIN}")
+# Any -ccbin existing in CUDA_NVCC_FLAGS gets highest priority
+list( FIND CUDA_NVCC_FLAGS "-ccbin" ccbin_found0 )
+list( FIND CUDA_NVCC_FLAGS "--compiler-bindir" ccbin_found1 )
+if( ccbin_found0 LESS 0 AND ccbin_found1 LESS 0 )
+  if (CUDA_HOST_COMPILER STREQUAL "$(VCInstallDir)bin" AND DEFINED CCBIN)
+    set(CCBIN -ccbin "${CCBIN}")
+  else()
+    set(CCBIN -ccbin "${CUDA_HOST_COMPILER}")
+  endif()
 endif()
 
 # cuda_execute_process - Executes a command with optional command echo and status message.
@@ -147,7 +155,7 @@ macro(cuda_execute_process status command)
     endforeach()
     # Echo the command
     execute_process(COMMAND ${CMAKE_COMMAND} -E echo ${cuda_execute_process_string})
-  endif(verbose)
+  endif()
   # Run the command
   execute_process(COMMAND ${ARGN} RESULT_VARIABLE CUDA_result )
 endmacro()
@@ -161,7 +169,7 @@ cuda_execute_process(
 # For CUDA 2.3 and below, -G -M doesn't work, so remove the -G flag
 # for dependency generation and hope for the best.
 set(depends_CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}")
-set(CUDA_VERSION 5.0)
+set(CUDA_VERSION 6.5)
 if(CUDA_VERSION VERSION_LESS "3.0")
   cmake_policy(PUSH)
   # CMake policy 0007 NEW states that empty list elements are not
@@ -285,4 +293,4 @@ if( build_cubin )
     -P "${CUDA_parse_cubin}"
     )
 
-endif( build_cubin )
+endif()

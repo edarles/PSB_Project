@@ -199,8 +199,6 @@ void  Box::calculateMinMax()
 	}
 	this->min = min;
 	this->max = max;
-	printf("Min:%f %f %f Max:%f %f %f\n",this->min.x(),this->min.y(),this->min.z(),
-					     this->max.x(),this->max.y(),this->max.z());
 }
 /**********************************************************************************/
 /**********************************************************************************/

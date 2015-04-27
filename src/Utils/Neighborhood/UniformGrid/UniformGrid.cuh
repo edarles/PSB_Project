@@ -70,8 +70,11 @@ void computeNormales_Vertex_CUDA(double* posV, double* normales, float scale, ui
 void displayGrid(UniformGrid *grid);
 void displayGridByIso(UniformGrid *grid);
 
-
-void _exportData(const char* filename, UniformGrid *grid);
+/*****************************************************************************/
+/*** EXPORT TO RENDER FLUID IN MITSUBA (HETEREGENOUS PARTICIPATING MEDIA *****/
+/*****************************************************************************/
+void _exportData(const char* filename, UniformGrid *grid, double* positions, double* radius, double* m_densities, uint nbParticles);
+void _exportAlbedo(const char* filename, UniformGrid *grid, double* positions, double* radius, double* m_a);
 }
 /*****************************************************************************/
 /*****************************************************************************/

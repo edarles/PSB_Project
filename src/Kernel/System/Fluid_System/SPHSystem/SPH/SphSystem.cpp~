@@ -7,6 +7,8 @@ SPHSystem::SPHSystem():System()
 {
     m_solverIterations = 1;
     dt = 0.01;
+    MinS = Vector3(-1,-1,-1);
+    MaxS = Vector3(1,1,1);
 
     m_dPos[0] = m_dPos[1] = 0;
     m_dVel[0] = m_dVel[1] = 0;
@@ -34,6 +36,8 @@ SPHSystem::SPHSystem():System()
     m_hVelInterAv = 0;
     m_hVelInterAp = 0;
 
+    frameNumber = 0;
+    currentTime = 0;
     init();
 }
 
@@ -41,11 +45,34 @@ SPHSystem::SPHSystem():System()
 SPHSystem::~SPHSystem()
 {
    _finalize();
+  // #pragma omp parallel for
    for(unsigned int i=0;i<particles.size();i++)
 	delete(particles[i]);
    particles.clear();
 }
 
+/*****************************************************************************/
+/*****************************************************************************/
+Vector3 SPHSystem::getMinS()
+{
+   return MinS;
+}
+/*****************************************************************************/
+Vector3 SPHSystem::getMaxS()
+{
+   return MaxS;
+}
+/*****************************************************************************/
+void SPHSystem::setMinS(Vector3 MinS)
+{
+  this->MinS = MinS;
+}
+/*****************************************************************************/
+void SPHSystem::setMaxS(Vector3 MaxS)
+{
+   this->MaxS = MaxS;
+}
+/*****************************************************************************/
 /*****************************************************************************/
 void SPHSystem::init(vector<Particle*> result)
 {
@@ -56,7 +83,6 @@ void SPHSystem::init(vector<Particle*> result)
 /*****************************************************************************/
 void SPHSystem::init()
 {
-    unsigned int maxParticles = 65536;
     unsigned int memSize = sizeof(double)*3*maxParticles;
     
     allocateArray((void**)&m_dVel[0], memSize);
@@ -111,7 +137,6 @@ void SPHSystem::init()
 
     gridCreated = false;
 }
-
 /*****************************************************************************/
 void SPHSystem::_initialize(int begin, int numParticles)
 {
@@ -127,6 +152,7 @@ void SPHSystem::_initialize(int begin, int numParticles)
     }
     printf("begin:%d numParticles:%d\n",begin, numParticles);
    
+    #pragma omp parallel for
     for(int i=begin;i<numParticles;i++){
 	 SPHParticle* p   = (SPHParticle*) particles[i];
 	
@@ -170,7 +196,7 @@ void SPHSystem::_initialize(int begin, int numParticles)
 	 m_hColors[i*4] = p->getColor().x();
 	 m_hColors[(i*4)+1] = p->getColor().y();
 	 m_hColors[(i*4)+2] = p->getColor().z();
-	 m_hColors[(i*4)+3] = 1.0; 
+	 m_hColors[(i*4)+3] = 1.0;
 
    }
     copyArrayToDevice(m_dPos[0], m_hPos[0], 0, sizeof(double)*3*numParticles);
@@ -192,12 +218,51 @@ void SPHSystem::_initialize(int begin, int numParticles)
 
     if(gridCreated==false){
 	SPHParticle* p   = (SPHParticle*) particles[0];
+	Vector3 C = Vector3((MaxS.x()+MinS.x())/2,(MaxS.y()+MinS.y())/2,(MaxS.z()+MinS.z())/2);
+	double l = MaxS.x()-MinS.x(); 
+	double w = MaxS.y()-MinS.y(); 
+	double d = MaxS.z()-MinS.z(); 
 	grid = (UniformGrid*)malloc(sizeof(UniformGrid));
-	createGrid(0,0,0,1.0,1.0,1.0,p->getInteractionRadius(),grid);
+	createGrid(C.x(),C.y(),C.z(),l,w,d,p->getInteractionRadius(),grid);
         gridCreated = true;
+	displayGrid(grid);
     }
- 
+  // Radius and mass correction
+/*  reinitCells(grid);
+  storeParticles(grid,m_dPos[1],particles.size());
+  searchNeighbooring(m_dPos[1],m_interactionRadius, grid, 1, voisines, particles.size());
+  evaluate_densitiesSPH(m_dPos[1],m_dMass, m_interactionRadius, m_density, m_pressure,m_restDensity,m_gasStiffness,particles.size(),voisines);
+  copyArrayFromDevice(m_hDensity,m_density,0,sizeof(double)*particles.size());
+
+  double averageDens = 0;
+  double averageDensRest = 0;
+  for(int i=0;i<particles.size();i++){
+		averageDens += m_hDensity[i];
+		averageDensRest += m_hRestDensity[i];
   }
+  averageDens /= particles.size();
+  averageDensRest /= particles.size();
+  double scale = averageDensRest/averageDens;
+  maxH = 0;
+  printf("scale:%f\n",scale);
+  for(int i=0;i<particles.size();i++){
+	m_hMass[i] = m_hMass[i]*scale;//m_hRestDensity[i]/m_hDensity[i];
+	m_hParticleRadius[i] = m_hParticleRadius[i]*scale;// powf((3*m_hMass[i]*20)/(4*M_PI*m_hDensity[i]),(1/3.0));//powf(m_hMass[i]*scale/m_hRestDensity[i],(1/3.0));
+	if(m_hParticleRadius[i]>maxH) maxH = m_hParticleRadius[i];
+  }
+  printf("max radius:%f\n",maxH);
+  copyArrayToDevice(m_dMass, m_hMass, 0, sizeof(double)*numParticles);
+  copyArrayToDevice(m_dParticleRadius, m_hParticleRadius, 0, sizeof(double)*numParticles);
+  copyArrayToDevice(m_interactionRadius, m_hParticleRadius, 0, sizeof(double)*numParticles);
+
+  delete(grid);
+  Vector3 C = Vector3((MaxS.x()+MinS.x())/2,(MaxS.y()+MinS.y())/2,(MaxS.z()+MinS.z())/2);
+  double l = MaxS.x()-MinS.x(); 
+  double w = MaxS.y()-MinS.y(); 
+  double d = MaxS.z()-MinS.z(); 
+  grid = (UniformGrid*)malloc(sizeof(UniformGrid));
+  createGrid(C.x(),C.y(),C.z(),l,w,d,maxH,grid);*/
+ }
 }
 /*****************************************************************************/
 void SPHSystem::_finalize()
@@ -254,7 +319,9 @@ void SPHSystem::_finalize()
 
     FExt->_finalize();
 
-    _finalizeGrid(grid);
+   // _finalizeGrid(grid);
+    delete(grid);
+  //  delete(FExt);
   }
 }
 /*****************************************************************************/
@@ -284,55 +351,133 @@ void SPHSystem::update()
     
     // evaluate forces
     evaluateForcesExt();
+	
+    // calculate time step (CFL condition)
+    double timeStep = calculateTimeStep();//0.005
+    dt = timeStep;
+   // dt = min(dt, timeStep);
 
     // integrate
     integrate();
 
-    // Collision
-    collide();
-
     // Interpolate velocities
     interpolateVelocities();
 
-}
+    // Collision
+    collide();
+/*
+    FILE *f = fopen("timeStepSolitonVelocities.dat","a");
+    fprintf(f,"%d %f\n",t,timeStep);
+    fclose(f);
+   
+   if(t%600==0){
+	printf("INIT Vitess\n");
+   float g = 9.81; float c;
+   float H = 7; float d = 10;
+   
+    for(uint i=0;i<particles.size();i++){
+	float x = m_hPos[1][i*3];
+	float y = m_hPos[1][i*3+1];
+	if(m_hPos[1][i*3]<-1.0){
+		/*double HD = sqrt((3*H)/(4*d*d*d))*(x+1.0);
+		double sech2 = (1/(cosh(HD)*cosh(HD)));
+		double tanh1 = sinh(HD)/cosh(HD);
+		double u = 0.8*sqrt(g*d)*(H/d)*(1/sech2);
+		double v = 20*sqrt(3*g*d)*powf(H/d,1.5)*(y/d)*sech2*tanh1;*/
+/*		float H = 0.32; float d = 0.1;
+		float A = sqrt(3*H/(4*d*d*d));
+		float prof = fabs(y +0.1);
+		float lambda1 = 2.5; float lambda2 = 32.5;
+	 	float u = 10*-sqrt(g*d)*powf(prof/d,3)*tanh(A*(-prof))*(1/cosh(A*(-prof)));//*lambda1;
+		float v = 10*H*powf(1/cosh(A*(x+1.0)),2);//*lambda2;
 
+		m_hVel[1][i*3] = u;
+		m_hVel[0][i*3] = u;
+		m_hVel[0][i*3+1] = v;
+		m_hVel[1][i*3+1] = v;
+		m_hVelInterAp[i*3] = u;
+		m_hVelInterAp[i*3+1] = v;
+	}
+   }
+   copyArrayToDevice(m_dVel[1], m_hVel[1], 0, sizeof(double)*3*particles.size());
+   copyArrayToDevice(m_dVelInterAp, m_hVelInterAp, 0, sizeof(double)*3*particles.size());
+   }
+*/
+   t++;//timeStep;
+   printf("t:%d\n",t);
+}
+/*****************************************************************************/
 /*****************************************************************************/
 void SPHSystem::evaluateDensitiesForces()
 {
+   // #if defined (CUDA)
     evaluate_densities_forces(m_dPos[1],m_dVel[1],m_dMass, m_interactionRadius, m_density, m_pressure,
 			      m_normales,m_restDensity,m_viscosity,m_gasStiffness,m_threshold,m_surfaceTension,
  			      particles.size(),m_fPressure, m_fViscosity, m_fSurface, FExt->m_F, voisines);
+   // #endif
 }
 /*****************************************************************************/
+/*****************************************************************************/
 void SPHSystem::evaluateForcesExt()
-{
-  FExt->evaluate(m_dPos[0],FExt->m_F, m_dMass, particles.size());
+{  
+   FExt->evaluate(m_dPos[1],FExt->m_F, m_density, particles.size());
 }
-
+/*****************************************************************************/
 /*****************************************************************************/
 void SPHSystem::collide()
 {
-    if(collision->getObjects().size()>0)
-	collision->collide(m_dPos[0],m_dPos[1],m_dVelInterAv,m_dVelInterAp, 
+    if(collision->getObjects().size()>0){
+	collision->collide(m_dPos[0],m_dPos[1],m_dVel[0], m_dVel[1], 
 			   particles[0]->getParticleRadius(), dt, particles.size());
+	postProcessCollide(m_dVelInterAv, m_dVelInterAp, m_dVel[0], m_dVel[1], particles.size());
+   }
 }
+/*****************************************************************************/
 /*****************************************************************************/
 void SPHSystem::integrate()
 {
-    integrateSPHSystem(m_dVelInterAv, m_dVelInterAp, m_dPos[0], m_dPos[1], FExt->m_F, m_density,dt,particles.size());
+    integrateSPHSystem(m_dVelInterAv, m_dVelInterAp, m_dPos[0], m_dPos[1], FExt->m_F, m_density, dt, particles.size());
     copyArrayFromDevice(m_hPos[1], m_dPos[1], 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(m_hPos[0], m_dPos[0], 0, sizeof(double)*3*particles.size());
 }
-
+/*****************************************************************************/
 /*****************************************************************************/
 void SPHSystem::interpolateVelocities()
 {
     interpolateSPHVelocities(m_dVelInterAv, m_dVelInterAp, m_dVel[0], m_dVel[1], particles.size());
 
     copyArrayFromDevice(m_hPos[1], m_dPos[1], 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(m_hPos[0], m_dPos[0], 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(m_hVel[0], m_dVel[0], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVel[1], m_dVel[1], 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVelInterAp, m_dVelInterAp, 0, sizeof(double)*3*particles.size());
     copyArrayFromDevice(m_hVelInterAv, m_dVelInterAv, 0, sizeof(double)*3*particles.size());
-} 
+}
+/*****************************************************************************/ 
+/*****************************************************************************/
+double SPHSystem::calculateTimeStep()
+{
+    double* acc = new double[3*particles.size()];
+    double* dens = new double[particles.size()];
+    copyArrayFromDevice(m_hVel[1], m_dVel[1], 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(acc, FExt->m_F, 0, sizeof(double)*3*particles.size());
+    copyArrayFromDevice(dens, m_density, 0, sizeof(double)*particles.size());
+    double vmax = 0; double amax = 0; double hmin = 1000;
+    for(int i=0;i<particles.size();i++){
+	Vector3 v = Vector3(m_hVel[1][(i*3)],m_hVel[1][(i*3)+1],m_hVel[1][(i*3)+2]);
+	Vector3 a = Vector3(acc[i*3]/dens[i],acc[(i*3)+1]/dens[i],acc[(i*3)+2]/dens[i]);
+	double lv = v.length();
+	double la = a.length();
+	if(lv>vmax) vmax = lv;
+	if(la>amax) amax = la;
+	if(m_hInteractionRadius[i]<hmin) hmin = m_hInteractionRadius[i];
+    }
+    delete[] acc;
+    delete[] dens;
+    double a = vmax*vmax+4*amax*0.5*hmin;
+    return -(vmax-sqrt(a))/(2*amax);
+}
+/*****************************************************************************/ 
 /*****************************************************************************/
 void SPHSystem::evaluateIso(double* pos, uint nbCellsX, uint nbCellsY, uint nbCellsZ, double scale)
 {
@@ -347,6 +492,7 @@ void SPHSystem::computeNormales_Vertex(double* posV, double* normales, float sca
 			            grid, m_dPos[1], m_interactionRadius, m_dMass, m_density, particles.size());
 }
 /*****************************************************************************/
+/*****************************************************************************/
 void SPHSystem::displayParticles(ParticleDisplay mode, Vector3 color)
 {
 	if(particles.size()>0){
@@ -357,12 +503,122 @@ void SPHSystem::displayParticles(ParticleDisplay mode, Vector3 color)
 	}
 }
 /*****************************************************************************/
-void  SPHSystem::_exportData_Mitsuba(const char* filename)
+void SPHSystem::displayParticlesByField(uint field)
 {
-	// evaluate IsoSurface
-        //evaluateIso(m_dPos[1],m_normales,m_dMass,m_density,grid,0.08,particles.size());
-	_exportData(filename, grid);
-
+    // DISPLAY BY DENSITY FIELD
+    if(field==0){
+    	copyArrayFromDevice(m_hDensity,m_density,0,sizeof(double)*particles.size());
+	double dMax = 0; double dMin = 10000;
+	for(int i=0;i<particles.size();i++){
+		if(m_hDensity[i]>dMax) dMax = m_hDensity[i];
+		if(m_hDensity[i]<dMin) dMin = m_hDensity[i];
+	}
+	//printf("dMin:%f dMax:%f\n",dMin, dMax);
+	#pragma omp parallel for
+    	for(uint i=0;i<particles.size();i++){
+		float hue;
+		if(dMax==dMin) hue = 240;
+		else hue = 240 * (dMax - min((double)m_hDensity[i],dMax)) / (dMax-dMin);
+		Vector3 Hsv(hue,1,1);
+		Vector3 Rgb = convertHsvToRgb(Hsv);
+		m_hColors[i*4] = Rgb.x();
+		m_hColors[i*4+1] = Rgb.y();
+		m_hColors[i*4+2] = Rgb.z();
+		m_hColors[i*4+3] = 0.5;
+    	}
+    }
+    // DISPLAY BY PRESSURE FIELD
+    if(field==1){
+    	copyArrayFromDevice(m_hPressure,m_pressure,0,sizeof(double)*particles.size());
+	double pMax = -1000000; double pMin = 1000000;
+	for(int i=0;i<particles.size();i++){
+		if(m_hPressure[i]>pMax) pMax = m_hPressure[i];
+		if(m_hPressure[i]<pMin) pMin = m_hPressure[i];
+	}
+	//double pMin = 0; double pMax = 100000;
+	//printf("pMin:%f pMax:%f\n",pMin, pMax);
+	#pragma omp parallel for
+    	for(uint i=0;i<particles.size();i++){
+		float hue = 240 * (pMax - min(fabs((double)m_hPressure[i]),pMax)) / (pMax-pMin);
+		if(pMax==pMin) hue = 240;
+		Vector3 Hsv(hue,1,1);
+		Vector3 Rgb = convertHsvToRgb(Hsv);
+		m_hColors[i*4] = Rgb.x();
+		m_hColors[i*4+1] = Rgb.y();
+		m_hColors[i*4+2] = Rgb.z();
+    	}
+   }
+   // DISPLAY BY VISCOSITY FIELD
+   if(field==2){
+    	copyArrayFromDevice(m_hViscosity,m_viscosity,0,sizeof(double)*particles.size());
+	double vMin = 3.5; double vMax = 10;
+	#pragma omp parallel for
+    	for(uint i=0;i<particles.size();i++){
+		float hue = 240 * (vMax - min((double)m_hViscosity[i],vMax)) / (vMax-vMin);
+		Vector3 Hsv(hue,1,1);
+		Vector3 Rgb = convertHsvToRgb(Hsv);
+		m_hColors[i*4] = Rgb.x();
+		m_hColors[i*4+1] = Rgb.y();
+		m_hColors[i*4+2] = Rgb.z();
+    	}
+   }
+   //DISPLAY BY SURFACE TENSION FIELD
+   if(field==3){
+    	copyArrayFromDevice(m_hSurfaceTension,m_fSurface,0,sizeof(double)*3*particles.size());
+	#pragma omp parallel for
+    	for(uint i=0;i<particles.size();i++){
+		double sTension = sqrt(m_hSurfaceTension[i*3]*m_hSurfaceTension[i*3] + 
+				       m_hSurfaceTension[i*3+1]*m_hSurfaceTension[i*3+1] + 
+				       m_hSurfaceTension[i*3+2]*m_hSurfaceTension[i*3+2]);
+		if(sTension!=0) {
+			m_hColors[i*4] = 255;
+			m_hColors[i*4+1] = 0;
+			m_hColors[i*4+2] = 0;
+		}
+		else {
+			m_hColors[i*4] = 0;
+			m_hColors[i*4+1] = 0;
+			m_hColors[i*4+2] = 255;
+		}
+    	}
+   }
+   //DISPLAY BY VELOCITY FIELD
+   if(field==3){
+    	copyArrayFromDevice(m_hVel[1],m_dVel[1],0,sizeof(double)*3*particles.size());
+	double vmax, vmin;
+	vmax = 0; vmin = 1000000;
+	for(uint i=0;i<particles.size();i++){
+		double length = sqrt(m_hVel[1][i*3]*m_hVel[1][i*3]+m_hVel[1][i*3+1]*m_hVel[1][i*3+1]+m_hVel[1][i*3+2]*m_hVel[1][i*3+2]);
+		if(vmax<length) vmax = length;
+		if(vmin>length) vmin = length;
+	}
+	#pragma omp parallel for
+    	for(uint i=0;i<particles.size();i++){
+		double length = sqrt(m_hVel[1][i*3]*m_hVel[1][i*3]+m_hVel[1][i*3+1]*m_hVel[1][i*3+1]+m_hVel[1][i*3+2]*m_hVel[1][i*3+2]);
+		float hue = 240 * (vMax - min(length,vMax)) / (vMax-vMin);
+		Vector3 Hsv(hue,1,1);
+		Vector3 Rgb = convertHsvToRgb(Hsv);
+		m_hColors[i*4] = Rgb.x();
+		m_hColors[i*4+1] = Rgb.y();
+		m_hColors[i*4+2] = Rgb.z();
+    	}
+   }
 }
 /*****************************************************************************/
 /*****************************************************************************/
+Vector3 SPHSystem::convertHsvToRgb(Vector3 Hsv)
+{
+   Vector3 result;
+   int t = (int)(floor(Hsv.x()/60))%6;
+   double f = (Hsv.x()/60)-t;
+   double l = Hsv.z()*(1-Hsv.y());
+   double m = Hsv.z()*(1-f*Hsv.y());
+   double n = Hsv.z()*(1-(1-f)*Hsv.y());
+   if(t==0) {result.setX(Hsv.z()); result.setY(n); result.setZ(l);};
+   if(t==1) {result.setX(m); result.setY(Hsv.z()); result.setZ(l);};
+   if(t==2) {result.setX(l); result.setY(Hsv.z()); result.setZ(n);};
+   if(t==3) {result.setX(l); result.setY(m); result.setZ(Hsv.z());};
+   if(t==4) {result.setX(n); result.setY(l); result.setZ(Hsv.z());};
+   if(t==5) {result.setX(Hsv.z()); result.setY(l); result.setZ(m);};
+   return result;
+}

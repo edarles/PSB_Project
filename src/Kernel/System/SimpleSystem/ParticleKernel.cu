@@ -1,5 +1,5 @@
 
-#include <math_constants.h>
+#include <ParticleKernel.cuh>
 #include <device_launch_parameters.h>
 #include <vector_types.h>
 #include <driver_types.h>

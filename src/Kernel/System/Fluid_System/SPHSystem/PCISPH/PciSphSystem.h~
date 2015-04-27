@@ -16,24 +16,24 @@ public:
     void init(vector<Particle*> particles);
     void emitParticles();
     void update();
+    virtual double calculateTimeStep();
 
 protected: // methods
     
     void _initialize(int begin, int numParticles);
+    double calculateTimeStepCorrected();
 
-    double* m_restore_dPos[2];
-    double* m_restore_velInterAv;
-    double* m_restore_velInterAp;
+    double* m_dPosPredict[2];
+    double* m_dVelPredict[2];
+    double* m_dVelInterPredict[2];
     double* m_densityError;
+    double* m_densityPredict;
 
-    double* m_hRestore_posAv;
-    double* m_hRestore_posAp;
-    double* m_hRestore_velInterAv;
-    double* m_hRestore_velInterAp;
+  
+    double* m_hDensityCorrected;
+    double* m_hErrorDensity;
 
     double  errorThreshold;
-
-    void update_back();
 };
 
 #endif //

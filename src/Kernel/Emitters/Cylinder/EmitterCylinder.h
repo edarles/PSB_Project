@@ -16,6 +16,9 @@ class EmitterCylinder : public Emitter, public Cylinder
 		~EmitterCylinder();
 
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
+		vector<Particle*> emitParticles2D_z();
+
 		void display(Vector3 color);
 
 };

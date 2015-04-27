@@ -64,6 +64,7 @@ void Face::setVertexs(vector<Vector3> vertexs)
 	for(unsigned int i=0;i<vertexs.size();i++)
 		this->vertexs.push_back(vertexs[i]);	
 }
+/*************************************************************************************/
 void Face::setVertex(Vector3 V)
 {
 	vertexs.push_back(V);
@@ -107,8 +108,9 @@ void Face::display(Vector3 color)
 		glVertex3f(v.x(),v.y(),v.z());
 	}
 	glEnd();
-	glLineWidth(1.0);
-	glColor3f(1.0,1.0,1.0);
+//	glLineWidth(1.0);
+//	glColor3f(1.0,1.0,1.0);
+       // displayNormale(Vector3(1,0,0));
 }
 /*************************************************************************************/
 void Face::displayNormale(Vector3 color)
@@ -122,7 +124,7 @@ void Face::displayNormale(Vector3 color)
 	glLineWidth(3.0);
 	glBegin(GL_LINES);
 	glVertex3f(G.x(),G.y(),G.z());
-	glVertex3f(G.x()+N.x()*0.3,G.y()+N.y()*0.3,G.z()+N.z()*0.3);
+	glVertex3f(G.x()+N.x()*0.1,G.y()+N.y()*0.1,G.z()+N.z()*0.1);
 	glEnd();
         glLineWidth(1.0);
 	glColor3f(1.0,1.0,1.0);

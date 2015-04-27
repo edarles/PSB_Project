@@ -2,12 +2,8 @@
 #define _FORCE_EXT_TROCHOIDE_KERNEL_H_
 /******************************************************************************************/
 /******************************************************************************************/
+#include <common.cuh>
 
-#include <cuda.h>
-#include <vector_functions.h>
-#include <cuda_runtime_api.h>
-#include <cuda.h>
-#include <host_defines.h>
 
 extern "C"
 {

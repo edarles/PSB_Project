@@ -2,30 +2,38 @@
 #include <System.h>
 #include <typeinfo>
 #include <shaders.h>
+#if defined(__APPLE__) || defined(__MACOSX)
+  #include <GLUT/glut.h>
+  #ifndef glutCloseFunc
+  #define glutCloseFunc glutWMCloseFunc
+  #endif
+#else
+#include <GL/freeglut.h>
+#endif
 
 /*********************************************************************************************/
 /*********************************************************************************************/
 System::System()
 { 
+ //glutInitDisplayMode(GLUT_RGBA | GLUT_3_2_CORE_PROFILE);
  m_program = _compileProgram(vertexShader, spherePixelShader);
-
  collision = new Collision();
  emitters = new Emitters();
  FExt = new ForcesExt();
  dt = 0.01;
+ t = 0;
 }
 /*********************************************************************************************/
 System::~System()
 {
  glDeleteProgram(m_program);
-
+ //#pragma omp parallel for
  for(unsigned int i=0;i<particles.size();i++)
 	delete(particles[i]);
  particles.clear();
+ 
  delete(collision);
  delete(emitters);
- for(unsigned int i=0;i<FExt->getNbForces();i++)
-	delete(FExt->getForce(i));
  delete(FExt);
 }
 /*********************************************************************************************/
@@ -90,6 +98,7 @@ vector<Particle*> System::getParticles()
 /*********************************************************************************************/
 void System::setParticles(vector<Particle*> particles)
 {
+	#pragma omp parallel for
 	for(unsigned int i=0;i<particles.size();i++){
 		this->particles[i] = new Particle();
 		this->particles[i] = particles[i];
@@ -100,6 +109,7 @@ void System::setParticles(vector<Particle*> particles)
 void System::displayParticles(ParticleDisplay mode, Vector3 color)
 {
    glColor3f(1.0,1.0,1.0);
+   double scaleV = 0.1;
    switch(mode)
    {
        // std::stringstream fps_text, mode_text, grid_text, gpumem_text,
@@ -118,12 +128,13 @@ void System::displayParticles(ParticleDisplay mode, Vector3 color)
 			glDrawArrays(GL_POINTS, 0, particles.size());
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glDisableClientState(GL_COLOR_ARRAY);
-
+			
 		break;
 	case SPHERES:
 			glEnable(GL_POINT_SPRITE_ARB);
-			 glEnable(GL_BLEND);                                // Allow Transparency
-   			glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // how transparency acts
+			
+			//glEnable(GL_BLEND);                                // Allow Transparency
+   			//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // how transparency acts
        			glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
         		glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_NV);
         		glDepthMask(GL_TRUE);
@@ -131,7 +142,9 @@ void System::displayParticles(ParticleDisplay mode, Vector3 color)
 			
         		glUseProgram(m_program);
         		glUniform1f( glGetUniformLocation(m_program, "pointScale"), 768 / tanf(60*0.5f*(float)M_PI/180.0f) );
-        		glUniform1f( glGetUniformLocation(m_program, "pointRadius"), 0.02 );
+        		glUniform1f( glGetUniformLocation(m_program, "pointRadius"), particles[0]->getParticleRadius()/1.5);
+			glUniform1f( glGetUniformLocation(m_program, "near"), 0.000000001 );
+			glUniform1f( glGetUniformLocation(m_program, "far"), 0.00001 );
 
         		glPointSize(1.0);
 			glColor3f(1,1,1);
@@ -146,11 +159,36 @@ void System::displayParticles(ParticleDisplay mode, Vector3 color)
         		glUseProgram(0);
 			glDisable(GL_BLEND);
         		glDisable(GL_POINT_SPRITE_ARB);
+/*
+			for(uint i=0;i<particles.size();i++){
+				glColor3f(m_hColors[i*4],m_hColors[i*4+1],m_hColors[i*4+2]);
+				glTranslatef(m_hPos[1][i*3],m_hPos[1][i*3+1],m_hPos[1][i*3+2]);
+				glutSolidSphere(particles[i]->getParticleRadius()/1.5,20,20);
+				glTranslatef(-m_hPos[1][i*3],-m_hPos[1][i*3+1],-m_hPos[1][i*3+2]);
+                     	}
+			
+*/
 			break;
 	//case SURFACE:
 	//	break;
 	
    }
+   /*glLineWidth(0.1);
+			for(uint i=0;i<particles.size();i++){
+				glColor3f(m_hColors[i*4],m_hColors[i*4+1],m_hColors[i*4+2]);
+				glBegin(GL_LINES);
+				
+				glVertex3f(m_hPos[1][i*3],m_hPos[1][i*3+1],m_hPos[1][i*3+2]);
+				
+				glVertex3f(m_hPos[1][i*3]+m_hVel[1][i*3]*scaleV,m_hPos[1][i*3+1]+m_hVel[1][i*3+1]*scaleV,m_hPos[1][i*3+2]+m_hVel[1][i*3+2]*scaleV);
+				glEnd();
+			}
+	*/
+}
+/*********************************************************************************************/
+/*********************************************************************************************/
+void System::displayParticlesByField(uint field)
+{
 }
 /*********************************************************************************************/
 /*********************************************************************************************/
@@ -190,6 +228,7 @@ GLuint System::_compileProgram(const char *vsource, const char *fsource)
 
     if (!success) {
         char temp[256];
+	printf("succes:%d\n",success);
         glGetProgramInfoLog(program, 256, 0, temp);
         printf("Failed to link program:\n%s\n", temp);
         glDeleteProgram(program);

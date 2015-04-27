@@ -12,6 +12,7 @@ class ParticleExporter_Txt : public ParticleExporter {
 	~ParticleExporter_Txt();
 
 	void _export(const char* filename,  System *S);
+	void _exportToMaya(unsigned int frame, const char* directory, System *S);
 
 };
 

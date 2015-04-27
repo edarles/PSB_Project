@@ -18,7 +18,7 @@ class Periodic_HeightFieldCollision : public Periodic_HeightField, public Height
 /***************************************************************************************************************/
 		void create(Vector3 origin, float length, float width, double dx, double dz,
 			    uint nbFunc, double AMin, double AMax, double kMin, double kMax, double thetaMin, double thetaMax,
-			    double phiMin, double phiMax, float elast);
+			    double phiMin, double phiMax, double wMin, double wMax, float elast);
 /***************************************************************************************************************/
 		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 		             float dt, int nbBodiesP);

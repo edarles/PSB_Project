@@ -24,7 +24,8 @@ class Collision {
 		void removeLastObject();
 
 		void collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
-		             		    float dt, int nbBodiesP);
+		             float dt, int nbBodiesP);
+
 
 		void display(GLenum modeRaster, GLenum modeFace, Vector3 colorObject, Vector3 colorNormales, bool normales);
 

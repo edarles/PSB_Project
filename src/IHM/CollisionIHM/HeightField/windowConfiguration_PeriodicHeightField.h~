@@ -58,6 +58,8 @@ private:
 
     string getOpenFileName(const QString & caption, const QStringList & filters,int * ind_filter);
     QDir current_dir;
+
+    WindowConfiguration_CombinedHeightField* parent;
     
 };
 

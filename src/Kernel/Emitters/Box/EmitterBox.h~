@@ -5,24 +5,18 @@
 #include <Box.h>
 using namespace Utils;
 
-template <class T>
 class EmitterBox : public Emitter, public Box
 {
 	public:
 		EmitterBox();
 		EmitterBox(Vector3 center, float sizeX, float sizeY, float sizeZ, Vector3 velocityEmission);
-		EmitterBox(const EmitterBox<T> &C);
+		EmitterBox(const EmitterBox&C);
 		~EmitterBox();
 
-		T* 	getData();
-		void 	setData(T*);
-
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
 		void		  display(Vector3 color);
 
-
-	private:
-		T* data;
 };
 
 #endif

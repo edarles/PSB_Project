@@ -24,13 +24,13 @@ Periodic_HeightFieldCollision::~Periodic_HeightFieldCollision()
 /***********************************************************************************/
 void Periodic_HeightFieldCollision::create(Vector3 origin, float length, float width, double dx_, double dz_,
 			    		   uint nbFunc, double AMin, double AMax, double kMin, double kMax, double thetaMin, double thetaMax,
-			    		   double phiMin, double phiMax, float elast)
+			    		   double phiMin, double phiMax, double wMin, double wMax, float elast)
 {
 	setElast(elast);
 	Vector3 min_(origin.x()-length/2,origin.y(),origin.z()-width/2);
 	Vector3 max_(origin.x()+length/2,origin.y(),origin.z()+width/2);
 
-	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax,0,0);
+	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax,wMin,wMax);
 	HeightField::create(min_,max_,dx_,dz_);
 	HeightField::generate();
 }

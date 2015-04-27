@@ -10,6 +10,8 @@ SimulationData_MSPHSystem::SimulationData_MSPHSystem():SimulationData_SPHSystem(
 	sigma = Vector3(0.9126,1.0748,1.2500);
 	beta = Vector3(0.9124,1.0744,1.2492);
 	g = Vector3(0.932,0.902,0.859);
+	phase = new Phase(temperature,1.0,sigma,beta,g);
+	phase->calculateD0(viscosity, restDensity, particleRadius, gasStiffness); 
 }
 /***********************************************************************************************/
 SimulationData_MSPHSystem::SimulationData_MSPHSystem(float particleRadius, float mass, Vector3 color,
@@ -24,6 +26,9 @@ SimulationData_MSPHSystem::SimulationData_MSPHSystem(float particleRadius, float
 	this->sigma = sigma;
 	this->beta = beta;
 	this->g = g;
+	this->phase = new Phase(temperature, 1.0, sigma, beta, g);
+	this->phase->calculateD0(viscosity, restDensity, particleRadius, gasStiffness); 
+	printf("mass:%f\n",this->particleMass);
 }
 /***********************************************************************************************/
 SimulationData_MSPHSystem::SimulationData_MSPHSystem(const SimulationData_MSPHSystem& S)
@@ -33,12 +38,19 @@ SimulationData_MSPHSystem::SimulationData_MSPHSystem(const SimulationData_MSPHSy
 	this->sigma = S.sigma;
 	this->beta = S.beta;
 	this->g = S.g;
+	this->phase = S.phase;
 }
 /***********************************************************************************************/
 SimulationData_MSPHSystem::~SimulationData_MSPHSystem()
 {
+	delete(phase);
 }
 /***********************************************************************************************/
+/***********************************************************************************************/
+Phase* SimulationData_MSPHSystem::getPhase()
+{
+	return phase;
+}
 /***********************************************************************************************/
 float SimulationData_MSPHSystem::getTemperature()
 {
@@ -64,6 +76,11 @@ Vector3 SimulationData_MSPHSystem::getG()
 void SimulationData_MSPHSystem::setTemperature(float temperature)
 {
 	this->temperature = temperature;
+}
+/***********************************************************************************************/
+void SimulationData_MSPHSystem::setPhase(Phase *p)
+{
+	this->phase = p;
 }
 /***********************************************************************************************/
 void SimulationData_MSPHSystem::setSigma(Vector3 sigma)

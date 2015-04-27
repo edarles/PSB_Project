@@ -16,5 +16,17 @@ HeightFieldCollision::HeightFieldCollision(const HeightFieldCollision& H):Object
 HeightFieldCollision::~HeightFieldCollision()
 {
 }
+/**********************************************************************************/
+/**********************************************************************************/
+void HeightFieldCollision::display(GLenum mode, GLenum raster, Vector3 color)
+{
+	glPolygonMode(mode, raster);
+	HeightField::display(color);
+}
+/**********************************************************************************/
+void HeightFieldCollision::displayNormales(Vector3 color)
+{
+	HeightField::displayNormale(color);
+}
 /*****************************************************************************************************/
 /*****************************************************************************************************/

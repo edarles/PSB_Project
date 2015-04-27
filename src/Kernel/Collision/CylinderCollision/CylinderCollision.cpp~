@@ -1,5 +1,5 @@
 #include <CylinderCollision.h>
-
+#include <CylinderCollision.cuh>
 /************************************************************************************/
 /************************************************************************************/
 CylinderCollision::CylinderCollision():ObjectCollision(),Cylinder()
@@ -35,6 +35,8 @@ void CylinderCollision::create(Vector3 center, float baseRadius, float length, V
 void CylinderCollision::collide(double* oldPos, double* newPos, double* oldVel, double* newVel, float radiusParticle, 
 		                float dt, int nbBodiesP)
 {
+	collisionCylinder_CUDA(newPos,newVel,radiusParticle,dt,nbBodiesP, 
+			       getCenter(), getDirection(),getBaseRadius(),getLength(),getElast(),getIsContainer());
 }
 /************************************************************************************/
 /************************************************************************************/

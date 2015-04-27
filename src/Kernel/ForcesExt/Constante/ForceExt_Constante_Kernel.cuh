@@ -1,6 +1,8 @@
 #ifndef _FORCE_EXT_CONSTANTE_KERNEL_H_
 #define _FORCE_EXT_CONSTANTE_KERNEL_H_
 
+#include <common.cuh>
+
 extern "C"
 {
 /*****************************************************************************************************************/

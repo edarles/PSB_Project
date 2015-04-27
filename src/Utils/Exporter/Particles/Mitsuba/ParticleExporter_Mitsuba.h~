@@ -12,7 +12,10 @@ class ParticleExporter_Mitsuba : public ParticleExporter {
 	~ParticleExporter_Mitsuba();
 
 	void _export(const char* filename,  System *S);
+	void _exportData(const char* filenameDensity, const char* filenameAlbedo, System* S);
 
+ //private:
+	//void _exportData(const char* filename, UniformGrid *grid);
 };
 }
 

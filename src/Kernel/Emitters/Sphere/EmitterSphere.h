@@ -16,6 +16,8 @@ class EmitterSphere : public Emitter, public Sphere
 		~EmitterSphere();
 
 		vector<Particle*> emitParticles();
+		vector<Particle*> emitParticles2D();
+		vector<Particle*> emitParticles2D_z();
 		void display(Vector3 color);
 
 };

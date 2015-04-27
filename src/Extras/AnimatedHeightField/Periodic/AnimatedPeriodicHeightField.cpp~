@@ -1,22 +1,25 @@
 #include <AnimatedPeriodicHeightField.h>
 #include <AnimatedPeriodicHeightField.cuh>
 #include <GL/gl.h>
-
+#include <stdio.h>
 /***********************************************************************************/
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField()
 			     :Periodic_HeightField(),AnimatedHeightField()
 {
+	t = 0;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField(float step)
 			     :Periodic_HeightField(),AnimatedHeightField(step)
 {
+	t = 0;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::AnimatedPeriodic_HeightField(const AnimatedPeriodic_HeightField& H)
 			     :Periodic_HeightField(H),AnimatedHeightField(H)
 {
+	this->t = H.t;
 }
 /***********************************************************************************/
 AnimatedPeriodic_HeightField::~AnimatedPeriodic_HeightField()
@@ -35,7 +38,7 @@ void AnimatedPeriodic_HeightField::create(Vector3 origin, float length, float wi
 	Periodic_HeightField::create(nbFunc,AMin,AMax,kMin,kMax,thetaMin,thetaMax,phiMin,phiMax,wMin,wMax);
 	HeightField::create(min_,max_,dx_,dz_);
 	HeightField::generate();
-	HeightField::exportToOBJ("test.obj");
+	t = 0;
 }
 /*****************************************************************************************************/
 /*****************************************************************************************************/
@@ -46,6 +49,7 @@ void AnimatedPeriodic_HeightField::update()
 	copyArrayFromDevice(pos,m_pos, 0, 3*size*sizeof(double));
         threadSync();
 	t += step;
+	printf("AHF t:%f\n",t);
 }
 /***********************************************************************************/
 /***********************************************************************************/
@@ -54,6 +58,7 @@ void AnimatedPeriodic_HeightField::loadSpectrum(const char* filename)
 	Periodic_HeightField::loadSpectrum(filename);
 	HeightField::create(Min,Max,dx,dz);
 	HeightField::generate();
+	t = 0;
 }
 /***********************************************************************************/
 /***********************************************************************************/

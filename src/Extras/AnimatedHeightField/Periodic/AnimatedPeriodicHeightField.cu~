@@ -24,7 +24,7 @@ void AnimatedPeriodicHeightField_calculateHeight_Normales_Gradient_CUDA(double* 
 {
        int numThreadsX, numBlocksX;
        computeGridSize(nbPos,numBlocksX, numThreadsX);
-       AnimatedPeriodicHeightField_calculateHeight_Normales_Kernel<<<numBlocksX, numThreadsX>>>((double3*) m_pos, (double3*) m_N, 		
+       AnimatedPeriodicHeightField_calculateHeight_Normales_Gradient_Kernel<<<numBlocksX, numThreadsX>>>((double3*) m_pos, (double3*) m_N, 	
 												A,k,theta,phi,omega,t,nbFunc, nbPos);
 }
 /****************************************************************************************************************************/

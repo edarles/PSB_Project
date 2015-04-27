@@ -1,4 +1,4 @@
-#include <CollisionCylinderKernel.cuh>
+#include <CylinderCollision_Kernel.cuh>
 #include <double3.h>
 
 __global__ void collisionCylinder(int nbBodies, double3* newPos, double3* newVel, float radiusParticle, float dt,

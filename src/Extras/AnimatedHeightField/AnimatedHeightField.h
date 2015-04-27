@@ -27,6 +27,7 @@ class AnimatedHeightField
     		double getT() const;
     		double getStep() const;
 /*************************************************************************************/
+		void   setT(double);
     		void   setStep(double);
 /*************************************************************************************/
     		virtual void update() = 0;
@@ -37,7 +38,7 @@ class AnimatedHeightField
 	protected:
 /*************************************************************************************/
     		double t;	// temps courant
-    		double step; // pas de temps
+    		double step;    // pas de temps
 };
 /*************************************************************************************/
 #endif	/* ANIMATEDHEIGHTFIELD_H */

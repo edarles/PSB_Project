@@ -1,8 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windowConfiguration_CombinedHeightField.h'
 **
-** Created: Mon Jun 3 01:19:11 2013
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.6)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -11,7 +10,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'windowConfiguration_CombinedHeightField.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#error "This file was generated using the moc from 4.8.6. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -31,19 +30,19 @@ static const uint qt_meta_data_WindowConfiguration_CombinedHeightField[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      41,   40,   40,   40, 0x0a,
-      50,   40,   40,   40, 0x0a,
-      59,   40,   40,   40, 0x0a,
-      86,   40,   40,   40, 0x0a,
-     109,   40,   40,   40, 0x0a,
-     134,   40,   40,   40, 0x0a,
+      40,   49,   49,   49, 0x0a,
+      50,   49,   49,   49, 0x0a,
+      59,   49,   49,   49, 0x0a,
+      86,   49,   49,   49, 0x0a,
+     109,   49,   49,   49, 0x0a,
+     134,   49,   49,   49, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_WindowConfiguration_CombinedHeightField[] = {
     "WindowConfiguration_CombinedHeightField\0"
-    "\0accept()\0cancel()\0displayHeightField(double)\0"
+    "accept()\0\0cancel()\0displayHeightField(double)\0"
     "addLinearHeightField()\0addGaussianHeightField()\0"
     "addPeriodicHeightField()\0"
 };

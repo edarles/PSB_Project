@@ -21,7 +21,7 @@ CylinderCollision::~CylinderCollision()
 /************************************************************************************/
 void CylinderCollision::create(Vector3 center, float baseRadius, float length, Vector3 direction, float elast, bool is_container)
 {
-	//direction.makeUnitVector();
+	direction.makeUnitVector();
 	setElast(elast);
 	setFriction(1-elast);
 	setIsContainer(is_container);

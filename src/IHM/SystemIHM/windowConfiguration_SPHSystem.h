@@ -27,6 +27,8 @@ public slots:
     void cancel();
     void changeData(double);
     void changeGravityData(double);
+    void changeMinS(double);
+    void changeMaxS(double);
 
 private:
 
@@ -35,8 +37,8 @@ private:
     QPushButton *buttonOK;
     QPushButton *buttonCancel;
 
-    QDoubleSpinBox *gravity, *deltaTime;
-    QLabel *gravityLabel, *deltaTimeLabel;
+    QDoubleSpinBox *gravity, *deltaTime, *MinSX, *MinSY, *MinSZ, *MaxSX, *MaxSY, *MaxSZ;
+    QLabel *gravityLabel, *deltaTimeLabel, *MinS, *MaxS;
    
 };
 

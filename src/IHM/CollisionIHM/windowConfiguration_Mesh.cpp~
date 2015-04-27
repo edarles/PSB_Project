@@ -98,8 +98,30 @@ void WindowConfiguration_Mesh::loadFile()
 		loader = new ObjLoader();
 		Mesh mesh = loader->load(filename.c_str());
 		M = new MeshCollision(elast->value(),friction->value(),container->isChecked());
+		vector<Triangle> faces = mesh.getFaces();
+		Vector3 C(0,0,0);
+		for(uint i=0;i<mesh.getNbFaces();i++){
+			for(uint j=0;j<3;j++)
+				C = C + faces[i].getVertex(j);
+		}
+		C = C/(mesh.getNbFaces()*3);
+		for(uint i=0;i<mesh.getNbFaces();i++){
+			Triangle T = faces[i];
+			Vector3 N = T.getNormale();
+			Vector3 A = T.getVertex(0);
+			Vector3 AV = C-A;
+			double dot = AV.x()*N.x()+AV.y()*N.y()+AV.z()*N.z();
+			if(dot>=0){
+				if(container->isChecked())
+					T.setNormale(-N);
+			}
+			else {
+				if(!container->isChecked())
+					T.setNormale(-N);
+			}
+			mesh.setFace(i,T); 			
+		}
 		M->setFaces(mesh.getFaces());
-		M->inverseNormales();
 		M->storeFacesOnGPU();
 		glWidget->getDisplay()->displayObjectCollision(M);
   	}	

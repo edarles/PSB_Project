@@ -14,7 +14,7 @@ class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
 		SimulationData_MSPHSystem(float particleRadius, float mass, Vector3 color,
 					  float restDensity, float viscosity, float surfaceTension,
 					  float gasStiffness, float kernelParticles, 
-					  float temperature, float diffusion, Vector3 sigma, Vector3 beta, Vector3 g);
+					  float temperature, Vector3 sigma, Vector3 beta, Vector3 g);
 
 		SimulationData_MSPHSystem(const SimulationData_MSPHSystem&);
 
@@ -23,14 +23,14 @@ class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
 /**********************************************************************************/
 /**********************************************************************************/
 		float getTemperature();
-		float getDiffusion();
+		Phase* getPhase();
 		Vector3 getSigma();
 		Vector3 getBeta();
 		Vector3 getG();
 /**********************************************************************************/
 /**********************************************************************************/
 		void  setTemperature(float temperature);
-		void  setDiffusion(float diffusion);
+		void  setPhase(Phase* p);
 		void  setSigma(Vector3 sigma);
 		void  setBeta(Vector3 beta);
 		void  setG(Vector3 g);
@@ -43,6 +43,7 @@ class SimulationData_MSPHSystem : public SimulationData_SPHSystem {
 /**********************************************************************************/
 /**********************************************************************************/
 		float temperature;
+		Phase* phase;
 		Vector3 sigma, beta, g;
 /**********************************************************************************/
 /**********************************************************************************/

@@ -6,16 +6,20 @@ WindowConfiguration_Data_MSPHSystem::WindowConfiguration_Data_MSPHSystem(QWidget
 {
 	particleRadiusLabel = new QLabel("Particle Radius",widget);
  	particleRadius = new QDoubleSpinBox(widget);
-	particleRadius->setMinimum(0.01);
+	particleRadius->setMinimum(0);
 	particleRadius->setMaximum(1.0);
-	particleRadius->setValue(0.02);
+	particleRadius->setDecimals(5);
+	//particleRadius->setValue(0.02);
+	particleRadius->setValue(0.004);
 	connect(particleRadius, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	particleMassLabel = new QLabel("Particle Mass",widget);
  	particleMass = new QDoubleSpinBox(widget);
-	particleMass->setMinimum(0.01);
+	particleMass->setMinimum(0);
 	particleMass->setMaximum(100.0);
-	particleMass->setValue(0.02);
+	particleMass->setDecimals(5);
+	//particleMass->setValue(0.02);
+        particleMass->setValue(0.004);
 	connect(particleMass, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 
 	restDensityLabel = new QLabel("Rest Density",widget);
@@ -64,8 +68,9 @@ WindowConfiguration_Data_MSPHSystem::WindowConfiguration_Data_MSPHSystem(QWidget
 	sigmaLabel = new QLabel ("sigma",widget);
 	sigmaX = new QDoubleSpinBox(widget); sigmaY = new QDoubleSpinBox(widget); sigmaZ = new QDoubleSpinBox(widget);
 	sigmaX->setMinimum(0.0); sigmaY->setMinimum(0.0); sigmaZ->setMinimum(0.0);
-	sigmaX->setMaximum(200); sigmaY->setMaximum(200); sigmaZ->setMaximum(200);
-	sigmaX->setValue(20); sigmaY->setValue(20); sigmaZ->setValue(20);
+	sigmaX->setMaximum(2); sigmaY->setMaximum(2); sigmaZ->setMaximum(2);
+	sigmaX->setDecimals(4); sigmaY->setDecimals(4); sigmaZ->setDecimals(4);
+	sigmaX->setValue(0.9126); sigmaY->setValue(1.0748); sigmaZ->setValue(1.25);
         connect(sigmaX, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(sigmaY, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(sigmaZ, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
@@ -73,8 +78,9 @@ WindowConfiguration_Data_MSPHSystem::WindowConfiguration_Data_MSPHSystem(QWidget
 	betaLabel = new QLabel ("beta",widget);
 	betaX = new QDoubleSpinBox(widget); betaY = new QDoubleSpinBox(widget); betaZ = new QDoubleSpinBox(widget);
 	betaX->setMinimum(0.0); betaY->setMinimum(0.0); betaZ->setMinimum(0.0);
-	betaX->setMaximum(200); betaY->setMaximum(200); betaZ->setMaximum(200);
-	betaX->setValue(20); betaY->setValue(20); betaZ->setValue(20);
+	betaX->setMaximum(2); betaY->setMaximum(2); betaZ->setMaximum(2);
+	betaX->setDecimals(4); betaY->setDecimals(4); betaZ->setDecimals(4);
+	betaX->setValue(0.9124); betaY->setValue(1.0744); betaZ->setValue(1.2492);
         connect(betaX, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(betaY, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(betaZ, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
@@ -82,8 +88,9 @@ WindowConfiguration_Data_MSPHSystem::WindowConfiguration_Data_MSPHSystem(QWidget
 	gLabel = new QLabel ("g",widget);
 	gX = new QDoubleSpinBox(widget); gY = new QDoubleSpinBox(widget); gZ = new QDoubleSpinBox(widget);
 	gX->setMinimum(0.0); gY->setMinimum(0.0); gZ->setMinimum(0.0);
-	gX->setMaximum(200); gY->setMaximum(200); gZ->setMaximum(200);
-	gX->setValue(20); gY->setValue(20); gZ->setValue(20);
+	gX->setMaximum(2); gY->setMaximum(2); gZ->setMaximum(2);
+	gX->setDecimals(4); gY->setDecimals(4); gZ->setDecimals(4);
+	gX->setValue(0.932); gY->setValue(0.902); gZ->setValue(0.859);
         connect(gX, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(gY, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
 	connect(gZ, SIGNAL(valueChanged(double)), this, SLOT(changeData(double))); 
@@ -160,10 +167,10 @@ WindowConfiguration_Data_MSPHSystem::WindowConfiguration_Data_MSPHSystem(QWidget
 
 	widget->setLayout(layout1);
     
-        color = QColor(255,0,255);
+        color = QColor(0,0,255);
 	
-	data = new SimulationData_MSPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
-		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
+	data = new SimulationData_MSPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255.0,color.green()/255.0,
+		   color.blue()/255.0),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
 		   kernelParticles->value(),temperature->value(),Vector3(sigmaX->value(),sigmaY->value(),sigmaZ->value()),
 		   Vector3(betaX->value(),betaY->value(),betaZ->value()),Vector3(gX->value(),gY->value(),gZ->value()));
 }
@@ -176,8 +183,8 @@ WindowConfiguration_Data_MSPHSystem::~WindowConfiguration_Data_MSPHSystem()
 void WindowConfiguration_Data_MSPHSystem::changeData(double newValue)
 {
 	if(data!=NULL)	delete(data);
-	data = new SimulationData_MSPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255,color.green()/255,
-		   color.blue()/255),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
+	data = new SimulationData_MSPHSystem(particleRadius->value(),particleMass->value(),Vector3(color.red()/255.0,color.green()/255.0,
+		   color.blue()/255.0),restDensity->value(),viscosity->value(),surfaceTension->value(),gasStiffness->value(),
 		   kernelParticles->value(),temperature->value(),Vector3(sigmaX->value(),sigmaY->value(),sigmaZ->value()),
 		   Vector3(betaX->value(),betaY->value(),betaZ->value()),Vector3(gX->value(),gY->value(),gZ->value()));
 }

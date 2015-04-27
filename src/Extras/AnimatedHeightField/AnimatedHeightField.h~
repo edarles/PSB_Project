@@ -16,28 +16,29 @@ using namespace Utils;
 /*************************************************************************************/
 class AnimatedHeightField
 {
-public:
+	public:
 /*************************************************************************************/
-    AnimatedHeightField();
-    AnimatedHeightField(double step);
-    AnimatedHeightField(double step, Vector3 Min, Vector3 Max, double d_x, double d_z);
-    AnimatedHeightField(const AnimatedHeightField& orig);
-    virtual ~AnimatedHeightField();
+    		AnimatedHeightField();
+    		AnimatedHeightField(double step);
+    		AnimatedHeightField(double step, Vector3 Min, Vector3 Max, double d_x, double d_z);
+   		 AnimatedHeightField(const AnimatedHeightField& orig);
+    		virtual ~AnimatedHeightField();
 /*************************************************************************************/    
-    double getT() const;
-    double getStep() const;
+    		double getT() const;
+    		double getStep() const;
 /*************************************************************************************/
-    void   setStep(double);
+		void   setT(double);
+    		void   setStep(double);
 /*************************************************************************************/
-    virtual void update() = 0;
+    		virtual void update() = 0;
 /*************************************************************************************/
-    virtual void display(Vector3) = 0;
-    virtual void displayNormales(Vector3 color) = 0;
+    		virtual void display(Vector3) = 0;
+    		virtual void displayNormales(Vector3 color) = 0;
 /*************************************************************************************/    
-protected:
+	protected:
 /*************************************************************************************/
-    double t;	// temps courant
-    double step; // pas de temps
+    		double t;	// temps courant
+    		double step; // pas de temps
 };
 /*************************************************************************************/
 #endif	/* ANIMATEDHEIGHTFIELD_H */

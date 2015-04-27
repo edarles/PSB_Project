@@ -50,11 +50,11 @@ private:
 
    
     QDoubleSpinBox *OX, *OY, *OZ, *length, *width, *dx, *dz, *AMin, *AMax, *kMin, *kMax, *thetaMin, *thetaMax,
-		   *phiMin, *phiMax, *elast;
+		   *phiMin, *phiMax, *wMin, *wMax, *elast;
     QSpinBox *nbFunc;
     QLabel *widthLabel, *lengthLabel, *dxLabel, *dzLabel, *originLabel, *aLabel, *bLabel, 
 	   *nbFuncLabel, *AMinLabel, *AMaxLabel, *kMinLabel, *kMaxLabel, *thetaMinLabel, *thetaMaxLabel, 
-	   *phiMinLabel, *phiMaxLabel, *elastLabel;
+	   *phiMinLabel, *phiMaxLabel, *wMinLabel, *wMaxLabel, *elastLabel;
 
     string getOpenFileName(const QString & caption, const QStringList & filters,int * ind_filter);
     QDir current_dir;

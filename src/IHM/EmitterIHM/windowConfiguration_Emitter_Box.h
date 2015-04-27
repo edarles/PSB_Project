@@ -9,9 +9,14 @@
 
 #include <WindowConfiguration_Data_SimpleSystem.h>
 #include <WindowConfiguration_Data_SPHSystem.h>
+#include <WindowConfiguration_Data_SPH2DSystem.h>
 #include <WindowConfiguration_Data_PCI_SPHSystem.h>
+#include <WindowConfiguration_Data_WCSPHSystem.h>
 #include <WindowConfiguration_Data_CudaSystem.h>
 #include <WindowConfiguration_Data_MSPHSystem.h>
+#include <WindowConfiguration_Data_HSPHSystem.h>
+#include <WindowConfiguration_Data_SWSPHSystem.h>
+#include <WindowConfiguration_Data_HybridSPHSystem.h>
 
 //************************************************************************/
 //************************************************************************/

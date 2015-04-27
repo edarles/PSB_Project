@@ -25,7 +25,7 @@ public slots:
     void changeData(QColor newValue);
     void setColor();
 
-private:
+public:
 
     QDoubleSpinBox *particleRadius, *particleMass, *restDensity, *viscosity, *surfaceTension, *gasStiffness, *kernelParticles;
     QPushButton *colorButton;
